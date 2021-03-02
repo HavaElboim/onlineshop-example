@@ -8,6 +8,14 @@ const app = express();
 // use the body-parser addition:
 app.use(bodyParser.json());
 
+// add mongoose to communicate with mongoDB
+// - see https://mongoosejs.com/docs/index.html
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/gocodeshop", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 const products = [
   {
     id: 1,
@@ -315,19 +323,44 @@ app.get("/search", (req, res) => {
 // https://localhost:8000/:idnum
 app.get("/products/:id", (req, res) => {
   console.log("received request for product id: ", req.params.id);
-  const productId = req.params.id;
-  console.log("productId is ", productId);
-  const product = products.find((product) => product.id === +productId); // use + to change productId from string to number
-  console.log("found product: ", product);
-  res.send(product ?? {});
+  //const productId = req.params.id;
+  //console.log("productId is ", productId);
+  // old version fetching from json or array of data objects:
+  //const product = products.find((product) => product.id === +productId); // use + to change productId from string to number
+  //console.log("found product: ", product);
+   // old version
+  //res.send(product ?? {});
+
+// using MongoDB and Mongoose:
+  // define which collection from the db:
+  const products = await Product.find({}).exec();
+  const {q} = req.query;
+  if (q) {
+    res.send(products.filter((product) => product.title.includes(q)));
+  } else {
+    res.send(products);
+  }
 });
 // set a port number to be used for the server
 
 // post: to add an item to the database
 app.post("/products", (req, res) => {
+  const productSchema = new mongoose.Schema({
+    //title: { type: String, required: true },
+    title: String,
+    price: Number,
+    description: String,
+  });
+  // define "Product" as collection, 
+  // then Mongoose will go to "Products" (with `s` at the end)
+  // during app.get later on in the code
+  const Product = mongoose.model("Product", productSchema);
+  new Product({ title, price, description }).save();
+
   console.log(req.body);
-  const { title } = req.body; // title of the new product will be sent in the body of the post request
-  products = [...products, { id: products.length + 1, title }];
+  // for old version using json or saving products in array of objects:
+  //const { title } = req.body; // title of the new product will be sent in the body of the post request
+  //products = [...products, { id: products.length + 1, title }];
   res.send("OK");
 });
 
@@ -335,9 +368,13 @@ app.post("/products", (req, res) => {
 app.put("/products/:id", (req, res) => {
   const { productId } = req.params; // pass the id of the product you want to change in the params of the put request
   const { title } = req.body; // pass the new title in the body of the put request
-  const product = products.find((product) => product.id === +productId);
-  product.title = title; // here have changed the title of the product in the database
-  res.send("ok!");
+ // const product = products.find((product) => product.id === +productId);
+ // product.title = title; // here have changed the title of the product in the database
+  //res.send("ok!");
+
+  // with Mongo, get the relevant product directly with the product id:
+  const product = await Product.findById(productId);
+
 });
 
 // delete: to delete an item in the db
@@ -356,6 +393,11 @@ const PORT = 8000;
 //  listen for any requests that come in on port PORT (8000)
 
 app.listen(PORT, () => {
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "connection error:"));
+  db.once("open", function () {
+    // we're connected!
+  });
   //  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
   console.log(`CORS-enabled web server listening on port ${PORT}`);
 });
