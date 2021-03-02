@@ -271,8 +271,8 @@ const products = [
 // Something is already running on port 3000.
 // Would you like to run the app on another port instead?
 
-//var cors = require("cors");
-//app.use(cors());
+var cors = require("cors");
+app.use(cors());
 
 // provide data to be displayed on the / page of the server's website
 app.get("/", (req, res) => {
@@ -305,6 +305,7 @@ app.get("/products", (req, res) => {
 // client will access a product with given productid using:
 // https://localhost:8000/:idnum
 app.get("/products/:id", (req, res) => {
+  console.log("testing...");
   console.log("received request for product category: ", req.query);
   const { productId } = req.params;
   const product = products.find((product) => product.id === +productId);
