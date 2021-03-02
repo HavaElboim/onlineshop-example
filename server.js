@@ -25,7 +25,7 @@ const products = [
     description: "3 white hyacynth bulbs",
     category: "flowering bulbs",
     image:
-      "https://cdn.pixabay.com/photo/2019/04/27/21/56/cactus-4161381_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2016/03/24/22/09/hyacinthus-orientalis-1277753__340.jpg",
   },
   {
     id: 3,
@@ -292,7 +292,7 @@ app.get("/products", (req, res) => {
 // client will access a product containing a keyword using:
 // https://localhost:8000?q=keyword
 app.get("/products", (req, res) => {
-  console.log("received request for product category: ", req.query);
+  console.log("received query for product category: ", req.query);
   const { q } = req.query;
   if (q) {
     res.send(
@@ -310,18 +310,39 @@ app.get("/products", (req, res) => {
 // https://localhost:8000/:idnum
 app.get("/products/:id", (req, res) => {
   console.log("testing...");
-  console.log("received request for product category: ", req.query);
+  console.log("received request for product id: ", req.params.id);
   const { productId } = req.params;
-  const product = products.find((product) => product.id === +productId);
+  const product = products.find((product) => product.id === +productId); // use + to change productId from string to number
   res.send(product ?? {});
 });
 // set a port number to be used for the server
 
+// post: to add an item to the database
 app.post("/products", (req, res) => {
   console.log(req.body);
-  const { title } = req.body;
+  const { title } = req.body; // title of the new product will be sent in the body of the post request
   products = [...products, { id: products.length + 1, title }];
   res.send("OK");
+});
+
+// put : to change a value of an item in the database
+app.put("/products/:id", (req, res) => {
+  const { productId } = req.params; // pass the id of the product you want to change in the params of the put request
+  const { title } = req.body; // pass the new title in the body of the put request
+  const product = products.find((product) => product.id === +productId);
+  product.title = title; // here have changed the title of the product in the database
+  res.send("ok!");
+});
+
+// delete: to delete an item in the db
+app.delete("products/:id", (req, res) => {
+  const { productId } = req.params;
+  // use splice, providing index in the array and how many items, to remove items from an array
+  const productIndex = products.findIndex(
+    (product) => product.id === +productId
+  );
+  products.splice(productIndex, 1);
+  res.send("ok!");
 });
 
 const PORT = 8000;
