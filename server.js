@@ -1,8 +1,12 @@
 // import the express package, installed earlier using: npm install express
 const express = require("express");
+// import middleware to accept post requests:
+const bodyParser = require("body-parser");
 
 // call the express function which returns an express server application
 const app = express();
+// use the body-parser addition:
+app.use(bodyParser.json());
 
 const products = [
   {
@@ -64,7 +68,7 @@ const products = [
     title: "flowering succulent",
     price: 15,
     description: "succulent with white flowers",
-    category: "succulent",
+    category: "succulents",
     image:
       "https://cdn.pixabay.com/photo/2017/12/28/15/36/plant-3045473_960_720.jpg",
   },
@@ -312,6 +316,14 @@ app.get("/products/:id", (req, res) => {
   res.send(product ?? {});
 });
 // set a port number to be used for the server
+
+app.post("/products", (req, res) => {
+  console.log(req.body);
+  const { title } = req.body;
+  products = [...products, { id: products.length + 1, title }];
+  res.send("OK");
+});
+
 const PORT = 8000;
 
 //  listen for any requests that come in on port PORT (8000)
