@@ -291,16 +291,21 @@ app.get("/products", (req, res) => {
 //adding option to serve queries:
 // client will access a product containing a keyword using:
 // https://localhost:8000?q=keyword
-app.get("/products", (req, res) => {
-  console.log("received query for product category: ", req.query);
-  const { q } = req.query;
+app.get("/search", (req, res) => {
+  console.log("received query for product category: ", req.query.q);
+  const { q } = req.query.q;
   if (q) {
+    console.log("looking for ", q);
     res.send(
       products.filter(
-        (product) => product.category.includes(q) || product.title.includes(q)
+        (product) =>
+          product.category.includes(q) ||
+          product.title.includes(q) ||
+          product.description.includes(q)
       )
     );
   } else {
+    console.log("can't find product, showing all products");
     res.send(products);
   }
 });
@@ -309,10 +314,11 @@ app.get("/products", (req, res) => {
 // client will access a product with given productid using:
 // https://localhost:8000/:idnum
 app.get("/products/:id", (req, res) => {
-  console.log("testing...");
   console.log("received request for product id: ", req.params.id);
-  const { productId } = req.params;
+  const productId = req.params.id;
+  console.log("productId is ", productId);
   const product = products.find((product) => product.id === +productId); // use + to change productId from string to number
+  console.log("found product: ", product);
   res.send(product ?? {});
 });
 // set a port number to be used for the server
