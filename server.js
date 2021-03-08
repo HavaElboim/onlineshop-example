@@ -36,53 +36,48 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-// provide data to be displayed on the /shuki page of the server's website
-// remove file public/products.json
-// otherwise the MongoDB will not work - it will complain that
-// "Cannot overwrite Product model once compiled"
-/*
-app.get("/products", (req, res) => {
-  res.send(products);
-});
-*/
-
 //adding option to serve queries:
 // client will access a product containing a keyword using:
-// https://localhost:8000?q=keyword
-/*
-app.get("/search", (req, res) => {
-  console.log("received query for product category: ", req.query.q);
-  const { q } = req.query.q;
-  if (q) {
-    console.log("looking for ", q);
-    res.send(
-      products.filter(
-        (product) =>
-          product.category.includes(q) ||
-          product.title.includes(q) ||
-          product.description.includes(q)
-      )
-    );
-  } else {
-    console.log("can't find product, showing all products");
-    res.send(products);
-  }
-});
-*/
+// https://localhost:8000?search=keyword
 
 // route for /products is same as route for /products?search=keyword
 app.get("/products?search=keyword", async (req, res) => {
   const { search } = req.query;
   console.log("search by keyword");
   console.log("received request to search for product by keyword: ", req.query);
-  if (search) {
+  /*if (search) {
     Product.find({ title: search })
       .then((products) => res.json(products))
       .catch((err) => res.status(404).json({ success: false }));
     res.send(products ?? {});
   } else {
-    const products = await Product.find({});
+    //const products = await Product.find({});
+    Product.find({})
+      .then((products) => res.json(products))
+      .catch((err) => res.status(404).json({ success: false }));
     res.send(products);
+  }
+});
+*/
+
+  if (search) {
+    Product.find({ title: search }).exec(function (err, products) {
+      if (err) {
+        console.error("Error retrieving products by search keyword!");
+      } else {
+        console.log("server products = " + JSON.stringify(products));
+        res.json(products);
+      }
+    });
+  } else {
+    Product.find({}).exec(function (err, products) {
+      if (err) {
+        console.error("Error retrieving products by search keyword!");
+      } else {
+        console.log("server products = " + JSON.stringify(products));
+        res.json(products);
+      }
+    });
   }
 });
 
@@ -91,6 +86,7 @@ app.get("/products?search=keyword", async (req, res) => {
 // https://localhost:8000/:idnum
 app.get("/products/:id", async (req, res) => {
   console.log("received request for product id: ", req.params.id);
+
   //const productId = req.params.id;
   //console.log("productId is ", productId);
   // old version fetching from json or array of data objects:
@@ -106,26 +102,28 @@ app.get("/products/:id", async (req, res) => {
   // _id (and not id)
   // - inspect the db by MongoDB Compass to see the id for each record
 
-  //const product = await Product.findById(productId).exec();
-  //const { q } = req.query;
-  // if there is a search parameter then filter products by it
-  //if (q) {
-  //  res.send(products.filter((product) => product.title.includes(q)));
-  //} else {
-  //otherwise: just list all products
-  //   res.send(products);
-  //}
+  const { id } = req.params.id; ///here we do destructuring - we take out the params called id from the params array
 
-  const { id } = req.params; ///here we do destructuring - we take out the params called id from the params array
-  //const product = products.find((product) => product.id === +productId);
+  //const product = await Product.findById(id);
+  // Product.findById(id)
+  //  .then((products) => res.json(products))
+  //   .catch((err) => res.status(404).json({ success: false }));
 
-  //const product = await Product.findById(productId);
+  Product.findById(req.params.id).exec(function (err, product) {
+    if (err) {
+      console.error("Error retrieving product by id!");
+    } else {
+      console.log("server product = " + JSON.stringify(product));
+      res.json(product);
+    }
+  });
 
-  Product.findById(id)
-    .then((products) => res.json(products))
-    .catch((err) => res.status(404).json({ success: false }));
-
-  res.send(products ?? {});
+  if (product) {
+    console.log("used findById and got products ", product);
+    res.send(product ?? {});
+  } else {
+    res.send("product not found");
+  }
 });
 
 // set a port number to be used for the server
@@ -140,21 +138,17 @@ app.post("/products", (req, res) => {
   // then Mongoose will go to "Products" (with `s` at the end)
   // during app.get later on in the code
 
-  const { title, price, description, slug } = req.body;
+  const { title, price, description, category } = req.body;
 
-  const product = new Product({ title, price, description, slug }).save();
+  const product = new Product({ title, price, description, category }).save();
 
-  //products.push({ id: products.length + 1, title });
-  // for old version using json or saving products in array of objects:
-  //const { title } = req.body; // title of the new product will be sent in the body of the post request
-  //products = [...products, { id: products.length + 1, title }];
   res.send("OK");
 });
 
 // put : to change a value of an item in the database
 // define the put as an async function
 app.put("/products/:id", async (req, res) => {
-  const { productId } = req.params; // pass the id of the product you want to change in the params of the put request
+  const { id } = req.params.id; // pass the id of the product you want to change in the params of the put request
   const { title } = req.body; // pass the new title in the body of the put request
   // const product = products.find((product) => product.id === +productId);
   // product.title = title; // here have changed the title of the product in the database
@@ -162,7 +156,7 @@ app.put("/products/:id", async (req, res) => {
 
   // identify the project by the id generated by the server, which has the
   // key _id
-  await Product.updateOne({ _id: productId }, { title }).exec();
+  await Product.updateOne({ _id: id }, { title }).exec();
   // can give this a promise to move it to async
 
   res.send("OK!");
@@ -174,8 +168,8 @@ app.put("/products/:id", async (req, res) => {
 // 1. add async before (req, res)
 // 2. add .exec() after the deleteOne
 // 3. add await before the deleteOne
-app.delete("products/:id", async (req, res) => {
-  const { id } = req.params;
+app.delete("/products/:id", async (req, res) => {
+  const { id } = req.params.id;
   // use splice, providing index in the array and how many items, to remove items from an array
   /*const productIndex = products.findIndex(
     (product) => product.id === +productId
