@@ -21,6 +21,23 @@ mongoose.connect(
   }
 );
 
+// I'm getting in Heroku the following error:
+// Application error
+// An error occurred in the application and your page could not be served. If you are the application owner, check your logs for details.
+// (to see error log, in a cmd terminal, type:  heroku logs -a gocodeshop-hava )
+// in log there is: connection error: MongooseServerSelectionError: connect ECONNREFUSED
+// see here for ideas to solve error:
+// https://stackoverflow.com/questions/49894913/error-at-connecting-to-mongodb-atlas-server
+// :
+// I also faced the similar issue while I was connecting MongoDB Compass to https://cloud.mongodb.com/ cluster.
+//
+// The following steps resolve the issue.
+//
+// 1. Visit google.com > Enter My IP Address > Copy the Public IP Address of your system/network
+// 2. Go to https://cloud.mongodb.com/ Cluster > Select Security > Network Access > Click on IP whilelist Tab > Add IP Address > Enter your public IP address.
+//
+// tried all this but still get Application error in Heroku
+
 var cors = require("cors");
 app.use(cors());
 
