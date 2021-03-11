@@ -24,10 +24,14 @@ const Home = () => {
     console.log("fetched ");
   }, []);
   */
+  /* mongoose:
+ fetch("http://10.0.0.193:8000/products")
+ */
 
-  // in BinyaminTech:
   useEffect(() => {
-    fetch("http://10.0.0.193:8000/products")
+    fetch(
+      "mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true"
+    )
       .then((result) => result.json())
       .then((data) => {
         setProducts(data);

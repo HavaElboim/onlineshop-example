@@ -1,10 +1,12 @@
 import { React, useState, useEffect } from "react";
 import "./ProductInfo.css";
 
-const ProductInfo = ({ match }) => {
-  const [productData, setData] = useState({});
+/*
+mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
+*/
 
-  useEffect(() => {
+/* mongoDB version on localhost:
+useEffect(() => {
     fetch(`http://10.0.0.193:8000/products/${match.params.productid}`)
       .then((response) => response.json())
       .then((data) => setData(data));
@@ -12,6 +14,24 @@ const ProductInfo = ({ match }) => {
       "descr is ",
       productData,
       ` from http://10.0.0.193:8000/products/${match.params.productid}`
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  */
+
+const ProductInfo = ({ match }) => {
+  const [productData, setData] = useState({});
+
+  useEffect(() => {
+    fetch(
+      `mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true/${match.params.productid}`
+    )
+      .then((response) => response.json())
+      .then((data) => setData(data));
+    console.log(
+      "descr is ",
+      productData,
+      ` from mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true/${match.params.productid}`
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
