@@ -13,6 +13,7 @@ const Home = () => {
   const [isSale, setSale] = useState("true");
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [searchKeyword, setSearch] = useState("");
+  const [numProducts, setNumProds] = useState("");
 
   // fetching from my server on localhost at 192.168.43.81 on port 8000:
   /*useEffect(() => {
@@ -37,10 +38,12 @@ const Home = () => {
         setProducts(data);
       });
     console.log("fetched ");
+    setNumProds(products.length);
   }, []);
 
   return (
     <div>
+      <div>Num products: {numProducts}</div>
       <Header
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
