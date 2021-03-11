@@ -39,7 +39,7 @@ const Home = () => {
       });
     console.log("fetched ");
     setNumProds(products.length);
-  }, []);
+  }, [products.length]);
 
   return (
     <div>
