@@ -37,6 +37,14 @@ mongoose.connect(
 // 2. Go to https://cloud.mongodb.com/ Cluster > Select Security > Network Access > Click on IP whilelist Tab > Add IP Address > Enter your public IP address.
 //
 // tried all this but still get Application error in Heroku
+//
+// now read here: https://stackoverflow.com/questions/57371035/could-not-find-a-required-file-name-index-html
+// Does your project have an index.html file in the public directory? If not you can get the one that Create React App uses here:
+// https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/index.html
+// so copied that file into the public directory in the project
+//
+// & retried
+// but still get Application Error
 
 var cors = require("cors");
 app.use(cors());
