@@ -30,9 +30,7 @@ const Home = () => {
  */
 
   useEffect(() => {
-    fetch(
-      "mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true"
-    )
+    fetch("/api/products")
       .then((result) => result.json())
       .then((data) => {
         setProducts(data);

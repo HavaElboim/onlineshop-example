@@ -25,7 +25,7 @@ const Admin = () => {
   console.log("theme", theme);
 
   useEffect(() => {
-    fetch("http://10.0.0.193:8000/products")
+    fetch("/api/products")
       .then((result) => result.json())
       .then((data) => {
         setProducts(data);
@@ -35,7 +35,7 @@ const Admin = () => {
 
   const addProduct = async (title, description, price, category, url) => {
     console.log("in add product in client");
-    const res = await fetch("http://localhost:8000/products", {
+    const res = await fetch("/api/products", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
