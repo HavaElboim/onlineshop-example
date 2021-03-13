@@ -88,7 +88,14 @@ const Admin = () => {
           style={{ color: theme.background, background: theme.foreground }}
         ></CategorySelect>
       )}
-      <div>selected category of new product: {selectedCategory}</div>
+      <div>Select from existing categories of products: {selectedCategory}</div>
+      <div> or add new category here: </div>
+      <input
+        id="productCategory"
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
       <button
         id="addProductButton"
         style={{ color: theme.background, background: theme.foreground }}
@@ -102,7 +109,7 @@ const Admin = () => {
           );
         }}
       >
-        Add new Prod
+        Add new product to store
       </button>
     </div>
   );
