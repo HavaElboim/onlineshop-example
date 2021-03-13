@@ -1,6 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "./ProductInfo.css";
-import UserContext from "./contexts/UserContexts";
+import UserContext from "../../contexts/UserContexts";
+import ThemeContext from "../../contexts/ThemeContexts";
 
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
@@ -22,7 +23,8 @@ useEffect(() => {
 
 const ProductInfo = ({ match }) => {
   const [productData, setData] = useState({});
-  const [user, setUser] = useState(users.guest);
+  const [user, toggleUser] = useContext(UserContext);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     fetch(`/api/products/${match.params.id}`)
