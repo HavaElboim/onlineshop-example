@@ -15,7 +15,8 @@ const ChangeUser = () => {
       onClick={toggleUser}
     >
       {" "}
-      Login as: {user.name}
+      {user.name === "Admin" && <div>Login as Guest</div>}
+      {user.name === "Guest" && <div>Login as Admin</div>}
     </button>
   );
 };
