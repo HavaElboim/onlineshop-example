@@ -9,9 +9,11 @@ import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Admin from "./pages/Admin/Admin";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
+import DisplayUser from "./components/DisplayUser/DisplayUser";
 
 // for theme context:
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
+import UserContext, { users } from "./contexts/UserContexts";
 
 //import "./utils";
 
@@ -34,50 +36,64 @@ Header also calls CategorySelect component to choose products filter.
 
 const App = () => {
   const [theme, setTheme] = useState(themes.light);
+  const [user, setUser] = useState(users.guest);
+
   function toggleTheme() {
     setTheme((theme) => (theme === themes.light ? themes.dark : themes.light));
   }
 
+  function toggleUser() {
+    setUser((user) => (user === users.guest ? users.admin : users.guest));
+  }
+
   return (
     <ThemeContext.Provider value={[theme, toggleTheme]}>
-      <Router>
-        <div
-          className="outer-div"
-          style={{ color: theme.foreground, background: theme.background }}
-        >
-          <nav>
-            <ul>
-              <li>
-                <Link to="/Home">Home</Link>
-              </li>
-              <li>
-                <Link to="/About">About</Link>
-              </li>
-              <li>
-                <Link to="/Admin">Admin</Link>
-              </li>
-            </ul>
-          </nav>
+      <UserContext.Provider value={[user, toggleUser]}>
+        <Router>
+          <div
+            className="outer-div"
+            style={{ color: theme.foreground, background: theme.background }}
+          >
+            <DisplayUser />
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/Home">Home</Link>
+                </li>
+                <li>
+                  <Link to="/About">About</Link>
+                </li>
+                {user.name === "Admin" && (
+                  <li>
+                    <Link to="/Admin">Admin</Link>
+                  </li>
+                )}
+              </ul>
+            </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
+            {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/Admin">
-              <Admin />
-            </Route>
-            <Route exact path="/Home">
-              <Home />
-            </Route>
-            <Route path="/About">
-              <About />
-            </Route>
-            <Route path="/products/:productid" component={ProductInfo}></Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+            <Switch>
+              <Route path="/Admin">
+                <Admin />
+              </Route>
+              <Route exact path="/Home">
+                <Home />
+              </Route>
+              <Route path="/About">
+                <About />
+              </Route>
+              <Route
+                path="/products/:productid"
+                component={ProductInfo}
+              ></Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </UserContext.Provider>
     </ThemeContext.Provider>
   );
 };
