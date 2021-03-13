@@ -16,7 +16,7 @@ const SliderFilterPrice = (props) => {
         max = products[i].price > max ? products[i].price : max;
         console.log("max: ", max);
       }
-      setPriceRange([0, max]);
+      setPriceRange([0, max + 5]);
       console.log("max price is: ", max);
     }
   }, [products, setPriceRange]);

@@ -22,15 +22,15 @@ useEffect(() => {
   */
 
 const ProductInfo = ({ match }) => {
-  const [productData, setData] = useState({});
+  const [products, setProducts] = useState({});
   const [user, toggleUser] = useContext(UserContext);
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
     fetch(`/api/products/${match.params.id}`)
       .then((response) => response.json())
-      .then((data) => setData(data));
-    console.log("descr is ", productData, ` /api/products/${match.params.id}`);
+      .then((data) => setProducts(data));
+    console.log("descr is ", products, ` /api/products/${match.params.id}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,29 +51,29 @@ const ProductInfo = ({ match }) => {
     //setProducts(products);
   };
 
-  if (productData) {
+  if (products) {
     return (
       <div>
-        <div className="product-title">{productData.title}</div>
+        <div className="product-title">{products.title}</div>
         <div className="product-image">
-          <img src={productData.image} alt={""} />
+          <img src={products.image} alt={""} />
         </div>
         <div>
-          <div className="product-info">{productData.description}</div>
-          <div className="product-info">$ {productData.price}</div>
+          <div className="product-info">{products.description}</div>
+          <div className="product-info">$ {products.price}</div>
         </div>
-        <div className="product-info">{productData.category}</div>
+        <div className="product-info">{products.category}</div>
         {user.name === "Admin" && (
           <button
             id="editProductButton"
             style={{ color: theme.background, background: theme.foreground }}
             onClick={(e) => {
               editProduct(
-                productData.title,
-                productData.description,
-                productData.price,
-                productData.category,
-                productData.url
+                products.title,
+                products.description,
+                products.price,
+                products.category,
+                products.url
               );
             }}
           >
