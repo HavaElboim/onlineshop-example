@@ -28,7 +28,6 @@ const Header = (props) => {
 
   return (
     <div>
-      <ChangeThemeColors />
       <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}

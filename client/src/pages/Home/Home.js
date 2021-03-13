@@ -42,7 +42,6 @@ const Home = () => {
 
   return (
     <div>
-      <DisplayUser />
       <div>Num products in shop: {numProducts}</div>
       <Header
         selectedCategory={selectedCategory}

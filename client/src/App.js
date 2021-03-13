@@ -10,6 +10,7 @@ import About from "./pages/About/About";
 import Admin from "./pages/Admin/Admin";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import DisplayUser from "./components/DisplayUser/DisplayUser";
+import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
 
 // for theme context:
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
@@ -49,6 +50,7 @@ const App = () => {
   return (
     <ThemeContext.Provider value={[theme, toggleTheme]}>
       <UserContext.Provider value={[user, toggleUser]}>
+        <ChangeThemeColors />
         <DisplayUser />
         <Router>
           <div
