@@ -5,7 +5,7 @@ import Link from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Products from "../../components/Products/Products";
 //import SearchKeyword from "../SearchKeyword/SearchKeyword";
-import CategorySelect from "../../components/CategorySelect/CategorySelect";
+import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import ThemeContext from "../../contexts/ThemeContexts";
 
 const Admin = () => {
@@ -81,21 +81,13 @@ const Admin = () => {
         style={{ color: theme.background, background: theme.foreground }}
       />
       {products.length > 0 && (
-        <CategorySelect
+        <CategorySelectAdmin
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
           style={{ color: theme.background, background: theme.foreground }}
-        ></CategorySelect>
+        ></CategorySelectAdmin>
       )}
-      <div>Select from existing categories of products: {selectedCategory}</div>
-      <div> or add new category here: </div>
-      <input
-        id="productCategory"
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-        style={{ color: theme.background, background: theme.foreground }}
-      />
       <button
         id="addProductButton"
         style={{ color: theme.background, background: theme.foreground }}
