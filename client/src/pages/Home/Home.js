@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import DisplayUser from "../../components/DisplayUser/DisplayUser";
 
 //components of content:
 import Header from "../../components/Header/Header";
@@ -41,7 +42,8 @@ const Home = () => {
 
   return (
     <div>
-      <div>Num products: {numProducts}</div>
+      <DisplayUser />
+      <div>Num products in shop: {numProducts}</div>
       <Header
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
