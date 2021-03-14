@@ -50,15 +50,15 @@ const App = () => {
   }
 
   return (
-    <ThemeContext.Provider value={[theme, toggleTheme]}>
-      <UserContext.Provider value={[user, toggleUser]}>
-        <ChangeThemeColors />
-        <DisplayUser />
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <UserContext.Provider value={{ user, toggleUser }}>
         <Router>
           <div
             className="outer-div"
             style={{ color: theme.foreground, background: theme.background }}
           >
+            <ChangeThemeColors />
+            <DisplayUser />
             <nav>
               <ul>
                 <li>

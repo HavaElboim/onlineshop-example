@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../../contexts/ThemeContexts";
 
 const ChangeThemeColors = () => {
-  const [theme, toggleTheme] = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <button
@@ -12,8 +12,7 @@ const ChangeThemeColors = () => {
       }}
       onClick={toggleTheme}
     >
-      {" "}
-      Change Theme{" "}
+      Change Theme
     </button>
   );
 };

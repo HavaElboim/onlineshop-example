@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useContext } from "react";
 import "./ProductInfo.css";
 import UserContext from "../../contexts/UserContexts";
-import ThemeContext from "../../contexts/ThemeContexts";
+import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
@@ -23,8 +23,11 @@ useEffect(() => {
 
 const ProductInfo = ({ match }) => {
   const [products, setProducts] = useState({});
-  const [user, toggleUser] = useContext(UserContext);
-  const theme = useContext(ThemeContext);
+  const { user, toggleUser } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
+  const [editingMode, setEditingMode] = useState(false);
+
+  console.log("in productinfo, theme is: ", theme.foreground);
 
   useEffect(() => {
     fetch(`/api/products/${match.params._id}`)
@@ -51,10 +54,25 @@ const ProductInfo = ({ match }) => {
     //setProducts(products);
   };
 
+  const addToCart = (title, price, url) => {
+    localStorage.setItem("");
+  };
+
   if (products) {
     return (
       <div>
         <div className="product-title">{products.title}</div>
+        {user.name !== "Admin" && (
+          <button
+            id="addToCartButton"
+            onClick={(e) => {
+              addToCart();
+            }}
+          >
+            {" "}
+            Add to cart
+          </button>
+        )}
         <div className="product-image">
           <img src={products.image} alt={""} />
         </div>
@@ -63,10 +81,21 @@ const ProductInfo = ({ match }) => {
           <div className="product-info">$ {products.price}</div>
         </div>
         <div className="product-info">{products.category}</div>
+        <div>color: {theme.foreground}</div>
         {user.name === "Admin" && (
           <button
+            id="setEditingButton"
+            onClick={(e) => {
+              setEditingMode(!editingMode);
+            }}
+          >
+            Edit product
+          </button>
+        )}
+        {user.name === "Admin" && editingMode && (
+          <button
             id="editProductButton"
-            style={{ color: theme.background, background: theme.foreground }}
+            style={{ color: theme.foreground, background: theme.background }}
             onClick={(e) => {
               editProduct(
                 products.title,

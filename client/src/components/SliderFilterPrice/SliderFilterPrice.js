@@ -6,7 +6,7 @@ import ThemeContext from "../../contexts/ThemeContexts";
 
 const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (products.length) {

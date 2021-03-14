@@ -5,7 +5,7 @@ import ThemeContext from "../../contexts/ThemeContexts";
 const SearchKeyword = (props) => {
   const { searchKeyword, setSearch, products, setProducts } = props;
 
-  const [theme] = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     console.log(

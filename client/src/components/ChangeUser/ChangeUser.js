@@ -3,8 +3,8 @@ import UserContext from "../../contexts/UserContexts";
 import ThemeContext from "../../contexts/ThemeContexts";
 
 const ChangeUser = () => {
-  const [user, toggleUser] = useContext(UserContext);
-  const [theme, toggleTheme] = useContext(ThemeContext);
+  const { user, toggleUser } = useContext(UserContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <button
@@ -14,7 +14,6 @@ const ChangeUser = () => {
       }}
       onClick={toggleUser}
     >
-      {" "}
       {user.name === "Admin" && <div>Login as Guest</div>}
       {user.name === "Guest" && <div>Login as Admin</div>}
     </button>

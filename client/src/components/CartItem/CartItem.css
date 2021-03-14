@@ -1,0 +1,19 @@
+.cartItemDisplay{
+display: flex;
+}
+.itemIcon{
+    padding:5px;
+    max-width: 10px;
+    max-height: 10px;
+}
+.itemName{
+    padding:5px;
+}
+.itemPrice{
+    padding:5px;
+}
+.saleIcon{
+    padding:5px;
+    max-width: 10px;
+    max-height: 10px;
+}

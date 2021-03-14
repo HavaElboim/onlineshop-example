@@ -5,7 +5,7 @@ import ThemeContext from "../../contexts/ThemeContexts";
 
 const CategorySelect = (props) => {
   const { selectedCategory, setSelectedCategory, products } = props;
-  const [theme] = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     console.log(

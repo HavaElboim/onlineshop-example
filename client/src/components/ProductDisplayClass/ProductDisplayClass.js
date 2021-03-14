@@ -5,7 +5,7 @@ import sale from "./sale.png";
 //import { Link } from "react-router-dom";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProductInfo from "../../pages/ProductInfo/ProductInfo";
-import ThemeContext from "../../contexts/ThemeContexts";
+import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 
 /* this component is called from the Products class.
    It renders individual products cards (product title, image, price).
@@ -27,7 +27,7 @@ const ProductDisplayClass = (props) => {
     priceRange,
   } = props;
 
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const newPrice = salesProductsIds.includes(productid)
     ? ` Sale: $ ${+(price * 0.9).toFixed(2)}`

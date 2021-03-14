@@ -10,7 +10,7 @@ and sets state of display message depending on whether the sale has finished */
 
 const SaleCountdown = (props) => {
   const { secondsLeft, setSecondsLeft, isSale, setSale } = props;
-  const [theme] = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const convertToDHMS = () => {
     let temp = "";

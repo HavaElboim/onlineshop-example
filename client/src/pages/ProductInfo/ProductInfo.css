@@ -12,3 +12,9 @@
   text-align: center;
   padding: 20px;
 }
+
+.editProductButton {
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+}
