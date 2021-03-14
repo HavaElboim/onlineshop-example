@@ -44,7 +44,9 @@ const App = () => {
   }
 
   function toggleUser() {
+    console.log("request to change user");
     setUser((user) => (user === users.guest ? users.admin : users.guest));
+    console.log("logged in as user ", user.name);
   }
 
   return (
@@ -85,10 +87,7 @@ const App = () => {
               <Route path="/About">
                 <About />
               </Route>
-              <Route
-                path="/products/:productid"
-                component={ProductInfo}
-              ></Route>
+              <Route path="/products/:_id" component={ProductInfo}></Route>
               <Route path="/">
                 <Home />
               </Route>

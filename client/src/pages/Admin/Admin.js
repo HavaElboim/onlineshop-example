@@ -94,6 +94,51 @@ const Admin = () => {
           style={{ color: theme.background, background: theme.foreground }}
         ></CategorySelectAdmin>
       )}
+    </div>
+  );
+};
+
+export default Admin;
+
+/*
+ return (
+    <div style={{ background: theme.background }}>
+      <div>Input name of new product:</div>
+      <input
+        id="productName"
+        value={productName}
+        onChange={(e) => setName(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
+      <div>Input description of new product:</div>
+      <input
+        id="productDescription"
+        value={productDescription}
+        onChange={(e) => setDescription(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
+      <div>Input image URL of new product:</div>
+      <input
+        id="productURL"
+        value={productURL}
+        onChange={(e) => setURL(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
+      <div>Input price of new product:</div>
+      <input
+        id="productPrice"
+        value={productPrice}
+        onChange={(e) => setPrice(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
+      {products.length > 0 && (
+        <CategorySelectAdmin
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          products={products}
+          style={{ color: theme.background, background: theme.foreground }}
+        ></CategorySelectAdmin>
+      )}
       <button
         id="addProductButton"
         style={{ color: theme.background, background: theme.foreground }}
@@ -111,16 +156,4 @@ const Admin = () => {
       </button>
     </div>
   );
-};
-
-export default Admin;
-
-/*
- addProduct(
-            productName,
-            productDescription,
-            productPrice,
-            selectedCategory,
-            productURL
-          );
           */
