@@ -93,6 +93,20 @@ const Admin = () => {
           products={products}
         ></CategorySelectAdmin>
       )}
+      <button
+        id="addNewProductButton"
+        onClick={(e) =>
+          addProduct(
+            productName,
+            productDescription,
+            productPrice,
+            selectedCategory,
+            productURL
+          )
+        }
+      >
+        Add new product
+      </button>
     </div>
   );
 };
