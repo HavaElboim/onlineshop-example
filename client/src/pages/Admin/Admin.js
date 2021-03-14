@@ -91,7 +91,6 @@ const Admin = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
-          style={{ color: theme.background, background: theme.foreground }}
         ></CategorySelectAdmin>
       )}
     </div>
