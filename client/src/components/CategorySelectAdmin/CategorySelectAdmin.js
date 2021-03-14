@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ListCategories from "../ListCategories/ListCategories";
 import ThemeContext from "../../contexts/ThemeContexts";
 
-const CategorySelect = (props) => {
+const CategorySelectAdmin = (props) => {
   const { selectedCategory, setSelectedCategory, products } = props;
   const { theme } = useContext(ThemeContext);
 
@@ -45,10 +45,10 @@ const CategorySelect = (props) => {
   );
 };
 
-CategorySelect.propTypes = {
+CategorySelectAdmin.propTypes = {
   selectedCategory: PropTypes.string,
   setSelectedCategory: PropTypes.func,
 };
 
 /* add proptypes for products */
-export default CategorySelect;
+export default CategorySelectAdmin;
