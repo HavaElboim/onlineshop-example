@@ -100,7 +100,7 @@ app.get("/api/products/:_id", async (req, res) => {
   //  .then((products) => res.json(products))
   //   .catch((err) => res.status(404).json({ success: false }));
 
-  Product.findById(req.params.id).exec(function (err, product) {
+  Product.findById(req.params._id).exec(function (err, product) {
     if (err) {
       console.error("Error retrieving product by id!");
     } else {
@@ -124,14 +124,14 @@ app.post("/api/products", async (req, res) => {
 
   const { title, description, price, category, url } = req.body;
 
-  console.log("adding product: ", title, description, price, category, url);
+  console.log("adding product: ", title, description, price, category, image);
 
   const product = await new Product({
     title,
     description,
     price,
     category,
-    url,
+    image,
   }).save();
   console.log("POST!", product);
 
@@ -143,8 +143,8 @@ app.post("/api/products", async (req, res) => {
 
 // put : to change a value of an item in the database
 // define the put as an async function
-app.put("/api/products/:id", async (req, res) => {
-  const { title, description, price, category, url } = req.body; // pass the new title in the body of the put request
+app.put("/api/products/:_id", async (req, res) => {
+  const { title, description, price, category, image } = req.body; // pass the new title in the body of the put request
   // const product = products.find((product) => product.id === +productId);
   // product.title = title; // here have changed the title of the product in the database
   //res.send("ok!");
@@ -153,8 +153,8 @@ app.put("/api/products/:id", async (req, res) => {
   // key _id
   // omitUndefined=true : If true, delete any properties whose value is undefined when casting an update.
   await Product.updateOne(
-    { _id: req.params.id },
-    { title, description, price, category, url },
+    { _id: req.params._id },
+    { title, description, price, category, image },
     { omitUndefined: true }
   ).exec();
 
@@ -167,8 +167,8 @@ app.put("/api/products/:id", async (req, res) => {
 // 1. add async before (req, res)
 // 2. add .exec() after the deleteOne
 // 3. add await before the deleteOne
-app.delete("/api/products/:id", async (req, res) => {
-  console.log("id to delete: ", req.params.id);
+app.delete("/api/products/:_id", async (req, res) => {
+  console.log("id to delete: ", req.params._id);
 
   /*
   alternative version:
@@ -177,7 +177,7 @@ app.delete("/api/products/:id", async (req, res) => {
     (product) => product.id === +productId
   );
  */
-  await Product.deleteOne({ _id: req.params.id }).exec();
+  await Product.deleteOne({ _id: req.params._id }).exec();
 
   res.send("ok!");
 });
