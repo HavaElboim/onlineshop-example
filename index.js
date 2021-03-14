@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema({
   description: String,
   price: Number,
   category: String,
-  url: String,
+  image: String,
 });
 
 const Product = mongoose.model("Product", productSchema);
@@ -122,7 +122,7 @@ app.post("/api/products", async (req, res) => {
   // then Mongoose will go to "Products" (with `s` at the end)
   // during app.get later on in the code
 
-  const { title, description, price, category, url } = req.body;
+  const { title, description, price, category, image } = req.body;
 
   console.log("adding product: ", title, description, price, category, image);
 
