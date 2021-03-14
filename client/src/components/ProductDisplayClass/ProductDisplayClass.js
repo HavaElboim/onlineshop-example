@@ -54,6 +54,7 @@ const ProductDisplayClass = (props) => {
             {title}
           </h6>
         </div>
+        <div> product id is: {productid} </div>
         <div className="product-image">
           <img src={image} alt={""} />
         </div>
