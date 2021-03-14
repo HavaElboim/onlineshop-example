@@ -36,8 +36,8 @@ const Products = (props) => {
           {products.map((product) => (
             <Link
               className="product-card"
-              to={`/products/${product.id}`}
-              key={product.id}
+              to={`/products/${product._id}`}
+              key={product._id}
             >
               <ProductDisplayClass
                 color={color}
@@ -47,11 +47,11 @@ const Products = (props) => {
                 title={product.title}
                 image={product.image}
                 price={product.price}
-                productid={product.id}
+                productid={product._id}
                 category={product.category}
                 isSale={isSale}
                 priceRange={priceRange}
-                key={product.id}
+                key={product._id}
               ></ProductDisplayClass>
             </Link>
           ))}

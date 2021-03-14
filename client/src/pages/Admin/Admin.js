@@ -33,14 +33,20 @@ const Admin = () => {
     console.log("fetched ");
   }, []);
 
-  const addProduct = async (title, description, price, category, url) => {
+  const addProduct = async (title, description, price, category, image) => {
     console.log("in add product in client");
     const res = await fetch("/api/products", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title: title, description, price, category, url }),
+      body: JSON.stringify({
+        title: title,
+        description,
+        price,
+        category,
+        image,
+      }),
     });
 
     const product = await res.json();

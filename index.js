@@ -75,8 +75,8 @@ app.get("/api/products", async (req, res) => {
 //adding option to serve requests with parameters:
 // client will access a product with given productid using:
 // https://localhost:8000/:idnum
-app.get("/api/products/:id", async (req, res) => {
-  console.log("received request for product id: ", req.params.id);
+app.get("/api/products/:_id", async (req, res) => {
+  console.log("received request for product id: ", req.params._id);
 
   //const productId = req.params.id;
   //console.log("productId is ", productId);
@@ -93,7 +93,7 @@ app.get("/api/products/:id", async (req, res) => {
   // _id (and not id)
   // - inspect the db by MongoDB Compass to see the id for each record
 
-  const { id } = req.params.id; ///here we do destructuring - we take out the params called id from the params array
+  const { _id } = req.params._id; ///here we do destructuring - we take out the params called id from the params array
 
   //const product = await Product.findById(id);
   // Product.findById(id)

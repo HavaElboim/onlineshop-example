@@ -27,16 +27,16 @@ const ProductInfo = ({ match }) => {
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
-    fetch(`/api/products/${match.params.id}`)
+    fetch(`/api/products/${match.params._id}`)
       .then((response) => response.json())
       .then((data) => setProducts(data));
-    console.log("descr is ", products, ` /api/products/${match.params.id}`);
+    console.log("descr is ", products, ` /api/products/${match.params._id}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const editProduct = async (title, description, price, category, url) => {
     console.log("in add product in client");
-    const res = await fetch(`/api/products/${match.params.id}`, {
+    const res = await fetch(`/api/products/${match.params._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
