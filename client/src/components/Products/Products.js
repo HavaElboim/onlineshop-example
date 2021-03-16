@@ -49,7 +49,8 @@ const Products = (props) => {
                 price={product.price}
                 productid={product._id}
                 category={product.category}
-                isSale={isSale}
+                isSale={product.onSale}
+                quantityInStock={product.quantityInStock}
                 priceRange={priceRange}
                 key={product._id}
               ></ProductDisplayClass>

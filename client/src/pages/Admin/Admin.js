@@ -8,6 +8,11 @@ import Products from "../../components/Products/Products";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import ThemeContext from "../../contexts/ThemeContexts";
 
+/*****
+ * NEED TO ADD NEW FIELDS TO FORM
+ * *******
+ */
+
 const Admin = () => {
   const [color] = useState("red");
   const [secondsLeft, setSecondsLeft] = useState(65);
@@ -54,6 +59,12 @@ const Admin = () => {
     console.log("adding product ", product);
 
     setProducts([products, ...products]);
+
+    /*setName("");
+    setSelectedCategory("");
+    setDescription("");
+    setURL("");
+    setPrice("");*/
   };
 
   return (
@@ -95,6 +106,7 @@ const Admin = () => {
       )}
       <button
         id="addNewProductButton"
+        style={{ background: theme.background, color: theme.foreground }}
         onClick={(e) =>
           addProduct(
             productName,

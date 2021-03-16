@@ -24,6 +24,7 @@ const ProductDisplayClass = (props) => {
     productid,
     category,
     isSale,
+    quantityInStock,
     priceRange,
   } = props;
 
@@ -83,6 +84,8 @@ ProductDisplayClass.propTypes = {
   image: PropTypes.string,
   salesProductsIds: PropTypes.arrayOf(PropTypes.number),
   category: PropTypes.string,
+  quantityInStock: PropTypes.number,
+  isSale: PropTypes.bool,
 };
 
 export default ProductDisplayClass;

@@ -3,7 +3,7 @@ import ThemeContext from "../../contexts/ThemeContexts";
 import "./CartItem.css";
 import sale from "../sale.png";
 
-const CartItem = () => {
+const CartItem = (props) => {
   const { name, image, price, isSale, finalPrice, quantity } = props;
 
   const { theme, toggleTheme } = useContext(ThemeContext);

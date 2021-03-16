@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import "./ProductInfo.css";
 import UserContext from "../../contexts/UserContexts";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
+import "../../components/storagetools/LocalStorageArrayTools.js";
 
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
@@ -54,8 +55,13 @@ const ProductInfo = ({ match }) => {
     //setProducts(products);
   };
 
-  const addToCart = (title, price, url) => {
-    localStorage.setItem("");
+  // see here for how to add objects to localStorage:
+  // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
+  const addToCart = (title, price, image) => {
+    localStorage.pushArrayItem(
+      "cartArray",
+      `title: ${title}, price: ${price}, image: ${image}`
+    );
   };
 
   if (products) {
@@ -64,13 +70,13 @@ const ProductInfo = ({ match }) => {
         <div className="product-title">{products.title}</div>
         {user.name !== "Admin" && (
           <button
+            style={{ background: theme.background, color: theme.foreground }}
             id="addToCartButton"
             onClick={(e) => {
-              addToCart();
+              addToCart(products.title, products.price, products.image);
             }}
           >
-            {" "}
-            Add to cart
+            Add to cart{" "}
           </button>
         )}
         <div className="product-image">
@@ -85,6 +91,7 @@ const ProductInfo = ({ match }) => {
         {user.name === "Admin" && (
           <button
             id="setEditingButton"
+            style={{ background: theme.background, color: theme.foreground }}
             onClick={(e) => {
               setEditingMode(!editingMode);
             }}
