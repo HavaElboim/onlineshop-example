@@ -8,8 +8,8 @@ const DisplayUser = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div>
-      <div>Logged in as: {user.name}</div>
+    <div style={{ paddingBottom: "20px" }}>
+      <div>Welcome {user.name}</div>
       <ChangeUser />
     </div>
   );

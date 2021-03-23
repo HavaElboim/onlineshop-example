@@ -5,15 +5,17 @@ const ChangeThemeColors = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <button
-      style={{
-        background: theme.background,
-        color: theme.foreground,
-      }}
-      onClick={toggleTheme}
-    >
-      Change Theme
-    </button>
+    <div style={{ paddingBottom: "20px" }}>
+      <button
+        style={{
+          background: theme.background,
+          color: theme.foreground,
+        }}
+        onClick={toggleTheme}
+      >
+        Visibility
+      </button>
+    </div>
   );
 };
 

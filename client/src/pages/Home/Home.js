@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import DisplayUser from "../../components/DisplayUser/DisplayUser";
+import UserContext from "../../contexts/UserContexts";
 
 //components of content:
 import Header from "../../components/Header/Header";
@@ -15,6 +16,7 @@ const Home = () => {
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [searchKeyword, setSearch] = useState("");
   const [numProducts, setNumProds] = useState("");
+  const { user, toggleUser } = useContext(UserContext);
 
   // fetching from my server on localhost at 192.168.43.81 on port 8000:
   /*useEffect(() => {
@@ -43,6 +45,10 @@ const Home = () => {
   return (
     <div>
       <div>Num products in shop: {numProducts}</div>
+      {user.name === "Admin" && <div>Click on product to edit it</div>}
+      {user.name !== "Admin" && (
+        <div>Click on product to see details and order</div>
+      )}
       <Header
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

@@ -99,15 +99,32 @@ const ProductInfo = ({ match }) => {
       <div>
         {user.name === "Admin" && (
           <div className="outer-group">
-            <button
-              id="setEditingButton"
-              style={{ background: theme.background, color: theme.foreground }}
-              onClick={(e) => {
-                setEditProduct(!editProduct);
-              }}
-            >
-              Edit product
-            </button>
+            {!editProduct && (
+              <button
+                id="setEditingButton"
+                style={{
+                  background: theme.background,
+                  color: theme.foreground,
+                }}
+                onClick={(e) => {
+                  setEditProduct(!editProduct);
+                }}
+              >
+                Edit product
+              </button>
+            )}
+            {editProduct && (
+              <button
+                id="exitEditButton"
+                style={{
+                  background: theme.background,
+                  color: theme.foreground,
+                }}
+                onClick={(e) => setEditProduct(false)}
+              >
+                Cancel product update
+              </button>
+            )}
           </div>
         )}
 
@@ -258,13 +275,7 @@ const ProductInfo = ({ match }) => {
             >
               Update product details
             </button>
-            <button
-              id="exitEditButton"
-              style={{ background: theme.background, color: theme.foreground }}
-              onClick={(e) => setEditingMode(false)}
-            >
-              Cancel product update
-            </button>
+
             {notAllFieldsFilled && (
               <label for="addNewProductButton" style={{ display: "block" }}>
                 Complete all fields before uploading product update.

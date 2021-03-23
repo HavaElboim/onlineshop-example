@@ -69,7 +69,7 @@ const App = () => {
                 </li>
                 {user.name === "Admin" && (
                   <li>
-                    <Link to="/Admin">Admin</Link>
+                    <Link to="/Admin">Admin - add new product</Link>
                   </li>
                 )}
               </ul>
