@@ -41,6 +41,8 @@ const ProductInfo = ({ match }) => {
   const [productPrice, setPrice] = useState("");
   const [quantityInStock, setStockQuantity] = useState("");
 
+  const [stopEditText, setStopEditText] = useState("Cancel product update");
+
   console.log("in productinfo, theme is: ", theme.foreground);
 
   useEffect(() => {
@@ -61,6 +63,16 @@ const ProductInfo = ({ match }) => {
     id
   ) => {
     console.log("in edit product in client");
+
+    setStockQuantity(quantityInStock);
+    setDescription(description);
+    setPrice(price);
+    setName(title);
+    setSelectedCategory(category);
+
+    setEditProduct(false);
+    setStopEditText("Done");
+
     const res = await fetch(`/api/products/${match.params._id}`, {
       method: "PUT",
       headers: {
@@ -79,12 +91,15 @@ const ProductInfo = ({ match }) => {
     const product = await res.json();
 
     console.log("editing product ", product);
-
-    setEditProduct(false);
-
-    //setProducts(products);
   };
 
+  const copyProductDetails = () => {
+    setStockQuantity(products.quantityInStock);
+    setDescription(products.description);
+    setPrice(products.price);
+    setName(products.title);
+    setSelectedCategory(products.category);
+  };
   // see here for how to add objects to localStorage:
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
   const addToCart = (title, price, image, quantity) => {
@@ -95,6 +110,8 @@ const ProductInfo = ({ match }) => {
   };
 
   if (products) {
+    //copyProductDetails();
+
     return (
       <div>
         {user.name === "Admin" && (
@@ -108,6 +125,7 @@ const ProductInfo = ({ match }) => {
                 }}
                 onClick={(e) => {
                   setEditProduct(!editProduct);
+                  copyProductDetails();
                 }}
               >
                 Edit product
@@ -122,7 +140,7 @@ const ProductInfo = ({ match }) => {
                 }}
                 onClick={(e) => setEditProduct(false)}
               >
-                Cancel product update
+                {stopEditText}
               </button>
             )}
           </div>
@@ -176,13 +194,15 @@ const ProductInfo = ({ match }) => {
             </div>
           </div>
         )}
-        {!editProduct && <div className="product-title">{products.title}</div>}
+        {!editProduct && (
+          <div className="product-title">{productName || products.title}</div>
+        )}
         {user.name === "Admin" && editProduct && (
           <div>
             <div>Input name of product:</div>
             <input
               id="productName"
-              value={products.title}
+              value={productName}
               onChange={(e) => setName(e.target.value)}
               style={{ color: theme.background, background: theme.foreground }}
             />
@@ -196,14 +216,16 @@ const ProductInfo = ({ match }) => {
         </div>
         <div>
           {!editProduct && (
-            <div className="product-info">{products.description}</div>
+            <div className="product-info">
+              {productDescription || products.description}
+            </div>
           )}
           {user.name === "Admin" && editProduct && (
             <div>
               <div>Input description of product:</div>
               <input
                 id="productDescription"
-                value={products.description}
+                value={productDescription}
                 onChange={(e) => setDescription(e.target.value)}
                 style={{
                   color: theme.background,
@@ -213,14 +235,16 @@ const ProductInfo = ({ match }) => {
             </div>
           )}
           {!editProduct && (
-            <div className="product-info">$ {products.price}</div>
+            <div className="product-info">
+              $ {productPrice || products.price}
+            </div>
           )}
           {user.name === "Admin" && editProduct && (
             <div>
               <div>Input price of new product:</div>
               <input
                 id="productPrice"
-                value={products.price}
+                value={productPrice}
                 onChange={(e) => setPrice(e.target.value)}
                 style={{
                   color: theme.background,
@@ -234,7 +258,12 @@ const ProductInfo = ({ match }) => {
           )}
         </div>
         {!editProduct && (
-          <div className="product-info">{products.category}</div>
+          <div className="product-info">
+            {selectedCategory || products.category}
+          </div>
+        )}
+        {user.name === "Admin" && !editProduct && (
+          <div>Number of product in stock: {products.quantityInStock} </div>
         )}
         {user.name === "Admin" && editProduct && (
           <div>
@@ -248,12 +277,12 @@ const ProductInfo = ({ match }) => {
             <div>Number of product in stock:</div>
             <input
               id="quantityInStock"
-              value={products.quantityInStock}
+              value={quantityInStock}
               onChange={(e) => setStockQuantity(e.target.value)}
               style={{ color: theme.background, background: theme.foreground }}
             />
 
-            {products.quantityInStock.length === 0 && notAllFieldsFilled && (
+            {quantityInStock.length === 0 && notAllFieldsFilled && (
               <label for="quantityInStock">
                 How many of product are in stock?
               </label>
