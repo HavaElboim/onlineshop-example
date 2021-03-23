@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Link from "react-router-dom";
+import "./Admin.css";
 
 //components of content:
 import Header from "../../components/Header/Header";
@@ -24,6 +24,8 @@ const Admin = () => {
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
   const [productPrice, setPrice] = useState("");
+  const [quantityInStock, setStockQuantity] = useState("");
+  const [notAllFieldsFilled, setFieldsFilled] = useState(false);
 
   const { theme } = useContext(ThemeContext);
 
@@ -38,58 +40,104 @@ const Admin = () => {
     console.log("fetched ");
   }, []);
 
-  const addProduct = async (title, description, price, category, image) => {
+  const addButtonLabelStyle = {
+    display: "block",
+  };
+
+  const addProduct = async (
+    title,
+    description,
+    price,
+    category,
+    image,
+    quantityInStock
+  ) => {
     console.log("in add product in client");
-    const res = await fetch("/api/products", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        description,
-        price,
-        category,
-        image,
-      }),
-    });
+    // check here if all fields have been filled in:
+    if (
+      title.length === 0 ||
+      description.length === 0 ||
+      price.length === 0 ||
+      category.length === 0 ||
+      image.length === 0 ||
+      quantityInStock.length === 0
+    ) {
+      setFieldsFilled(true);
+    } else {
+      setFieldsFilled(false);
+      // upload new product to server
+      const res = await fetch("/api/products", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          description,
+          price,
+          category,
+          image,
+          quantityInStock,
+        }),
+      });
 
-    const product = await res.json();
+      const product = await res.json();
 
-    console.log("adding product ", product);
+      console.log("adding product ", product);
 
-    setProducts([products, ...products]);
+      setProducts([products, ...products]);
 
-    /*setName("");
-    setSelectedCategory("");
-    setDescription("");
-    setURL("");
-    setPrice("");*/
+      // clear Add Product form
+      setName("");
+      setSelectedCategory("");
+      setDescription("");
+      setURL("");
+      setPrice("");
+      setStockQuantity("");
+    }
   };
 
   return (
     <div style={{ background: theme.background }}>
-      <div>Input name of new product:</div>
+      <div>Input name of product:</div>
       <input
         id="productName"
         value={productName}
         onChange={(e) => setName(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
-      <div>Input description of new product:</div>
+      {productName.length === 0 && notAllFieldsFilled && (
+        <label for="productName">Enter name of product</label>
+      )}
+      <div>Input description of product:</div>
       <input
         id="productDescription"
         value={productDescription}
         onChange={(e) => setDescription(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
-      <div>Input image URL of new product:</div>
+      {productDescription.length === 0 && notAllFieldsFilled && (
+        <label for="productDescription">Enter description of product</label>
+      )}
+      <div>Input image URL of product:</div>
       <input
         id="productURL"
         value={productURL}
         onChange={(e) => setURL(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
+      {productURL.length === 0 && notAllFieldsFilled && (
+        <label for="productURL">Enter url of picture of product</label>
+      )}
+      {productURL.length !== 0 && (
+        <div>
+          <img
+            className="thumbImg"
+            src={productURL}
+            alt={{ productName }}
+          ></img>
+        </div>
+      )}
       <div>Input price of new product:</div>
       <input
         id="productPrice"
@@ -97,12 +145,26 @@ const Admin = () => {
         onChange={(e) => setPrice(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
+      {productPrice.length === 0 && notAllFieldsFilled && (
+        <label for="productPrice">Enter price of product</label>
+      )}
       {products.length > 0 && (
         <CategorySelectAdmin
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
         ></CategorySelectAdmin>
+      )}
+      <div>Number of product in stock:</div>
+      <input
+        id="quantityInStock"
+        value={quantityInStock}
+        onChange={(e) => setStockQuantity(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
+
+      {quantityInStock.length === 0 && notAllFieldsFilled && (
+        <label for="quantityInStock">How many of product are in stock?</label>
       )}
       <button
         id="addNewProductButton"
@@ -113,12 +175,18 @@ const Admin = () => {
             productDescription,
             productPrice,
             selectedCategory,
-            productURL
+            productURL,
+            quantityInStock
           )
         }
       >
         Add new product
       </button>
+      {notAllFieldsFilled && (
+        <label for="addNewProductButton" style={{ display: "block" }}>
+          Complete all fields before uploading new product.
+        </label>
+      )}
     </div>
   );
 };

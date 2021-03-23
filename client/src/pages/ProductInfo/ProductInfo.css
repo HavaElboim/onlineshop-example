@@ -17,4 +17,25 @@
   flex-direction: column;
   justify-content: center;
   display: flex;
+  border-width: 0px;
+}
+.outer-group {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+.quantity-group {
+  display: flex;
+  flex-direction: row;
+}
+.quantityButton {
+  font-size: 30pt;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quantity-display {
+  font-size: 20pt;
 }
