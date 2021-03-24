@@ -2,9 +2,11 @@ import { React, useState, useEffect, useContext } from "react";
 import "./ProductInfo.css";
 import UserContext from "../../contexts/UserContexts";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
+import SaleContext, { sales } from "../../contexts/SaleContexts";
+
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
-
+import saleIcon from "../../components/icons/sale-icon-png-19.png";
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
 */
@@ -27,14 +29,13 @@ const ProductInfo = ({ match }) => {
   const [products, setProducts] = useState({});
   const { user, toggleUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
-  const [editingMode, setEditingMode] = useState(false);
+  const { sale } = useContext(SaleContext);
   const [quantity, setQuantity] = useState(1);
   const [editProduct, setEditProduct] = useState(false);
   const [notAllFieldsFilled, setFieldsFilled] = useState(false);
 
-  const [salesProductsIds] = useState([1, 3, 5, 6]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isSale, setSale] = useState("true");
+  const [onSale, setSale] = useState("true");
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
@@ -44,6 +45,7 @@ const ProductInfo = ({ match }) => {
   const [stopEditText, setStopEditText] = useState("Cancel product update");
 
   console.log("in productinfo, theme is: ", theme.foreground);
+  //console.log("sale is", sale.isSale);
 
   useEffect(() => {
     fetch(`/api/products/${match.params._id}`)
@@ -60,6 +62,7 @@ const ProductInfo = ({ match }) => {
     category,
     url,
     quantityInStock,
+    onSale,
     id
   ) => {
     console.log("in edit product in client");
@@ -69,6 +72,7 @@ const ProductInfo = ({ match }) => {
     setPrice(price);
     setName(title);
     setSelectedCategory(category);
+    setSale(onSale);
 
     setEditProduct(false);
     setStopEditText("Done");
@@ -85,6 +89,7 @@ const ProductInfo = ({ match }) => {
         category,
         url,
         quantityInStock,
+        onSale,
       }),
     });
 
@@ -99,6 +104,7 @@ const ProductInfo = ({ match }) => {
     setPrice(products.price);
     setName(products.title);
     setSelectedCategory(products.category);
+    setSale(products.onSale);
   };
   // see here for how to add objects to localStorage:
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
@@ -114,6 +120,10 @@ const ProductInfo = ({ match }) => {
 
     return (
       <div>
+        <div>
+          product on sale? {onSale} ? {products.onSale} {products.price}{" "}
+          {products.onSale} {products.description}{" "}
+        </div>
         {user.name === "Admin" && (
           <div className="outer-group">
             {!editProduct && (
@@ -192,6 +202,11 @@ const ProductInfo = ({ match }) => {
                 Add to cart{" "}
               </button>
             </div>
+          </div>
+        )}
+        {sale.isSale && onSale && (
+          <div>
+            <img className="saleIconImg" src={saleIcon} alt="on sale" />
           </div>
         )}
         {!editProduct && (
@@ -281,12 +296,20 @@ const ProductInfo = ({ match }) => {
               onChange={(e) => setStockQuantity(e.target.value)}
               style={{ color: theme.background, background: theme.foreground }}
             />
-
+            <div>Put item on sale:</div>
+            <input
+              id="setSale"
+              type="checkbox"
+              value={onSale}
+              onChange={(e) => setSale(e.target.value)}
+              style={{ color: theme.background, background: theme.foreground }}
+            />
             {quantityInStock.length === 0 && notAllFieldsFilled && (
               <label for="quantityInStock">
                 How many of product are in stock?
               </label>
             )}
+
             <button
               id="addNewProductButton"
               style={{ background: theme.background, color: theme.foreground }}
@@ -298,6 +321,7 @@ const ProductInfo = ({ match }) => {
                   selectedCategory,
                   productURL,
                   quantityInStock,
+                  onSale,
                   match.params._id
                 )
               }
@@ -317,3 +341,9 @@ const ProductInfo = ({ match }) => {
   }
 };
 export default ProductInfo;
+
+// {sale.isSale && onSale && (
+//   <div>
+//     <img src={saleIcon} alt="on sale" />
+//   </div>
+// )}

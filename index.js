@@ -82,6 +82,7 @@ app.post("/api/products", async (req, res) => {
     category,
     image,
     quantityInStock,
+    onSale,
   } = req.body;
 
   console.log(
@@ -91,7 +92,8 @@ app.post("/api/products", async (req, res) => {
     price,
     category,
     image,
-    quantityInStock
+    quantityInStock,
+    onSale
   );
 
   const product = await new Product({
@@ -101,6 +103,7 @@ app.post("/api/products", async (req, res) => {
     category,
     image,
     quantityInStock,
+    onSale,
   }).save();
   console.log("POST!", product);
 
@@ -113,7 +116,15 @@ app.post("/api/products", async (req, res) => {
 // put : to change a value of an item in the database
 // define the put as an async function
 app.put("/api/products/:_id", async (req, res) => {
-  const { title, description, price, category, image } = req.body; // pass the new title in the body of the put request
+  const {
+    title,
+    description,
+    price,
+    category,
+    image,
+    quantityInStock,
+    onSale,
+  } = req.body; // pass the new title in the body of the put request
   // const product = products.find((product) => product.id === +productId);
   // product.title = title; // here have changed the title of the product in the database
   //res.send("ok!");
@@ -123,7 +134,7 @@ app.put("/api/products/:_id", async (req, res) => {
   // omitUndefined=true : If true, delete any properties whose value is undefined when casting an update.
   await Product.updateOne(
     { _id: req.params._id },
-    { title, description, price, category, image },
+    { title, description, price, category, image, quantityInStock, onSale },
     { omitUndefined: true }
   ).exec();
 
@@ -170,84 +181,3 @@ app.listen(PORT, () => {
   //  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
   console.log(`CORS-enabled web server listening on port ${PORT}`);
 });
-
-// running ipconfig in terminal to find local IP address:
-// gave:
-// IPv4 Address. . . . . . . . . . . : 192.168.43.81
-
-// installed express using: npm install express
-// and called: npm init
-// to create package.json file.
-
-// created json  database of products for shop in: products.json
-
-// run server using: node server.js
-
-// access server's webpage by this address in the browser:
-// http://192.168.43.81:8000/
-// This shows "Hello world" on the webpage
-
-// see the shuki page here:
-// http://192.168.43.81:8000/shuki
-
-/*
-elad's example:
-
-const express = require("express");
-const bodyParser = require("body-parser");
-
-const app = express();
-
-app.use(bodyParser.json());
-
-let todos = [
-  { id: 1, title: "Wash the car" },
-  { id: 2, title: "Throw the garbage" },
-  { id: 3, title: "Wash the dishes" },
-  { id: 4, title: "Empty the garbage" },
-];
-
-app.get("/todos", (req, res) => {
-  const { q } = req.query;
-  if (q) {
-    res.send(todos.filter((todo) => todo.title.includes(q)));
-  } else {
-    res.send(todos);
-  }
-});
-
-app.get("/todos/:todoId", (req, res) => {
-  const { todoId } = req.params;
-  const todo = todos.find((todo) => todo.id === +todoId);
-  res.send(todo ?? {});
-});
-
-app.post("/todos", (req, res) => {
-  const { title } = req.body;
-  todos.push({ id: todos.length + 1, title });
-
-  res.send("OK!");
-});
-
-app.put("/todos/:todoId", (req, res) => {
-  const { todoId } = req.params;
-  const { title } = req.body;
-  const todo = todos.find((todo) => todo.id === +todoId);
-  todo.title = title;
-
-  res.send("OK!");
-});
-
-app.delete("/todos/:todoId", (req, res) => {
-  const { todoId } = req.params;
-  const todoIndex = todos.findIndex((todo) => todo.id === +todoId);
-  todos.splice(todoIndex, 1);
-
-  res.send("OK!");
-});
-
-app.listen(8000, () => {
-  console.log("Example app listening on port 8000!");
-});
-
-*/

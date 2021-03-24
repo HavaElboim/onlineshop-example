@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import "./ProductDisplayClass.css";
 import PropTypes from "prop-types";
-import sale from "./sale.png";
-//import { Link } from "react-router-dom";
-//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import saleIcon from "../icons/sale.png";
+import SaleContext, { sales } from "../../contexts/SaleContexts";
 import ProductInfo from "../../pages/ProductInfo/ProductInfo";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 
@@ -14,25 +13,26 @@ import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 
 const ProductDisplayClass = (props) => {
   const {
-    color,
     secondsLeft,
-    salesProductsIds,
     selectedCategory,
     title,
     image,
     price,
     productid,
     category,
+    onSale,
     isSale,
     quantityInStock,
     priceRange,
   } = props;
 
   const { theme } = useContext(ThemeContext);
+  const { sale } = useContext(SaleContext);
 
-  const newPrice = salesProductsIds.includes(productid)
-    ? ` Sale: $ ${+(price * 0.9).toFixed(2)}`
-    : "";
+  // const newPrice =
+  //   onSale && sale.isSale ? ` Sale: $ ${+(price * 0.9).toFixed(2)}` : "";
+
+  const newPrice = onSale ? ` Sale: $ ${+(price * 0.9).toFixed(2)}` : "";
 
   /* renders an individual product card, containing product information and image.
   the information an image are obtained from the props which are passed from the ProductsContainerClass */
@@ -46,10 +46,10 @@ const ProductDisplayClass = (props) => {
         style={{ color: theme.foreground, background: "white" }}
       >
         <div className="product-info">
-          {newPrice && isSale ? <img src={sale} alt="sale item"></img> : null}
+          {onSale && <img src={saleIcon} alt="sale item"></img>}
           <h6
             style={{
-              color: newPrice && isSale ? color : "black",
+              color: onSale ? theme.salePriceColor : "black",
             }}
           >
             {title}
@@ -62,12 +62,13 @@ const ProductDisplayClass = (props) => {
           <h5>$ {price}</h5>
           <h5
             style={{
-              color: color,
+              color: theme.salePriceColor,
               display: newPrice && secondsLeft ? "block" : "none",
             }}
           >
             {newPrice}
           </h5>
+          <h5>{quantityInStock} in stock</h5>
         </div>
       </div>
     )
@@ -84,92 +85,18 @@ ProductDisplayClass.propTypes = {
   salesProductsIds: PropTypes.arrayOf(PropTypes.number),
   category: PropTypes.string,
   quantityInStock: PropTypes.number,
-  isSale: PropTypes.bool,
+  onSale: PropTypes.bool,
 };
 
 export default ProductDisplayClass;
 
-/*
-return (
-    (!selectedCategory || category === selectedCategory) && (
-      <div className="product-card">
-        <Link to={`/ProductInfo/${productid}`}>
-          <ProductInfo
-            id={productid}
-            price={price}
-            image={image}
-            title={title}
-            isSale={secondsLeft}
-            newPrice={newPrice ? newPrice : ""}
-          />
-        </Link>
-        <div className="product-info">
-          {newPrice && secondsLeft ? (
-            <img src={sale} alt="sale item"></img>
-          ) : null}
+/* <div className="product-info">
+          {sale.isSale && onSale && <img src={saleIcon} alt="sale item"></img>}
           <h6
             style={{
-              color: newPrice && secondsLeft ? color : "black",
+              color: sale.isSale && onSale ? theme.salePriceColor : "black",
             }}
           >
             {title}
           </h6>
-        </div>
-        <div className="product-image">
-          <img src={image} alt={""} />
-        </div>
-        <div className="product-info">
-          <h5>$ {price}</h5>
-          <h5
-            style={{
-              color: color,
-              display: newPrice && secondsLeft ? "block" : "none",
-            }}
-          >
-            {newPrice}
-          </h5>
-        </div>
-      </div>
-    )
-  );
-  */
-
-/*
-import { Link } from "react-router-dom";
-import AddTodo from "../../components/AddTodo/AddTodo";
-import Todo from "../../components/Todo/Todo";
-
-const Home = () => {
-    const [todos, setTodos] = useState([]);
-    // const check = useRef("Hello");
-  
-    // let check = "Hello";
-    useEffect(() => {
-      fetch("https://jsonplaceholder.typicode.com/todos")
-        .then((response) => response.json())
-        .then((data) => setTodos(data));
-    }, []);
-  
-    const addTodo = (title) => {
-      const newTodo = {
-        id: todos.length + 1,
-        title,
-        userId: 0,
-        completed: false,
-      };
-      setTodos([newTodo, ...todos]);
-    };
-  
-    return (
-      <>
-        <AddTodo onAdd={addTodo} />
-        {todos.map((todo) => (
-          <Link to={`/todos/${todo.id}`} key={todo.id}>
-            <Todo id={todo.id} title={todo.title} />
-          </Link>
-        ))}
-      </>
-    );
-  };
-  
-  */
+        </div> */

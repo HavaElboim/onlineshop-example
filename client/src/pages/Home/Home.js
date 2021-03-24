@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import DisplayUser from "../../components/DisplayUser/DisplayUser";
 import UserContext from "../../contexts/UserContexts";
+import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 //components of content:
 import Header from "../../components/Header/Header";
 import Products from "../../components/Products/Products";
 
 const Home = () => {
-  const [color] = useState("red");
   const [secondsLeft, setSecondsLeft] = useState(65);
-  const [salesProductsIds] = useState([1, 3, 5, 6]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
   const [isSale, setSale] = useState("true");
@@ -64,9 +63,7 @@ const Home = () => {
         setSearch={setSearch}
       ></Header>
       <Products
-        color={color}
         secondsLeft={secondsLeft}
-        salesProductsIds={salesProductsIds}
         selectedCategory={selectedCategory}
         products={products}
         isSale={isSale}

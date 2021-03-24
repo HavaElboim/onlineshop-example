@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./ListCategories.css";
 //import PropTypes from "prop-types";
-import ThemeContext from "../../contexts/ThemeContexts";
 
 /*reduce:
  *

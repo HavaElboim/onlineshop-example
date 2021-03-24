@@ -7,6 +7,7 @@ import Products from "../../components/Products/Products";
 //import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import ThemeContext from "../../contexts/ThemeContexts";
+import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 /*****
  * NEED TO ADD NEW FIELDS TO FORM
@@ -19,7 +20,7 @@ const Admin = () => {
   const [salesProductsIds] = useState([1, 3, 5, 6]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
-  const [isSale, setSale] = useState("true");
+  const [onSale, setSale] = useState("");
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
@@ -28,6 +29,7 @@ const Admin = () => {
   const [notAllFieldsFilled, setFieldsFilled] = useState(false);
 
   const { theme } = useContext(ThemeContext);
+  const { sale } = useContext(SaleContext);
 
   console.log("theme", theme);
 
@@ -50,7 +52,8 @@ const Admin = () => {
     price,
     category,
     image,
-    quantityInStock
+    quantityInStock,
+    onSale
   ) => {
     console.log("in add product in client");
     // check here if all fields have been filled in:
@@ -78,6 +81,7 @@ const Admin = () => {
           category,
           image,
           quantityInStock,
+          onSale,
         }),
       });
 
@@ -94,6 +98,7 @@ const Admin = () => {
       setURL("");
       setPrice("");
       setStockQuantity("");
+      setSale("");
     }
   };
 
@@ -166,6 +171,14 @@ const Admin = () => {
       {quantityInStock.length === 0 && notAllFieldsFilled && (
         <label for="quantityInStock">How many of product are in stock?</label>
       )}
+      <div>Put item on sale:</div>
+      <input
+        id="setSale"
+        type="checkbox"
+        value={onSale}
+        onChange={(e) => setSale(e.target.value)}
+        style={{ color: theme.background, background: theme.foreground }}
+      />
       <button
         id="addNewProductButton"
         style={{ background: theme.background, color: theme.foreground }}
@@ -176,7 +189,8 @@ const Admin = () => {
             productPrice,
             selectedCategory,
             productURL,
-            quantityInStock
+            quantityInStock,
+            onSale
           )
         }
       >

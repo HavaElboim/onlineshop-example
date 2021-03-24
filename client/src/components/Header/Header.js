@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
 import PropTypes from "prop-types";
 import CategorySelect from "../CategorySelect/CategorySelect";
 import SliderFilterPrice from "../SliderFilterPrice/SliderFilterPrice";
 import "./Header.css";
-import ChangeThemeColors from "../ChangeThemeColors/ChangeThemeColors";
-import ThemeContext from "../../contexts/ThemeContexts";
 import SearchKeyword from "../SearchKeyword/SearchKeyword";
 
 const Header = (props) => {

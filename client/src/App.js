@@ -12,14 +12,9 @@ import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import DisplayUser from "./components/DisplayUser/DisplayUser";
 import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
 
-// for theme context:
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
 import UserContext, { users } from "./contexts/UserContexts";
-
-//import "./utils";
-
-//const salesProductsIds = [1, 3, 5, 6];
-// import './App.css';
+import SaleContext, { sales } from "./contexts/SaleContexts";
 
 /* App calls ProductsContainerClass
   which calls SaleCountdown
@@ -38,6 +33,7 @@ Header also calls CategorySelect component to choose products filter.
 const App = () => {
   const [theme, setTheme] = useState(themes.light);
   const [user, setUser] = useState(users.guest);
+  const [sale, setSale] = useState(sales.endOfYearSale);
 
   function toggleTheme() {
     setTheme((theme) => (theme === themes.light ? themes.dark : themes.light));
@@ -49,51 +45,58 @@ const App = () => {
     console.log("logged in as user ", user.name);
   }
 
+  function switchSale(specialOffer) {
+    console.log("set sale to ", sales.name);
+    setSale((sale) => sale === sales.endOfYearSale);
+  }
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <UserContext.Provider value={{ user, toggleUser }}>
-        <Router>
-          <div
-            className="outer-div"
-            style={{ color: theme.foreground, background: theme.background }}
-          >
-            <ChangeThemeColors />
-            <DisplayUser />
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/Home">Home</Link>
-                </li>
-                <li>
-                  <Link to="/About">About</Link>
-                </li>
-                {user.name === "Admin" && (
+        <SaleContext.Provider value={{ sale, switchSale }}>
+          <Router>
+            <div
+              className="outer-div"
+              style={{ color: theme.foreground, background: theme.background }}
+            >
+              <ChangeThemeColors />
+              <DisplayUser />
+              <nav>
+                <ul>
                   <li>
-                    <Link to="/Admin">Admin - add new product</Link>
+                    <Link to="/Home">Home</Link>
                   </li>
-                )}
-              </ul>
-            </nav>
+                  <li>
+                    <Link to="/About">About</Link>
+                  </li>
+                  {user.name === "Admin" && (
+                    <li>
+                      <Link to="/Admin">Admin - add new product</Link>
+                    </li>
+                  )}
+                </ul>
+              </nav>
 
-            {/* A <Switch> looks through its children <Route>s and
+              {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
-            <Switch>
-              <Route path="/Admin">
-                <Admin />
-              </Route>
-              <Route exact path="/Home">
-                <Home />
-              </Route>
-              <Route path="/About">
-                <About />
-              </Route>
-              <Route path="/products/:_id" component={ProductInfo}></Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
+              <Switch>
+                <Route path="/Admin">
+                  <Admin />
+                </Route>
+                <Route exact path="/Home">
+                  <Home />
+                </Route>
+                <Route path="/About">
+                  <About />
+                </Route>
+                <Route path="/products/:_id" component={ProductInfo}></Route>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </SaleContext.Provider>
       </UserContext.Provider>
     </ThemeContext.Provider>
   );

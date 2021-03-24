@@ -5,15 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Products = (props) => {
-  const {
-    color,
-    secondsLeft,
-    salesProductsIds,
-    selectedCategory,
-    products,
-    isSale,
-    priceRange,
-  } = props;
+  const { secondsLeft, selectedCategory, products, isSale, priceRange } = props;
 
   /* the line
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,16 +32,15 @@ const Products = (props) => {
               key={product._id}
             >
               <ProductDisplayClass
-                color={color}
                 secondsLeft={secondsLeft}
-                salesProductsIds={salesProductsIds}
                 selectedCategory={selectedCategory}
                 title={product.title}
                 image={product.image}
                 price={product.price}
                 productid={product._id}
                 category={product.category}
-                isSale={product.onSale}
+                onSale={product.onSale}
+                isSale={isSale}
                 quantityInStock={product.quantityInStock}
                 priceRange={priceRange}
                 key={product._id}

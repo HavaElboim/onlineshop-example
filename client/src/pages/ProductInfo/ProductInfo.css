@@ -7,6 +7,10 @@
   flex-direction: column;
 }
 
+.saleIconImg {
+  max-width: 200px;
+}
+
 .product-title {
   font-size: 20px;
   text-align: center;
