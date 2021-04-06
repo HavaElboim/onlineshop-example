@@ -9,6 +9,7 @@ import SaleContext, { sales } from "../../contexts/SaleContexts";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import saleIcon from "../../components/icons/sale-icon-png-19.png";
+import CartIcon from "../../components/CartIcon/CartIcon";
 
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
@@ -184,6 +185,7 @@ const ProductInfo = ({ match }) => {
   if (products) {
     return (
       <div>
+        <CartIcon />
         {user.name === "Admin" && (
           <div className="outer-group">
             {!editProduct && (
