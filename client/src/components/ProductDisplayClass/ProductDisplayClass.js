@@ -49,7 +49,8 @@ const ProductDisplayClass = (props) => {
         style={{ color: theme.foreground, background: "white" }}
       >
         <div className="product-info">
-          {onSale && <img src={saleIcon} alt="sale item"></img>}
+          {onSale && <div className="product-banner-sale">SALE</div>}
+          {!onSale && <div className="product-banner-nosale"></div>}
           <h6
             style={{
               color: onSale ? theme.salePriceColor : "black",
@@ -69,7 +70,7 @@ const ProductDisplayClass = (props) => {
               display: newPrice && secondsLeft ? "block" : "none",
             }}
           >
-            {newPrice}
+            {saleReductionPercent}% off! {newPrice}
           </h5>
           <h5>{quantityInStock} in stock</h5>
         </div>
@@ -93,11 +94,12 @@ ProductDisplayClass.propTypes = {
 
 export default ProductDisplayClass;
 
-/* <div className="product-info">
-          {sale.isSale && onSale && <img src={saleIcon} alt="sale item"></img>}
+/* version with sale icon:
+<div className="product-info">
+          {onSale && <img src={saleIcon} alt="sale item"></img>}
           <h6
             style={{
-              color: sale.isSale && onSale ? theme.salePriceColor : "black",
+              color: onSale ? theme.salePriceColor : "black",
             }}
           >
             {title}

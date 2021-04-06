@@ -80,10 +80,10 @@ const Admin = () => {
     onSale,
     saleReductionPercent
   ) => {
-    alert("adding");
+    //alert("adding");
     console.log("in add product in client");
     // check here if all fields have been filled in:
-    alert("checking fields");
+    //alert("checking fields");
     if (
       title.length === 0 ||
       description.length === 0 ||
@@ -92,10 +92,10 @@ const Admin = () => {
       image.length === 0 ||
       quantityInStock.length === 0
     ) {
-      alert("not all filled");
+      //alert("not all filled");
       setFieldsFilled(true);
     } else {
-      alert("all filled");
+      //alert("all filled");
       setFieldsFilled(false);
       // upload new product to server
       const res = await fetch("/api/products", {
@@ -114,9 +114,9 @@ const Admin = () => {
           saleReductionPercent,
         }),
       });
-      alert("res is ", res);
+      //alert("res is ", res);
       const product = await res.json();
-      alert("adding product ", product);
+      //alert("adding product ", product);
       console.log("adding product ", product);
 
       setProducts([products, ...products]);

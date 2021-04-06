@@ -43,3 +43,7 @@
 .quantity-display {
   font-size: 20pt;
 }
+
+.addToCartButton {
+  margin-left: 10px;
+}

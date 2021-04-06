@@ -39,7 +39,7 @@ const ProductInfo = ({ match }) => {
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [onSale, setSale] = useState("false");
-  const [saleReductionPercent, setReduction] = useState(10);
+  const [saleReductionPercent, setReduction] = useState("");
 
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
@@ -145,6 +145,10 @@ const ProductInfo = ({ match }) => {
   if (products) {
     //copyProductDetails();
 
+    const newPrice = onSale
+      ? `  ${+((productPrice * (100 - saleReductionPercent)) / 100).toFixed(2)}`
+      : "";
+
     return (
       <div>
         {user.name === "Admin" && (
@@ -222,6 +226,7 @@ const ProductInfo = ({ match }) => {
                 +
               </button>
               <button
+                className="addToCartButton"
                 style={{
                   background: theme.background,
                   color: theme.foreground,
@@ -286,7 +291,7 @@ const ProductInfo = ({ match }) => {
               />{" "}
             </div>
           )}
-          {!editProduct && (
+          {!editProduct && !products.onSale && (
             <div className="product-info">
               $ {productPrice || products.price}
             </div>
@@ -310,27 +315,30 @@ const ProductInfo = ({ match }) => {
           )}
           {products.onSale && (
             <div>
-              <div style={{ color: "red" }}>
-                Product on sale! Original price: $ {productPrice} Reduced to ${" "}
-                {
-                  +(
-                    productPrice *
-                    ((100 - saleReductionPercent) / 100).toFixed(2)
-                  )
-                }
+              <div className="product-info" style={{ color: "red" }}>
+                Product on sale -{" "}
+                {saleReductionPercent || products.saleReductionPercent}% off!
+                Original price: $ {productPrice || products.price} Reduced to $
+                {(
+                  ((productPrice || products.price) *
+                    (100 -
+                      (saleReductionPercent ||
+                        products.saleReductionPercent))) /
+                  100
+                ).toFixed(2)}
               </div>
-              <div>{saleReductionPercent}</div>
-              <div>{(100 - saleReductionPercent) / 100}</div>
             </div>
           )}
         </div>
         {!editProduct && (
           <div className="product-info">
-            {selectedCategory || products.category}
+            Category: {selectedCategory || products.category}
           </div>
         )}
         {user.name === "Admin" && !editProduct && (
-          <div>Number of product in stock: {products.quantityInStock} </div>
+          <div className="product-info">
+            Number of product in stock: {products.quantityInStock}{" "}
+          </div>
         )}
         {user.name === "Admin" && editProduct && (
           <div>
@@ -417,3 +425,15 @@ export default ProductInfo;
 //     <img src={saleIcon} alt="on sale" />
 //   </div>
 // )}
+
+/*
+<div style={{ color: "red" }}>
+                Product on sale! Original price: $ {productPrice} Reduced to ${" "}
+                {
+                  +(
+                    productPrice *
+                    ((100 - saleReductionPercent) / 100).toFixed(2)
+                  )
+                }
+              </div>
+              */
