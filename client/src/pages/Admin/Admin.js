@@ -20,7 +20,8 @@ const Admin = () => {
   const [salesProductsIds] = useState([1, 3, 5, 6]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
-  const [onSale, setSale] = useState("");
+  const [onSale, setSale] = useState(false);
+  const [saleReductionPercent, setReduction] = useState(10);
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
@@ -31,7 +32,7 @@ const Admin = () => {
   const { theme } = useContext(ThemeContext);
   const { sale } = useContext(SaleContext);
 
-  console.log("theme", theme);
+  console.log("theme", theme, "on sale?", onSale);
 
   useEffect(() => {
     fetch("/api/products")
@@ -46,7 +47,7 @@ const Admin = () => {
     display: "block",
   };
 
-  const addProduct = async (
+  const checkFieldsFilled = (
     title,
     description,
     price,
@@ -55,8 +56,6 @@ const Admin = () => {
     quantityInStock,
     onSale
   ) => {
-    console.log("in add product in client");
-    // check here if all fields have been filled in:
     if (
       title.length === 0 ||
       description.length === 0 ||
@@ -67,6 +66,36 @@ const Admin = () => {
     ) {
       setFieldsFilled(true);
     } else {
+      setFieldsFilled(false);
+    }
+  };
+
+  const addProduct = async (
+    title,
+    description,
+    price,
+    category,
+    image,
+    quantityInStock,
+    onSale,
+    saleReductionPercent
+  ) => {
+    alert("adding");
+    console.log("in add product in client");
+    // check here if all fields have been filled in:
+    alert("checking fields");
+    if (
+      title.length === 0 ||
+      description.length === 0 ||
+      price.length === 0 ||
+      category.length === 0 ||
+      image.length === 0 ||
+      quantityInStock.length === 0
+    ) {
+      alert("not all filled");
+      setFieldsFilled(true);
+    } else {
+      alert("all filled");
       setFieldsFilled(false);
       // upload new product to server
       const res = await fetch("/api/products", {
@@ -82,11 +111,12 @@ const Admin = () => {
           image,
           quantityInStock,
           onSale,
+          saleReductionPercent,
         }),
       });
-
+      alert("res is ", res);
       const product = await res.json();
-
+      alert("adding product ", product);
       console.log("adding product ", product);
 
       setProducts([products, ...products]);
@@ -98,7 +128,8 @@ const Admin = () => {
       setURL("");
       setPrice("");
       setStockQuantity("");
-      setSale("");
+      setSale(false);
+      setReduction(10);
     }
   };
 
@@ -109,6 +140,7 @@ const Admin = () => {
         id="productName"
         value={productName}
         onChange={(e) => setName(e.target.value)}
+        //onChange={setName(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productName.length === 0 && notAllFieldsFilled && (
@@ -171,14 +203,36 @@ const Admin = () => {
       {quantityInStock.length === 0 && notAllFieldsFilled && (
         <label for="quantityInStock">How many of product are in stock?</label>
       )}
+      <button
+        style={{ color: theme.background, background: theme.foreground }}
+        onClick={(e) => {
+          alert("on slae?", onSale);
+          setSale(!onSale);
+        }}
+      >
+        on slae?
+      </button>
       <div>Put item on sale:</div>
       <input
         id="setSale"
         type="checkbox"
         value={onSale}
-        onChange={(e) => setSale(e.target.value)}
+        onChange={(e) => setSale(!onSale)}
         style={{ color: theme.background, background: theme.foreground }}
       />
+      {onSale && (
+        <div>
+          <div>Percentage price reduction: </div>
+          <input
+            id="reductionInput"
+            value={saleReductionPercent}
+            onChange={(e) => {
+              setReduction(e.target.value);
+            }}
+            style={{ color: theme.background, background: theme.foreground }}
+          ></input>
+        </div>
+      )}
       <button
         id="addNewProductButton"
         style={{ background: theme.background, color: theme.foreground }}
@@ -190,7 +244,8 @@ const Admin = () => {
             selectedCategory,
             productURL,
             quantityInStock,
-            onSale
+            onSale,
+            saleReductionPercent
           )
         }
       >
@@ -206,3 +261,15 @@ const Admin = () => {
 };
 
 export default Admin;
+
+/*
+addProduct(
+            productName,
+            productDescription,
+            productPrice,
+            selectedCategory,
+            productURL,
+            quantityInStock,
+            onSale
+          )
+          */

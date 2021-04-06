@@ -2,14 +2,16 @@ import { createContext } from "react";
 
 const themes = {
   light: {
-    foreground: "#ffffee",
-    background: "#220000",
-    salePriceColor: "red",
+    foreground: "darkgreen",
+    background: "rgb(185 249 115)",
+    salePriceColor: "green",
+    links: "#c5730d",
   },
   dark: {
-    foreground: "#002200",
-    background: "#ffffee",
-    salePriceColor: "yellow",
+    foreground: "rgb(185 249 115)",
+    background: "rgb(7 45 7)",
+    salePriceColor: "#09c709",
+    links: "#c5730d",
   },
 };
 

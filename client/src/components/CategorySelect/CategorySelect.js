@@ -4,15 +4,41 @@ import ListCategories from "../ListCategories/ListCategories";
 import ThemeContext from "../../contexts/ThemeContexts";
 
 const CategorySelect = (props) => {
-  const { selectedCategory, setSelectedCategory, products } = props;
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    products,
+    setProducts,
+  } = props;
   const { theme } = useContext(ThemeContext);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(
       "In CategorySelect, number of products from props: ",
       products.length
     );
   }, [products]);
+*/
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((result) => result.json())
+      .then((data) => {
+        setProducts(data);
+      });
+    console.log("fetched products in CategorySelect");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const searchCategory = async (category) => {
+    setSelectedCategory(category);
+    fetch(`/api/products?cat=${category}`)
+      .then((result) => result.json())
+      .then((data) => {
+        setProducts(data);
+      });
+    console.log(`fetched products in Category ${category}`);
+  };
 
   return (
     <div style={{ color: theme.color, background: theme.background }}>
@@ -21,7 +47,7 @@ const CategorySelect = (props) => {
         <select
           id="selectCat"
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => searchCategory(e.target.value)}
           style={{ color: theme.background, background: theme.foreground }}
         >
           <option value="">All products</option>

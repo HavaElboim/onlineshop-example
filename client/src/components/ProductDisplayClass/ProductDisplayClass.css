@@ -170,6 +170,10 @@ h2 {
   padding-top: 20px;
 }
 
+h5 {
+  padding-top: 10px;
+}
+
 .product-card {
   display: flex;
   flex-direction: column;
@@ -199,7 +203,7 @@ h2 {
 
 .product-info {
   /*margin-top: auto;*/ /*removed this as is adds different amounts of space above the product titles */
-  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
 }
 

@@ -15,6 +15,7 @@ const Products = (props) => {
     */
   useEffect(() => {
     console.log("In Products, products are: ", products);
+    console.log("In products, selected category is: ", selectedCategory);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,6 +41,7 @@ const Products = (props) => {
                 productid={product._id}
                 category={product.category}
                 onSale={product.onSale}
+                saleReductionPercent={product.saleReductionPercent}
                 isSale={isSale}
                 quantityInStock={product.quantityInStock}
                 priceRange={priceRange}

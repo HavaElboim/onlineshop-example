@@ -21,6 +21,7 @@ const ProductDisplayClass = (props) => {
     productid,
     category,
     onSale,
+    saleReductionPercent,
     isSale,
     quantityInStock,
     priceRange,
@@ -32,7 +33,9 @@ const ProductDisplayClass = (props) => {
   // const newPrice =
   //   onSale && sale.isSale ? ` Sale: $ ${+(price * 0.9).toFixed(2)}` : "";
 
-  const newPrice = onSale ? ` Sale: $ ${+(price * 0.9).toFixed(2)}` : "";
+  const newPrice = onSale
+    ? ` Sale: $ ${+((price * (100 - saleReductionPercent)) / 100).toFixed(2)}`
+    : "";
 
   /* renders an individual product card, containing product information and image.
   the information an image are obtained from the props which are passed from the ProductsContainerClass */

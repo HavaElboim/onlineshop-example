@@ -37,7 +37,7 @@ const Home = () => {
       .then((data) => {
         setProducts(data);
       });
-    console.log("fetched ");
+    console.log("fetched products in Home");
     setNumProds(products.length);
   }, [products.length]);
 

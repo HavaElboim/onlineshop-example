@@ -1,4 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import "./ProductInfo.css";
 import UserContext from "../../contexts/UserContexts";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
@@ -7,6 +9,7 @@ import SaleContext, { sales } from "../../contexts/SaleContexts";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import saleIcon from "../../components/icons/sale-icon-png-19.png";
+
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
 */
@@ -35,15 +38,18 @@ const ProductInfo = ({ match }) => {
   const [notAllFieldsFilled, setFieldsFilled] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [onSale, setSale] = useState("true");
+  const [onSale, setSale] = useState("false");
+  const [saleReductionPercent, setReduction] = useState(10);
+
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
   const [productPrice, setPrice] = useState("");
   const [quantityInStock, setStockQuantity] = useState("");
 
-  const [stopEditText, setStopEditText] = useState("Cancel product update");
+  const [stopEditText, setStopEditText] = useState("Exit product update");
 
+  const deleteProductText = "Delete product";
   console.log("in productinfo, theme is: ", theme.foreground);
   //console.log("sale is", sale.isSale);
 
@@ -55,6 +61,23 @@ const ProductInfo = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //const newPrice = +(productPrice * 0.9).toFixed(2);
+
+  const deleteProductFn = async (id) => {
+    console.log(`deleting product ${id}`);
+
+    if (window.confirm("Delete this product?")) {
+      const res = await fetch(`/api/products/${match.params._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const result = await res.json();
+    }
+  };
+
   const editProductFn = async (
     title,
     description,
@@ -63,6 +86,7 @@ const ProductInfo = ({ match }) => {
     url,
     quantityInStock,
     onSale,
+    saleReductionPercent,
     id
   ) => {
     console.log("in edit product in client");
@@ -76,6 +100,7 @@ const ProductInfo = ({ match }) => {
 
     setEditProduct(false);
     setStopEditText("Done");
+    setReduction(saleReductionPercent);
 
     const res = await fetch(`/api/products/${match.params._id}`, {
       method: "PUT",
@@ -90,6 +115,7 @@ const ProductInfo = ({ match }) => {
         url,
         quantityInStock,
         onSale,
+        saleReductionPercent,
       }),
     });
 
@@ -105,6 +131,7 @@ const ProductInfo = ({ match }) => {
     setName(products.title);
     setSelectedCategory(products.category);
     setSale(products.onSale);
+    setReduction(products.saleReductionPercent);
   };
   // see here for how to add objects to localStorage:
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
@@ -120,10 +147,6 @@ const ProductInfo = ({ match }) => {
 
     return (
       <div>
-        <div>
-          product on sale? {onSale} ? {products.onSale} {products.price}{" "}
-          {products.onSale} {products.description}{" "}
-        </div>
         {user.name === "Admin" && (
           <div className="outer-group">
             {!editProduct && (
@@ -138,20 +161,34 @@ const ProductInfo = ({ match }) => {
                   copyProductDetails();
                 }}
               >
-                Edit product
+                Edit/delete product
               </button>
             )}
             {editProduct && (
-              <button
-                id="exitEditButton"
-                style={{
-                  background: theme.background,
-                  color: theme.foreground,
-                }}
-                onClick={(e) => setEditProduct(false)}
-              >
-                {stopEditText}
-              </button>
+              <>
+                <button
+                  id="exitEditButton"
+                  style={{
+                    background: theme.background,
+                    color: theme.foreground,
+                  }}
+                  onClick={(e) => setEditProduct(false)}
+                >
+                  {stopEditText}
+                </button>
+                <Link to={`/products`}>
+                  <button
+                    id="deleteProductButton"
+                    style={{
+                      background: theme.background,
+                      color: theme.foreground,
+                    }}
+                    onClick={(e) => deleteProductFn()}
+                  >
+                    {deleteProductText}
+                  </button>
+                </Link>
+              </>
             )}
           </div>
         )}
@@ -204,7 +241,7 @@ const ProductInfo = ({ match }) => {
             </div>
           </div>
         )}
-        {sale.isSale && onSale && (
+        {products.onSale && (
           <div>
             <img className="saleIconImg" src={saleIcon} alt="on sale" />
           </div>
@@ -256,7 +293,7 @@ const ProductInfo = ({ match }) => {
           )}
           {user.name === "Admin" && editProduct && (
             <div>
-              <div>Input price of new product:</div>
+              <div>Input price of product:</div>
               <input
                 id="productPrice"
                 value={productPrice}
@@ -269,6 +306,21 @@ const ProductInfo = ({ match }) => {
               {products.price.length === 0 && notAllFieldsFilled && (
                 <label for="productPrice">Enter price of product</label>
               )}
+            </div>
+          )}
+          {products.onSale && (
+            <div>
+              <div style={{ color: "red" }}>
+                Product on sale! Original price: $ {productPrice} Reduced to ${" "}
+                {
+                  +(
+                    productPrice *
+                    ((100 - saleReductionPercent) / 100).toFixed(2)
+                  )
+                }
+              </div>
+              <div>{saleReductionPercent}</div>
+              <div>{(100 - saleReductionPercent) / 100}</div>
             </div>
           )}
         </div>
@@ -301,9 +353,26 @@ const ProductInfo = ({ match }) => {
               id="setSale"
               type="checkbox"
               value={onSale}
-              onChange={(e) => setSale(e.target.value)}
+              onChange={(e) => setSale(!onSale)}
               style={{ color: theme.background, background: theme.foreground }}
             />
+            {onSale && (
+              <div>
+                <div>Percentage price reduction: </div>
+                <input
+                  id="reductionInput"
+                  value={saleReductionPercent}
+                  onChange={(e) => {
+                    setReduction(e.target.value);
+                  }}
+                  style={{
+                    color: theme.background,
+                    background: theme.foreground,
+                  }}
+                ></input>
+                <div>{saleReductionPercent}</div>
+              </div>
+            )}
             {quantityInStock.length === 0 && notAllFieldsFilled && (
               <label for="quantityInStock">
                 How many of product are in stock?
@@ -322,6 +391,7 @@ const ProductInfo = ({ match }) => {
                   productURL,
                   quantityInStock,
                   onSale,
+                  saleReductionPercent,
                   match.params._id
                 )
               }

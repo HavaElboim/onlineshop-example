@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 // need to install and design: npm install antd
 import { Slider } from "antd";
 import "antd/dist/antd.css";
-import ThemeContext from "../../contexts/ThemeContexts";
+import ThemeContext, { currentTheme } from "../../contexts/ThemeContexts";
 
 const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;

@@ -37,6 +37,7 @@ const Header = (props) => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
+          setProducts={setProducts}
         ></CategorySelect>
       )}
       {products.length > 0 && (
