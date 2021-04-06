@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import "./ProductDisplayClass.css";
 import PropTypes from "prop-types";
-import saleIcon from "../icons/sale.png";
+//import saleIcon from "../icons/sale.png";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
-import ProductInfo from "../../pages/ProductInfo/ProductInfo";
+//import ProductInfo from "../../pages/ProductInfo/ProductInfo";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 
 /* this component is called from the Products class.

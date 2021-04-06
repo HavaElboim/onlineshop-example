@@ -5,6 +5,8 @@ import CategorySelect from "../CategorySelect/CategorySelect";
 import SliderFilterPrice from "../SliderFilterPrice/SliderFilterPrice";
 import "./Header.css";
 import SearchKeyword from "../SearchKeyword/SearchKeyword";
+import "../../components/storagetools/LocalStorageArrayTools.js";
+import CartIcon from "../CartIcon/CartIcon";
 
 const Header = (props) => {
   const {
@@ -26,6 +28,7 @@ const Header = (props) => {
 
   return (
     <div>
+      <CartIcon />
       <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}

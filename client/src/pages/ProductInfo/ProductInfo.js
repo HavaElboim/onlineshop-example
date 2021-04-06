@@ -48,6 +48,7 @@ const ProductInfo = ({ match }) => {
   const [quantityInStock, setStockQuantity] = useState("");
 
   const [stopEditText, setStopEditText] = useState("Exit product update");
+  const [quantityWarnText, setQtyWarn] = useState("");
 
   const deleteProductText = "Delete product";
   console.log("in productinfo, theme is: ", theme.foreground);
@@ -133,22 +134,54 @@ const ProductInfo = ({ match }) => {
     setSale(products.onSale);
     setReduction(products.saleReductionPercent);
   };
+
+  const selectNumberToBuyAddOrRemoveOne = (qty) => {
+    if (quantity + qty < 0) {
+      setQtyWarn("");
+    } else if (quantity + qty <= products.quantityInStock) {
+      setQuantity(quantity + qty);
+      setQtyWarn("");
+    } else {
+      switch (products.quantityInStock) {
+        case 0:
+          setQtyWarn(`There are no more ${products.title}s in stock`);
+          break;
+        case 1:
+          setQtyWarn(`There is only 1 ${products.title} in stock`);
+          break;
+        default: {
+          setQtyWarn(
+            `There are only ${products.quantityInStock} ${products.title}s in stock`
+          );
+        }
+      }
+    }
+  };
+
   // see here for how to add objects to localStorage:
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
   const addToCart = (title, price, image, quantity) => {
+    setQtyWarn("");
     localStorage.pushArrayItem(
       "cartArray",
       `title: ${title}, price: ${price}, image: ${image}`
     );
+    if (localStorage.getItem("cartQty")) {
+      localStorage.setItem(
+        "cartQty",
+        +localStorage.getItem("cartQty") + quantity
+      );
+      console.log("added to cart qty, total:", localStorage.getItem("cartQty"));
+    } else {
+      localStorage.setItem("cartQty", quantity);
+      console.log(
+        "initialized cart qty, total:",
+        localStorage.getItem("cartQty")
+      );
+    }
   };
 
   if (products) {
-    //copyProductDetails();
-
-    const newPrice = onSale
-      ? `  ${+((productPrice * (100 - saleReductionPercent)) / 100).toFixed(2)}`
-      : "";
-
     return (
       <div>
         {user.name === "Admin" && (
@@ -207,7 +240,7 @@ const ProductInfo = ({ match }) => {
                 }}
                 className="quantityButton"
                 onClick={() => {
-                  setQuantity(quantity - 1);
+                  selectNumberToBuyAddOrRemoveOne(-1);
                 }}
               >
                 -
@@ -220,7 +253,7 @@ const ProductInfo = ({ match }) => {
                 }}
                 className="quantityButton"
                 onClick={() => {
-                  setQuantity(quantity + 1);
+                  selectNumberToBuyAddOrRemoveOne(1);
                 }}
               >
                 +
@@ -244,6 +277,7 @@ const ProductInfo = ({ match }) => {
                 Add to cart{" "}
               </button>
             </div>
+            <div style={{ color: "red" }}>{quantityWarnText}</div>
           </div>
         )}
         {products.onSale && (

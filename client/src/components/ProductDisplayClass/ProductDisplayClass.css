@@ -203,6 +203,7 @@ h6 {
 
 .product-banner-sale {
   background-color: green;
+  color: rgb(185, 249, 115);
   font-variant: small-caps;
   font-weight: bolder;
   /* height: 20px; */

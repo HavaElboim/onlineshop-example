@@ -1,0 +1,21 @@
+/* Container holding cart image and num items in cart text */
+
+.cartContainer {
+  position: relative;
+  text-align: center;
+  max-width: 70px;
+}
+
+.numCartItemsDisplay {
+  position: absolute;
+  bottom: 40px;
+  left: -30px;
+  color: white;
+  background: darkgreen;
+  border-radius: 50px;
+  padding: 10px;
+}
+
+.cartIcon {
+  max-width: 80px;
+}
