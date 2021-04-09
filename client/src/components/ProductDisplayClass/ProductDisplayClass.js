@@ -45,7 +45,7 @@ const ProductDisplayClass = (props) => {
     price < priceRange[1] &&
     price > priceRange[0] && (
       <div
-        className="product-card"
+        className=" hvr-shutter-out-vertical"
         style={{ color: theme.foreground, background: "white" }}
       >
         <div className="product-info">

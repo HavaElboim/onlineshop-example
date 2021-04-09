@@ -163,10 +163,30 @@ const ProductInfo = ({ match }) => {
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
   const addToCart = (title, price, image, quantity) => {
     setQtyWarn("");
-    localStorage.pushArrayItem(
-      "cartArray",
-      `title: ${title}, price: ${price}, image: ${image}`
-    );
+
+    // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
+    let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
+    console.log("# of cart items: " + currentItems.length);
+    currentItems.forEach(function (cartItem, index) {
+      console.log("[" + index + "]: " + cartItem.id);
+    });
+    let newItem = {
+      title: title,
+      price: price,
+      image: image,
+      quantity: quantity,
+      id: currentItems.length,
+    };
+    currentItems.push(newItem);
+    console.log("Added item #" + newItem.id);
+
+    // localStorage.pushArrayItem(
+    //   "cartArray",
+    //   `title: ${title}, price: ${price}, image: ${image}`
+    // );
+
+    localStorage.setItem("cartArray", JSON.stringify(currentItems));
+
     if (localStorage.getItem("cartQty")) {
       localStorage.setItem(
         "cartQty",

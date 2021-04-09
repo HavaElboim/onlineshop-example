@@ -28,7 +28,7 @@ const Products = (props) => {
         <div className="product-filter">
           {products.map((product) => (
             <Link
-              className="product-card"
+              className="product-card  hvr-shutter-out-vertical"
               to={`/products/${product._id}`}
               key={product._id}
             >
