@@ -21,7 +21,7 @@ const CartIcon = (props) => {
     <div>
       <div className="cartContainer">
         <img
-          className="cartIcon"
+          className="cartIcon hvr-skew-forward"
           src={cartIcon}
           alt="Shopping cart icon"
           onClick={(e) => {
