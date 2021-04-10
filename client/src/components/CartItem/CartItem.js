@@ -13,9 +13,10 @@ const CartItem = ({ item }) => {
 
   return (
     <div className="cartItemDisplay">
-      <div className="itemIcon">{item.image}</div>
+      <img className="itemIcon" src={item.image} alt="showing the item" />
       <div className="itemName">{item.title}</div>
-      <div className="itemPrice">{item.price}</div>
+      <div className="itemPrice">{item.price} shekel</div>
+      <div className="itemQuantity">{item.quantity}</div>
       {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
     </div>
   );

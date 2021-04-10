@@ -28,10 +28,14 @@ const CartIcon = (props) => {
             setShowCart(true);
           }}
         />
-        <div className="numCartItemsDisplay">
-          {localStorage.getItem("cartQty")}
-        </div>
-        <div>{cartNumItems}</div>
+        {cartNumItems > 0 && (
+          <div>
+            {" "}
+            <div className="numCartItemsDisplay">
+              {localStorage.getItem("cartQty")}
+            </div>
+          </div>
+        )}
       </div>
       {cartNumItems && <CartDisplayContents />}
     </div>

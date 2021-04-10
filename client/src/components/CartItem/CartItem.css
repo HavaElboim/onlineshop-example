@@ -1,19 +1,22 @@
-.cartItemDisplay{
-display: flex;
+.cartItemDisplay {
+  display: flex;
 }
-.itemIcon{
-    padding:5px;
-    max-width: 10px;
-    max-height: 10px;
+.itemIcon {
+  padding: 5px;
+  max-width: 100px;
+  max-height: 100px;
 }
-.itemName{
-    padding:5px;
+.itemName {
+  padding: 5px;
 }
-.itemPrice{
-    padding:5px;
+.itemPrice {
+  padding: 5px;
 }
-.saleIcon{
-    padding:5px;
-    max-width: 10px;
-    max-height: 10px;
+.itemQuantity {
+  padding: 5px;
+}
+.saleIcon {
+  padding: 5px;
+  max-width: 100px;
+  max-height: 100px;
 }

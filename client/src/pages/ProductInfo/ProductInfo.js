@@ -42,6 +42,7 @@ const ProductInfo = ({ match }) => {
   const [onSale, setSale] = useState("false");
   const [saleReductionPercent, setReduction] = useState("");
 
+  const [productId, setId] = useState("");
   const [productName, setName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productURL, setURL] = useState("");
@@ -134,6 +135,7 @@ const ProductInfo = ({ match }) => {
     setSelectedCategory(products.category);
     setSale(products.onSale);
     setReduction(products.saleReductionPercent);
+    setId(match.params._id);
   };
 
   const selectNumberToBuyAddOrRemoveOne = (qty) => {
@@ -161,12 +163,16 @@ const ProductInfo = ({ match }) => {
 
   // see here for how to add objects to localStorage:
   // https://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage/23516713#23516713
-  const addToCart = (title, price, image, quantity) => {
+  // https://stackoverflow.com/questions/62504525/persistence-with-localstorage-with-usestate-and-usecontext-react-hooks
+  // https://stackoverflow.com/questions/63925254/useeffect-localstorage-loop
+  // https://egghead.io/lessons/react-store-values-in-localstorage-with-the-react-useeffect-hook
+
+  const addToCart = (title, price, image, quantity, _id) => {
     setQtyWarn("");
 
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
     let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
-    console.log("# of cart items: " + currentItems.length);
+    console.log("current # of cart items: " + currentItems.length);
     currentItems.forEach(function (cartItem, index) {
       console.log("[" + index + "]: " + cartItem.id);
     });
@@ -175,10 +181,10 @@ const ProductInfo = ({ match }) => {
       price: price,
       image: image,
       quantity: quantity,
-      id: currentItems.length,
+      id: _id,
     };
     currentItems.push(newItem);
-    console.log("Added item #" + newItem.id);
+    console.log("Added item #" + _id);
 
     // localStorage.pushArrayItem(
     //   "cartArray",
@@ -200,6 +206,7 @@ const ProductInfo = ({ match }) => {
         localStorage.getItem("cartQty")
       );
     }
+    selectNumberToBuyAddOrRemoveOne(0);
   };
 
   if (products) {
