@@ -9,7 +9,7 @@ const CartDisplayContents = () => {
   console.log(cartItemsArray);
   return (
     <div>
-      {cartItemsArray.length > 0 && (
+      {cartItemsArray != null && cartItemsArray.length > 0 && (
         <div className="shoppingList">
           {cartItemsArray.map((item, i) => (
             <CartItem item={item} key={i} />

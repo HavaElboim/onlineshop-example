@@ -20,6 +20,10 @@
   max-width: 80px;
 }
 
+.deleteIcon {
+  height: 30px;
+}
+
 /* Skew Forward */
 .hvr-skew-forward {
   display: inline-block;

@@ -211,7 +211,6 @@ const ProductInfo = ({ match }) => {
         localStorage.getItem("cartQty")
       );
     }
-    selectNumberToBuyAddOrRemoveOne(0);
   };
 
   if (products) {

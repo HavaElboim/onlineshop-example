@@ -12,6 +12,13 @@ const CartIcon = (props) => {
     return cur;
   }, JSON.parse(localStorage.getItem("cartQty")));
 
+  /*  const [cartNumItems, setCartNumItems] = useReducer((prev, cur) => {
+    localStorage.getItem("cartQty", JSON.stringify(cur));
+    return cur;
+    //localStorage.getItem("cartArray", JSON.stringify(cur));
+    //return cur.length;
+  }, JSON.parse(localStorage.getItem("cartArray")));*/
+
   // see google on "localstorage dependency in useeffect"
   // useEffect(() => {
   //   setCartNumItems(localStorage.getItem("cartQty"));
