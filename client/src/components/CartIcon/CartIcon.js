@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useReducer } from "react";
-import cartIcon from "../../components/icons/iconfinder_cart_1814095.png";
+import cartIcon from "../../components/icons/shoppingCart.png";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import "./CartIcon.css";
 import CartDisplayContents from "../CartDisplayContents/CartDisplayContents";
@@ -26,9 +26,9 @@ const CartIcon = (props) => {
 
   return (
     <div>
-      <div className="cartContainer">
+      <div className="cartContainer hvr-skew-forward">
         <img
-          className="cartIcon hvr-skew-forward"
+          className="cartIcon "
           src={cartIcon}
           alt="Shopping cart icon"
           onClick={(e) => {
