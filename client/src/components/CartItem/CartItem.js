@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer } from "react";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "./CartItem.css";
-import sale from "../icons/sale.png";
+import sale from "../icons/saleGreen.png";
 import deleteIcon from "../icons/trash.png";
 import editIcon from "../icons/editIcon.png";
 import upArrow from "../icons/upArrow.png";
@@ -10,6 +10,7 @@ import "../../components/storagetools/LocalStorageArrayTools.js";
 
 const CartItem = ({ item }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+
   const isSale = true;
   //console.log("cart item: ", item);
   //console.log(`cart item: ${item.title}, ${item.price}`);
@@ -38,8 +39,12 @@ const CartItem = ({ item }) => {
     // );
 
     localStorage.setItem("cartArray", JSON.stringify(currentItems));
-    let origCartQty = localStorage.getItem("cartQty");
+    let origCartQty = JSON.parse(localStorage.getItem("cartQty"));
+    alert("orig qty:", origCartQty);
+
     origCartQty -= quantityInCart;
+    alert("orig qty:", origCartQty);
+
     localStorage.setItem("cartQty", origCartQty);
   };
 
@@ -61,16 +66,22 @@ const CartItem = ({ item }) => {
     // );
 
     localStorage.setItem("cartArray", JSON.stringify(currentItems));
-    let origCartQty = localStorage.getItem("cartQty");
-    origCartQty -= qty;
+
+    let origCartQty = JSON.parse(localStorage.getItem("cartQty"));
+    alert("orig qty:", origCartQty);
+    origCartQty += qty;
+    alert("new qty:", origCartQty);
+
     localStorage.setItem("cartQty", origCartQty);
   };
 
   return (
     <div className="cartItemDisplay">
+      {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
       <img className="itemIcon" src={item.image} alt="showing the item" />
       <div className="itemName">{item.title}</div>
-      <div className="itemPrice">{item.price} shekel</div>
+      <div className="itemPrice">price: {item.price} shekel</div>
+      <div className="itemPrice">quantity: </div>
       <img
         className="upDownIcon"
         src={downArrow}
@@ -90,8 +101,6 @@ const CartItem = ({ item }) => {
         alt="click here to remove item from cart"
         onClick={(e) => removeFromCart(item.productid)}
       />
-
-      {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
     </div>
   );
 };

@@ -37,7 +37,6 @@ const CartIcon = (props) => {
         />
         {cartNumItems > 0 && (
           <div>
-            {" "}
             <div className="numCartItemsDisplay">
               {localStorage.getItem("cartQty")}
             </div>

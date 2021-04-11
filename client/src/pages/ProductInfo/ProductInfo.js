@@ -8,7 +8,8 @@ import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
-import saleIcon from "../../components/icons/sale-icon-png-19.png";
+// import saleIcon from "../../components/icons/sale-icon-png-19.png";
+import saleIcon from "../../components/icons/saleGreenBig.png";
 import CartIcon from "../../components/CartIcon/CartIcon";
 
 /*
