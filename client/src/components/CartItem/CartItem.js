@@ -67,11 +67,9 @@ const CartItem = ({ item }) => {
 
     localStorage.setItem("cartArray", JSON.stringify(currentItems));
 
+    // update as well total number of items in cart
     let origCartQty = JSON.parse(localStorage.getItem("cartQty"));
-    alert("orig qty:", origCartQty);
     origCartQty += qty;
-    alert("new qty:", origCartQty);
-
     localStorage.setItem("cartQty", origCartQty);
   };
 
@@ -80,7 +78,15 @@ const CartItem = ({ item }) => {
       {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
       <img className="itemIcon" src={item.image} alt="showing the item" />
       <div className="itemName">{item.title}</div>
-      <div className="itemPrice">price: {item.price} shekel</div>
+      {item.saleReductionPercent > 0 && (
+        <div style={{ color: "red" }} className="itemPrice">
+          sale price: ${(item.price * (100 - item.saleReductionPercent)) / 100}
+        </div>
+      )}
+      {item.saleReductionPercent === 0 && (
+        <div className="itemPrice">price: ${item.price} </div>
+      )}
+
       <div className="itemPrice">quantity: </div>
       <img
         className="upDownIcon"

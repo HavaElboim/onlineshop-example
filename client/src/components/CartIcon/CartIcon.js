@@ -25,7 +25,7 @@ const CartIcon = (props) => {
   // }, localStorage);
 
   return (
-    <div>
+    <div className="cartWindow">
       <div className="cartContainer hvr-skew-forward">
         <img
           className="cartIcon "

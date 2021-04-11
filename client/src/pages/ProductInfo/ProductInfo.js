@@ -168,9 +168,19 @@ const ProductInfo = ({ match }) => {
   // https://stackoverflow.com/questions/63925254/useeffect-localstorage-loop
   // https://egghead.io/lessons/react-store-values-in-localstorage-with-the-react-useeffect-hook
 
-  const addToCart = (title, price, image, quantity, id) => {
+  const addToCart = (
+    title,
+    price,
+    image,
+    quantity,
+    id,
+    onSale,
+    saleReductionPercent
+  ) => {
     setQtyWarn("");
 
+    // if item is not on sale, change price reduction to 0
+    if (!onSale) saleReductionPercent = 0;
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
     let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
     console.log("current # of cart items: " + currentItems.length);
@@ -190,6 +200,7 @@ const ProductInfo = ({ match }) => {
         image: image,
         quantity: quantity,
         productid: id,
+        saleReductionPercent,
       });
     }
     // localStorage.pushArrayItem(
@@ -305,7 +316,9 @@ const ProductInfo = ({ match }) => {
                     products.price,
                     products.image,
                     quantity,
-                    match.params._id
+                    match.params._id,
+                    products.onSale,
+                    products.saleReductionPercent
                   );
                 }}
               >
