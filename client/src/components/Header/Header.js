@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useContext } from "react";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
 import PropTypes from "prop-types";
 import CategorySelect from "../CategorySelect/CategorySelect";
@@ -7,6 +7,7 @@ import "./Header.css";
 import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CartIcon from "../CartIcon/CartIcon";
+import UserContext from "../../contexts/UserContexts";
 
 const Header = (props) => {
   const {
@@ -24,11 +25,13 @@ const Header = (props) => {
     setSearch,
   } = props;
 
+  const { user, toggleUser } = useContext(UserContext);
+
   //const theme = useContext(ThemeContext);
 
   return (
     <div>
-      <CartIcon />
+      {user.name === "Guest" && <CartIcon />}
       <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
