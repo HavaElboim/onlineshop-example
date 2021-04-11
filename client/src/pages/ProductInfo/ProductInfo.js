@@ -167,7 +167,7 @@ const ProductInfo = ({ match }) => {
   // https://stackoverflow.com/questions/63925254/useeffect-localstorage-loop
   // https://egghead.io/lessons/react-store-values-in-localstorage-with-the-react-useeffect-hook
 
-  const addToCart = (title, price, image, quantity, _id) => {
+  const addToCart = (title, price, image, quantity, id) => {
     setQtyWarn("");
 
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
@@ -176,16 +176,21 @@ const ProductInfo = ({ match }) => {
     currentItems.forEach(function (cartItem, index) {
       console.log("[" + index + "]: " + cartItem.id);
     });
-    let newItem = {
-      title: title,
-      price: price,
-      image: image,
-      quantity: quantity,
-      id: _id,
-    };
-    currentItems.push(newItem);
-    console.log("Added item #" + _id);
-
+    // search to see if item already exists in cart
+    var checkItem = currentItems.find(
+      (checkItem) => checkItem.productid === id
+    );
+    if (checkItem) {
+      checkItem.quantity += quantity;
+    } else {
+      currentItems.push({
+        title: title,
+        price: price,
+        image: image,
+        quantity: quantity,
+        productid: id,
+      });
+    }
     // localStorage.pushArrayItem(
     //   "cartArray",
     //   `title: ${title}, price: ${price}, image: ${image}`
@@ -299,7 +304,8 @@ const ProductInfo = ({ match }) => {
                     products.title,
                     products.price,
                     products.image,
-                    quantity
+                    quantity,
+                    match.params._id
                   );
                 }}
               >
