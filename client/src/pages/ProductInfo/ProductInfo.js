@@ -271,20 +271,20 @@ const ProductInfo = ({ match }) => {
                   background: theme.background,
                   color: theme.foreground,
                 }}
-                className="quantityButton"
+                className="quantityBox quantityButton"
                 onClick={() => {
                   selectNumberToBuyAddOrRemoveOne(-1);
                 }}
               >
                 -
               </button>
-              <div className="quantity-display">{quantity}</div>
+              <div className="quantityBox quantity-display">{quantity}</div>
               <button
                 style={{
                   background: theme.background,
                   color: theme.foreground,
                 }}
-                className="quantityButton"
+                className="quantityBox quantityButton"
                 onClick={() => {
                   selectNumberToBuyAddOrRemoveOne(1);
                 }}

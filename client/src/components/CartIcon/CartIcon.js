@@ -44,7 +44,7 @@ const CartIcon = (props) => {
           </div>
         )}
       </div>
-      {cartNumItems && <CartDisplayContents />}
+      {cartNumItems > 0 && <CartDisplayContents />}
     </div>
   );
 };

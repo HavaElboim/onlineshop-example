@@ -5,12 +5,18 @@ import "../storagetools/LocalStorageArrayTools.js";
 import "./CartDisplayContents.css";
 
 const CartDisplayContents = () => {
+  const { theme } = useContext(ThemeContext);
   const cartItemsArray = JSON.parse(localStorage.getItem("cartArray"));
   console.log(cartItemsArray);
   return (
     <div>
       {cartItemsArray != null && cartItemsArray.length > 0 && (
-        <div className="shoppingList">
+        <div
+          className="shoppingList"
+          style={{
+            background: theme.listBackground,
+          }}
+        >
           {cartItemsArray.map((item, i) => (
             <CartItem item={item} key={i} />
           ))}
