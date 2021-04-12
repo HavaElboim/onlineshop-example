@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useState, useReducer } from "react";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "./CartItem.css";
 import sale from "../icons/saleGreen.png";
@@ -10,6 +10,7 @@ import "../../components/storagetools/LocalStorageArrayTools.js";
 
 const CartItem = ({ item }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const [qtyLabe, setQtyLabel] = useState("");
 
   const isSale = true;
   //console.log("cart item: ", item);
@@ -48,7 +49,7 @@ const CartItem = ({ item }) => {
     localStorage.setItem("cartQty", origCartQty);
   };
 
-  const editItemCartQty = (id, qty) => {
+  const editItemCartQty = (id, quantityInStock, qty) => {
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
     let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
 
@@ -58,7 +59,8 @@ const CartItem = ({ item }) => {
     );
 
     // then use index to take item out of array
-    currentItems[index].quantity += qty;
+    if (currentItems[index].quantity + qty <= quantityInStock)
+      currentItems[index].quantity += qty;
 
     // localStorage.pushArrayItem(
     //   "cartArray",
@@ -87,26 +89,44 @@ const CartItem = ({ item }) => {
         <div className="itemPrice">price: ${item.price} </div>
       )}
 
-      <div className="itemPrice">quantity: </div>
-      <img
-        className="upDownIcon"
-        src={downArrow}
-        alt="click here to reduce item quantity"
-        onClick={(e) => editItemCartQty(item.productid, -1)}
-      />
-      <div className="itemQuantity">{item.quantity}</div>
-      <img
-        className="upDownIcon"
-        src={upArrow}
-        alt="click here to increase item quantity"
-        onClick={(e) => editItemCartQty(item.productid, 1)}
-      />
-      <img
-        className="deleteIcon"
-        src={deleteIcon}
-        alt="click here to remove item from cart"
-        onClick={(e) => removeFromCart(item.productid)}
-      />
+      <div className="itemQtyBoxContainer">
+        <div className="itemQtyBox">
+          <div className="itemPrice">quantity: </div>
+
+          <div className="itemQtyNumArrows">
+            <img
+              className="upDownIcon"
+              src={downArrow}
+              alt="click here to reduce item quantity"
+              onClick={(e) =>
+                editItemCartQty(item.productid, item.quantityInStock, -1)
+              }
+            />
+            <div id="itemQuantity" className="itemQuantity">
+              {item.quantity}
+            </div>
+            <img
+              className="upDownIcon"
+              src={upArrow}
+              alt="click here to increase item quantity"
+              onClick={(e) =>
+                editItemCartQty(item.productid, item.quantityInStock, 1)
+              }
+            />
+          </div>
+
+          <img
+            className="deleteIcon"
+            src={deleteIcon}
+            alt="click here to remove item from cart"
+            onClick={(e) => removeFromCart(item.productid)}
+          />
+        </div>
+
+        <label for="itemQuantity">
+          There are only {item.quantityInStock} items in stock
+        </label>
+      </div>
     </div>
   );
 };

@@ -1,19 +1,40 @@
 .cartItemDisplay {
+  flex-direction: row;
   display: flex;
 }
 .itemIcon {
   padding: 5px;
   max-width: 100px;
   max-height: 100px;
+  flex: 1;
 }
 .itemName {
   padding: 5px;
+  flex: 1;
+  font-size: 12px;
+  font-variant: all-small-caps;
 }
 .itemPrice {
   padding: 5px;
+  flex: 1;
+  font-size: 12px;
+}
+.itemQtyBoxContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+.itemQtyBox {
+  display: flex;
+  flex-direction: row;
 }
 .itemQuantity {
   padding: 5px;
+  flex: 1;
+}
+.itemQtyNumArrows {
+  display: flex;
+  justify-content: center;
 }
 .saleIcon {
   padding: 5px;
@@ -27,4 +48,8 @@
   cursor: pointer;
   height: 7px;
   margin-top: 8px;
+}
+label {
+  text-transform: none;
+  font-size: 12px;
 }
