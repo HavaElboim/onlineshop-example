@@ -38,10 +38,13 @@
 }
 .saleIcon {
   padding: 5px;
-  max-width: 100px;
-  max-height: 100px;
-  position: absolute;
-  left: 65px;
+  max-width: 40px;
+  max-height: 40px;
+  /* position: absolute;
+  left: 65px; */
+}
+.itemIconImage {
+  display: block;
 }
 .upDownIcon {
   width: 10px;
@@ -51,5 +54,5 @@
 }
 label {
   text-transform: none;
-  font-size: 12px;
+  font-size: 12px !important;
 }

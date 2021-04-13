@@ -1,8 +1,8 @@
 /* Container holding cart image and num items in cart text */
 
 .cartWindow {
-  /* position: relative;
-  text-align: right; */
+  display: flex;
+  justify-content: flex-end;
 }
 .cartContainer {
   /* position: absolute; */
@@ -44,6 +44,7 @@
 .hvr-skew-forward {
   display: inline-block;
   vertical-align: middle;
+  height: fit-content;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 1px 10px 0;

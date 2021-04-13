@@ -77,8 +77,10 @@ const CartItem = ({ item }) => {
 
   return (
     <div className="cartItemDisplay">
-      {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
-      <img className="itemIcon" src={item.image} alt="showing the item" />
+      <div className="itemIconImage">
+        {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
+        <img className="itemIcon" src={item.image} alt="showing the item" />
+      </div>
       <div className="itemName">{item.title}</div>
       {item.saleReductionPercent > 0 && (
         <div style={{ color: "red" }} className="itemPrice">
