@@ -389,7 +389,9 @@ const ProductInfo = ({ match }) => {
               <div className="product-info">
                 {productDescription || products.description}
               </div>
-              <div>{quantityInStock} items in stock</div>
+              <div className="product-info">
+                {products.quantityInStock} items in stock
+              </div>
             </>
           )}
           {user.name === "Admin" && editProduct && (
