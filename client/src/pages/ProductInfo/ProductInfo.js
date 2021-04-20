@@ -12,6 +12,9 @@ import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySe
 import saleIcon from "../../components/icons/saleGreenBig.png";
 import CartIcon from "../../components/CartIcon/CartIcon";
 
+// custom hook for updating state from local storage
+import createPersistedState from "use-persisted-state";
+const useCartState = createPersistedState("cart");
 /*
 mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
 */
@@ -56,6 +59,7 @@ const ProductInfo = ({ match }) => {
   const deleteProductText = "Delete product";
   console.log("in productinfo, theme is: ", theme.foreground);
   //console.log("sale is", sale.isSale);
+  const [cart, setCart] = useCartState({});
 
   useEffect(() => {
     fetch(`/api/products/${match.params._id}`)
@@ -182,17 +186,38 @@ const ProductInfo = ({ match }) => {
     // if item is not on sale, change price reduction to 0
     if (!onSale) saleReductionPercent = 0;
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
-    let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
+    // old version directly accessing localstorage:
+    //let currentItems = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    console.log("cart contains ", cart);
+
+    let currentItems = cart.length > 0 ? cart : [];
+
+    // new version using custom hook:
+
     console.log("current # of cart items: " + currentItems.length);
-    currentItems.forEach(function (cartItem, index) {
-      console.log("[" + index + "]: " + cartItem.id);
-    });
-    // search to see if item already exists in cart
-    var checkItem = currentItems.find(
-      (checkItem) => checkItem.productid === id
-    );
+    console.log("cart contains ", currentItems);
+    console.log("first item is currentItems[0] = ", currentItems[0]);
+    if (currentItems.length !== 0) {
+      currentItems.forEach(function (cartItem, index) {
+        console.log("currentItems[" + index + "]: " + cartItem.productid);
+      });
+
+      cart.forEach(function (cartItem, index) {
+        console.log("cart[" + index + "]: " + cartItem.productid);
+      });
+
+      // search to see if item already exists in cart
+      var checkItem = currentItems.find(
+        (checkItem) => checkItem.productid === id
+      );
+      console.log("checkItem is ", checkItem);
+    } else checkItem = null;
+
     if (checkItem) {
       checkItem.quantity += quantity;
+      //id = checkItem.productid;
+      console.log("need to update qty of item ", id);
     } else {
       currentItems.push({
         title: title,
@@ -208,6 +233,7 @@ const ProductInfo = ({ match }) => {
     //   `title: ${title}, price: ${price}, image: ${image}`
     // );
 
+    /* old version - accessing localstorage directly:
     localStorage.setItem("cartArray", JSON.stringify(currentItems));
 
     if (localStorage.getItem("cartQty")) {
@@ -223,6 +249,10 @@ const ProductInfo = ({ match }) => {
         localStorage.getItem("cartQty")
       );
     }
+    */
+    // new version, using custom hook:
+    setCart(currentItems);
+    console.log("added to cart qty, total:", cart.length);
   };
 
   if (products) {

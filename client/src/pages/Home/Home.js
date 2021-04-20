@@ -8,7 +8,7 @@ import Header from "../../components/Header/Header";
 import Products from "../../components/Products/Products";
 
 const Home = () => {
-  const [secondsLeft, setSecondsLeft] = useState(65);
+  const [secondsLeft, setSecondsLeft] = useState(5);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
   const [isSale, setSale] = useState("true");
