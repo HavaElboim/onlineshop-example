@@ -385,9 +385,12 @@ const ProductInfo = ({ match }) => {
         </div>
         <div>
           {!editProduct && (
-            <div className="product-info">
-              {productDescription || products.description}
-            </div>
+            <>
+              <div className="product-info">
+                {productDescription || products.description}
+              </div>
+              <div>{quantityInStock} items in stock</div>
+            </>
           )}
           {user.name === "Admin" && editProduct && (
             <div>
