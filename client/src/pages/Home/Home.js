@@ -39,7 +39,13 @@ const Home = () => {
       });
     console.log("fetched products in Home");
     setNumProds(products.length);
-  }, [products.length]);
+
+    // setProducts(products.filter( (price) => {
+    //   {if (products.price<=priceRange[1] && products.price>=priceRange[0]) return products.price}
+    // }));
+    // console.log("%%%%%% In Home, new list of products: ", products);
+  // }, products.length, priceRange );
+}, products.length );
 
   return (
     <div>
@@ -66,6 +72,7 @@ const Home = () => {
         secondsLeft={secondsLeft}
         selectedCategory={selectedCategory}
         products={products}
+        setProducts={setProducts}
         isSale={isSale}
         priceRange={priceRange}
       ></Products>

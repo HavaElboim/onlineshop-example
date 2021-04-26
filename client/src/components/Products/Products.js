@@ -1,32 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Products = (props) => {
-  const { secondsLeft, selectedCategory, products, isSale, priceRange } = props;
+  const { secondsLeft, selectedCategory, products, setProducts, isSale, priceRange } = props;
 
-  /* the line
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    stops the warning
-    "React Hook useEffect has a missing dependency: ''"
-    where it expects to see [products] instead of []
-    */
+  const [filteredData, setFilteredData]= useState(products);
+  
   useEffect(() => {
-    console.log("In Products, products are: ", products);
-    console.log("In products, selected category is: ", selectedCategory);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    setFilteredData(products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0])
+    ));
+
+  }, priceRange);
+
 
   // maps the array containing the shop information to set up individual products items
   // and passes via to the ProductsDisplayClass which will starts the sale countdown and which calls the  */
 
   return (
     <div>
-      {products.length > 0 && (
+      {filteredData.length > 0 && (
         <div className="product-filter">
-          {products.map((product) => (
+          {filteredData.map((product) => (
             <Link
               className="product-card  hvr-shutter-out-vertical"
               to={`/products/${product._id}`}
