@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 // need to install and design: npm install antd
-import { Slider } from "antd";
+import { Slider, InputNumber } from "antd";
 import "antd/dist/antd.css";
 import ThemeContext, { currentTheme } from "../../contexts/ThemeContexts";
 
@@ -8,18 +8,40 @@ const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;
   const { theme } = useContext(ThemeContext);
 
+  
+
+  const formatter = (value) =>{
+    return `${value}%`;
+  }
   useEffect(() => {
-    if (products.length) {
-      console.log("prods are ", products);
-      let max = 0;
-      for (let i = 0; i < products.length; i++) {
-        max = products[i].price > max ? products[i].price : max;
-        console.log("max: ", max);
+  if (products.length) {
+        console.log("prods are ", products);
+        let max = 0;
+        for (let i = 0; i < products.length; i++) {
+          max = products[i].price > max ? products[i].price : max;
+          console.log("max: ", max);
+        }
+        setPriceRange([0, max + 5]);
+        console.log("max price is: ", max);
       }
-      setPriceRange([0, max + 5]);
-      console.log("max price is: ", max);
-    }
-  }, [products, setPriceRange]);
+    }, [products, setPriceRange]);
+
+      const storeMaxPrice = priceRange[1]; //use spread to copy over values, 
+                                                //otherwise storeMaxPrice changes dynamically when priceRange changes
+console.log("storeMaxPrice is:", storeMaxPrice);
+  
+                                                // useEffect(() => {
+  //   if (products.length) {
+  //     console.log("prods are ", products);
+  //     let max = 0;
+  //     for (let i = 0; i < products.length; i++) {
+  //       max = products[i].price > max ? products[i].price : max;
+  //       console.log("max: ", max);
+  //     }
+  //     setPriceRange([0, max + 5]);
+  //     console.log("max price is: ", max);
+  //   }
+  // }, [products, setPriceRange]);
 
   //const [disabled] = useState(false);
 
@@ -30,12 +52,25 @@ const SliderFilterPrice = (props) => {
       </div>
       <Slider
         range
-        defaultValue={[0, 1000]}
         min={0}
-        max={1000}
+        max={50}
         value={priceRange}
         onChange={setPriceRange}
       />
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+      <InputNumber
+            min={0}
+            style={{ margin: '0 16px' }}
+            value={priceRange[0]}
+            onChange={setPriceRange}
+          />
+          <InputNumber
+            max={storeMaxPrice}
+            style={{ margin: '0 16px' }}
+            value={priceRange[1]}
+            onChange={setPriceRange}
+          />
+          </div>
     </>
   );
 };
