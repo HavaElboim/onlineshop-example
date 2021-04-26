@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import UserContext from "../../contexts/UserContexts";
 import ThemeContext from "../../contexts/ThemeContexts";
+import "../ChangeThemeColors/ChangeThemeColors.css";
 
 const ChangeUser = () => {
   const { user, toggleUser } = useContext(UserContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <button
+    <button className="button"
       style={{
         background: theme.background,
         color: theme.foreground,

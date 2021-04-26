@@ -21,7 +21,7 @@ const CartDisplayContents = ({numInCart, setNumInCart}) => {
         <div
           className="shoppingList"
           style={{
-            background: theme.listBackground,
+            color: theme.listColor,
           }}
         >
           {cart.map((item, i) => (

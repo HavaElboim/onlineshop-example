@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "./CartItem.css";
-import sale from "../icons/saleGreen.png";
+import sale from "../icons/green-leaves-sale.svg";
 import deleteIcon from "../icons/trash.png";
 import editIcon from "../icons/editIcon.png";
 import upArrow from "../icons/upArrow.png";
@@ -100,7 +100,7 @@ console.log("in cartItem, numincart is: ", numInCart);
     // );
     //alert("currentItems are: ", currentItems);
     if(quantityWarnText!=="")setQtyWarn("");
-    
+
     console.log("item to change: ", index, "from id ", id);
 
     console.log("qty prev in cart ", currentItems[index].quantity);
@@ -167,6 +167,7 @@ console.log("in cartItem, numincart is: ", numInCart);
         {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
         <img className="itemIcon" src={item.image} alt="showing the item" />
       </div>
+      <div className="itemNamePrice">
       <div className="itemName">{item.title}</div>
       {item.saleReductionPercent > 0 && (
         <div style={{ color: "red" }} className="itemPrice">
@@ -176,7 +177,7 @@ console.log("in cartItem, numincart is: ", numInCart);
       {item.saleReductionPercent === 0 && (
         <div className="itemPrice">price: ${item.price} </div>
       )}
-
+      </div>
       <div className="itemQtyBoxContainer">
         <div className="itemQtyBox">
           <div className="itemPrice">quantity: </div>
@@ -197,14 +198,15 @@ console.log("in cartItem, numincart is: ", numInCart);
               alt="click here to increase item quantity"
               onClick={(e) => editItemCartQty(item.productid, 1)}
             />
-          </div>
-
-          <img
+            <img
             className="deleteIcon"
             src={deleteIcon}
             alt="click here to remove item from cart"
             onClick={(e) => removeFromCart(item.productid)}
           />
+          </div>
+
+          
         </div>
 
         <label htmlFor="itemQuantity">{qtyLabel}</label>

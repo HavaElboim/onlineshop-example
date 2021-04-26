@@ -37,7 +37,7 @@ const Header = (props) => {
   //const theme = useContext(ThemeContext);
 
   return (
-    <div>
+    <div className="headerDiv">
       {user.name === "Guest" && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
       <SaleCountdown
         secondsLeft={secondsLeft}

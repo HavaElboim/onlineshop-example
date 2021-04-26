@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 //import ProductInfo from "../../pages/ProductInfo/ProductInfo";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
+import LeftFrame from "../../components/icons/green-leaves-left-frame.svg";
 
 /* this component is called from the Products class.
    It renders individual products cards (product title, image, price).
@@ -48,6 +49,8 @@ const ProductDisplayClass = (props) => {
         className=" hvr-shutter-out-vertical"
         style={{ color: theme.foreground, background: "white" }}
       >
+        <img src={LeftFrame} alt="frame of green leaves" className="leavesFrame"/>
+        <div className="inner-card">
         <div className="product-info">
           {onSale && <div className="product-banner-sale">SALE</div>}
           {!onSale && <div className="product-banner-nosale"></div>}
@@ -73,6 +76,7 @@ const ProductDisplayClass = (props) => {
             {saleReductionPercent}% off! {newPrice}
           </h5>
           <h5>{quantityInStock} in stock</h5>
+        </div>
         </div>
       </div>
     )

@@ -16,7 +16,8 @@ const CartIcon = ({numInCart, setNumInCart}) => {
   const [cart, setCart] = useCartState({});
  // const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
 
-  let showCart = true;
+ const [ShowCart, setShowCart] = useState(false);
+  //let showCart = true;
   console.log("in cartIcon, numincart is: ", numInCart);
 
   // old version using useState / useReducer / useEffect -
@@ -39,10 +40,11 @@ const CartIcon = ({numInCart, setNumInCart}) => {
   //   setCartNumItems(localStorage.getItem("cartQty"));
   // }, localStorage);
 
-  console.log("show val now is ", showCart);
+  console.log("show val now is ", ShowCart);
 
   const showCartFn = () => {
-    showCart = !showCart;
+   // showCart = !showCart;
+   setShowCart(!ShowCart);
   };
 
   return (
@@ -64,7 +66,7 @@ const CartIcon = ({numInCart, setNumInCart}) => {
           </div>
         )}
       </div>
-      {cart.length > 0 && showCart && <CartDisplayContents numInCart={numInCart} setNumInCart={setNumInCart}/>}
+      {cart.length > 0 && ShowCart && <CartDisplayContents numInCart={numInCart} setNumInCart={setNumInCart}/>}
     </div>
   );
 };

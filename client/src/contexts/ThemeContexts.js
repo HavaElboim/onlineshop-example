@@ -6,14 +6,16 @@ const themes = {
     background: "rgb(185 249 115)",
     salePriceColor: "green",
     links: "#c5730d",
-    listBackground: "#f7fb92",
+    listBackground: "rgb(226 250 200);",
+    listColor: "rgb(7 45 7)"
   },
   dark: {
     foreground: "rgb(185 249 115)",
     background: "rgb(7 45 7)",
     salePriceColor: "#09c709",
     links: "#c5730d",
-    listBackground: "#942f04",
+    listBackground: "rgb(226 250 200);",
+    listColor: "rgb(7 45 7)"
   },
 };
 

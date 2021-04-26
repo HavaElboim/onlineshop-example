@@ -16,6 +16,8 @@ import ThemeContext, { themes } from "./contexts/ThemeContexts";
 import UserContext, { users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
 
+import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.svg";
+
 /* App calls ProductsContainerClass
   which calls SaleCountdown
   which calls Products
@@ -60,6 +62,7 @@ const App = () => {
               className="outer-div"
               style={{ color: theme.foreground, background: theme.background }}
             >
+              <div className="inner-outer-div">
               <ChangeThemeColors />
               <DisplayUser />
               <nav>
@@ -95,6 +98,8 @@ const App = () => {
                   <Home />
                 </Route>
               </Switch>
+              </div>
+              <img src={FlowerBaseSVG} className="imgBottom" alt="flower decoration"/>
             </div>
           </Router>
         </SaleContext.Provider>

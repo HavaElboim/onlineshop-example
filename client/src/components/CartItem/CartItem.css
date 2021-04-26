@@ -3,16 +3,22 @@
   display: flex;
 }
 .itemIcon {
-  padding: 5px;
-  max-width: 100px;
+  padding: 10px 5px 10px 0px; /* top right bottom left */
+  max-width: 80px;
   max-height: 100px;
-  flex: 1;
+  flex: 1 1;
 }
 .itemName {
   padding: 5px;
   flex: 1;
   font-size: 12px;
   font-variant: all-small-caps;
+  width: 55px;
+}
+.itemNamePrice{
+  display: flex;
+  flex-direction: column;
+  width: 75px;
 }
 .itemPrice {
   padding: 5px;
@@ -26,7 +32,7 @@
 }
 .itemQtyBox {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .itemQuantity {
   padding: 5px;
@@ -37,14 +43,17 @@
   justify-content: center;
 }
 .saleIcon {
-  padding: 5px;
-  max-width: 40px;
-  max-height: 40px;
+  padding: 5px 0px 0px 5px; /* top right bottom left */
+  max-width: 80px;
+  max-height: 80px;
+  
+  /* margin-bottom: 15px; */
   /* position: absolute;
   left: 65px; */
 }
 .itemIconImage {
-  display: block;
+  /* display: block; */
+  display: contents;
 }
 .upDownIcon {
   width: 10px;
