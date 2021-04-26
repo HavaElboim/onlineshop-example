@@ -43,7 +43,6 @@ const CartIcon = ({numInCart, setNumInCart}) => {
 
   const showCartFn = () => {
     showCart = !showCart;
-    alert(" showcart val now is ", showCart);
   };
 
   return (

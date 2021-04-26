@@ -187,10 +187,7 @@ const ProductInfo = ({ match }) => {
 
     // if item is not on sale, change price reduction to 0
     if (!onSale) saleReductionPercent = 0;
-    // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
-    // old version directly accessing localstorage:
-    //let currentItems = JSON.parse(localStorage.getItem("cart") || "[]");
-
+ 
     console.log("adding to cart.................");
     console.log("cart contains ", cart);
 
@@ -201,7 +198,11 @@ const ProductInfo = ({ match }) => {
     console.log("current # of cart items: " + currentItems.length);
     console.log("cart contains ", currentItems);
     console.log("first item is currentItems[0] = ", currentItems[0]);
+
+    // If there is already at least one item in the cart:
+    //// opened if currentItems.length
     if (currentItems.length !== 0) {
+      console.log("there is already at least one item in the cart");
       currentItems.forEach(function (cartItem, index) {
         console.log("currentItems[" + index + "]: " + cartItem.productid  + cartItem.quantity);
       });
@@ -217,17 +218,24 @@ const ProductInfo = ({ match }) => {
         (checkItem) => checkItem.productid === id
       );
       console.log("checkitme is ", checkItem);
+
+      //// opened if checkItem undefined
+      // if checkItem is undefined, this particular item has not yet been added to the cart
     if (checkItem !== undefined) {
       // check if there is enough in stock
       console.log("products are: ", products);
-      // var checkStockItem = products.find (
-      //   (checkStockItem) => checkStockItem.productId === id
-      // )
-      console.log(`there are ${checkItem.quantityInStock} in stock, ${checkItem.quantity} in the cart, and you want to add another ${quantity}`)
+         console.log(`there are ${checkItem.quantityInStock} in stock, ${checkItem.quantity} in the cart, and you want to add another ${quantity}`)
+      
+      //// opened if checkItem quantity
+      // check if there are enough items in stock to add the new quantity:
       if(checkItem.quantity + quantity <= products.quantityInStock) {
+        //update the number of items of this item in the cart
       checkItem.quantity += quantity;
       //id = checkItem.productid;
-      console.log("item found in cart, need to update qty of item ", id);}
+      console.log("item found in cart, need to update qty of item ", id);
+      // update the state displaying the total number of items in the cart
+      setNumInCart(numInCart+quantity);
+      }
       else {
         // warn user that there are not enough items in stock
         switch (checkItem.quantityInStock - checkItem.quantity) {
@@ -241,11 +249,18 @@ const ProductInfo = ({ match }) => {
             setQtyWarn(
               `There are only ${products.quantityInStock} ${products.title}s in stock`
             );
+            ///end default case:
           }
+          console.log("got to end block 2");
+         /// end switch of number of products left in stock, when not enough:
         }
+        console.log("got to end block 3");
+         //// end of check for enough items in stock:
       }
+      console.log("got to end block 4");
+      ///// end of situation that this item is already in the cart:
     } 
-  
+    //// if this item is not yet in the cart (but the cart is not empty):
   else {
     console.log("item not yet in cart, adding..");
       currentItems.push({
@@ -256,12 +271,11 @@ const ProductInfo = ({ match }) => {
         productid: id,
         saleReductionPercent,
       });
+            // update the state displaying the total number of items in the cart
+      setNumInCart(numInCart+quantity);
+      //// end of situation that the cart is not empty but this item was not yet in it
     }
-    setNumInCart(numInCart+quantity);
-    // localStorage.pushArrayItem(
-    //   "cartArray",
-    //   `title: ${title}, price: ${price}, image: ${image}`
-    // );
+    
 
     /* old version - accessing localstorage directly:
     localStorage.setItem("cartArray", JSON.stringify(currentItems));
@@ -280,10 +294,29 @@ const ProductInfo = ({ match }) => {
       );
     }
     */
-    // new version, using custom hook:
+    // new version, load array of items into cart state using custom hook:
     setCart(currentItems);
     console.log("added to cart qty, cart length:", cart.length);
+
+    //// end of situation that the cart is non-empty
   }
+  else {
+    // shopping cart was still empty. Add item directly
+    console.log("item not yet in cart, adding..");
+      currentItems = [{
+        title: title,
+        price: price,
+        image: image,
+        quantity: quantity,
+        productid: id,
+        saleReductionPercent,
+      }];
+       // update the state displaying the total number of items in the cart
+      setNumInCart(numInCart+quantity);
+       // load array of items into cart state using custom hook:
+    setCart(currentItems);
+  }
+  console.log("got to end");
   };
 
   // defining the key={numInCart} in the CartIcon component below forces it to
