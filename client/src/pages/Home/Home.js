@@ -49,7 +49,6 @@ const Home = () => {
 
   return (
     <div>
-      <div>Num products in shop: {numProducts}</div>
       {user.name === "Admin" && <div>Click on product to edit it</div>}
       {user.name !== "Admin" && (
         <div>Click on product to see details and order</div>
@@ -75,6 +74,7 @@ const Home = () => {
         setProducts={setProducts}
         isSale={isSale}
         priceRange={priceRange}
+        searchKeyword={searchKeyword}
       ></Products>
     </div>
   );

@@ -5,16 +5,24 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Products = (props) => {
-  const { secondsLeft, selectedCategory, products, setProducts, isSale, priceRange } = props;
+  const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
 
   const [filteredData, setFilteredData]= useState(products);
   
   useEffect(() => {
 
-    setFilteredData(products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0])
-    ));
+    setFilteredData(products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0])));
 
-  }, priceRange);
+    if(selectedCategory != "") {
+      setFilteredData(filteredData.filter( (item) => ( item.category === selectedCategory)));
+    }
+    if(searchKeyword != "") {
+      setFilteredData(filteredData.filter( (item) => ( item.description.includes(searchKeyword) || item.title.includes(searchKeyword) || item.category.includes(searchKeyword))));
+    }
+  console.log("In Products. selected cat: ", selectedCategory, "search keyword", searchKeyword, "filtered shop", filteredData);
+
+  }, priceRange, selectedCategory, searchKeyword);
+
 
 
   // maps the array containing the shop information to set up individual products items

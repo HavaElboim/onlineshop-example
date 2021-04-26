@@ -50,7 +50,6 @@ const Header = (props) => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
-          setProducts={setProducts}
         ></CategorySelect>
       )}
       {products.length > 0 && (
@@ -58,7 +57,6 @@ const Header = (props) => {
           searchKeyword={searchKeyword}
           setSearch={setSearch}
           products={products}
-          setProducts={setProducts}
         ></SearchKeyword>
       )}
       <div className="price-range">
