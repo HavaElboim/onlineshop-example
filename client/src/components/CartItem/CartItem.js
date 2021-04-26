@@ -164,7 +164,8 @@ console.log("in cartItem, numincart is: ", numInCart);
   return (
     <div className="cartItemDisplay">
       <div className="itemIconImage">
-        {isSale && <img className="saleIcon" src={sale} alt="sale icon" />}
+        {(item.saleReductionPercent>0) && <img className="saleIcon" src={sale} alt="sale icon" />}
+        {(item.saleReductionPercent==0) && <div className="noSaleBox"></div>}
         <img className="itemIcon" src={item.image} alt="showing the item" />
       </div>
       <div className="itemNamePrice">

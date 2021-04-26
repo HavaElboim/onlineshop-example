@@ -43,13 +43,16 @@
   justify-content: center;
 }
 .saleIcon {
-  padding: 5px 0px 0px 5px; /* top right bottom left */
-  max-width: 80px;
-  max-height: 80px;
+  padding: 5px 0px 0px 0px; /* top right bottom left */
+  max-width: 45px;
+  max-height: 60px;
   
   /* margin-bottom: 15px; */
   /* position: absolute;
   left: 65px; */
+}
+.noSaleBox {
+  padding-left: 45px;
 }
 .itemIconImage {
   /* display: block; */
