@@ -60,7 +60,9 @@ const ProductInfo = ({ match }) => {
   console.log("in productinfo, theme is: ", theme.foreground);
   //console.log("sale is", sale.isSale);
   const [cart, setCart] = useCartState({});
+  const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
 
+  console.log("!!!!!!!!!!!!!!!!!!!!! In ProductInfo, numInCart is: ", numInCart);
   useEffect(() => {
     fetch(`/api/products/${match.params._id}`)
       .then((response) => response.json())
@@ -189,6 +191,7 @@ const ProductInfo = ({ match }) => {
     // old version directly accessing localstorage:
     //let currentItems = JSON.parse(localStorage.getItem("cart") || "[]");
 
+    console.log("adding to cart.................");
     console.log("cart contains ", cart);
 
     let currentItems = cart.length > 0 ? cart : [];
@@ -200,25 +203,51 @@ const ProductInfo = ({ match }) => {
     console.log("first item is currentItems[0] = ", currentItems[0]);
     if (currentItems.length !== 0) {
       currentItems.forEach(function (cartItem, index) {
-        console.log("currentItems[" + index + "]: " + cartItem.productid);
+        console.log("currentItems[" + index + "]: " + cartItem.productid  + cartItem.quantity);
       });
 
       cart.forEach(function (cartItem, index) {
-        console.log("cart[" + index + "]: " + cartItem.productid);
+        console.log("cart[" + index + "]: " + cartItem);
       });
+
+      console.log("###### searching for id ", id, "in currentItems ", currentItems);
 
       // search to see if item already exists in cart
       var checkItem = currentItems.find(
         (checkItem) => checkItem.productid === id
       );
-      console.log("checkItem is ", checkItem);
-    } else checkItem = null;
-
-    if (checkItem) {
+      console.log("checkitme is ", checkItem);
+    if (checkItem !== undefined) {
+      // check if there is enough in stock
+      console.log("products are: ", products);
+      // var checkStockItem = products.find (
+      //   (checkStockItem) => checkStockItem.productId === id
+      // )
+      console.log(`there are ${checkItem.quantityInStock} in stock, ${checkItem.quantity} in the cart, and you want to add another ${quantity}`)
+      if(checkItem.quantity + quantity <= products.quantityInStock) {
       checkItem.quantity += quantity;
       //id = checkItem.productid;
-      console.log("need to update qty of item ", id);
-    } else {
+      console.log("item found in cart, need to update qty of item ", id);}
+      else {
+        // warn user that there are not enough items in stock
+        switch (checkItem.quantityInStock - checkItem.quantity) {
+          case 0:
+            setQtyWarn(`There are no more ${products.title}s in stock`);
+            break;
+          case 1:
+            setQtyWarn(`There is only 1 more ${products.title} in stock`);
+            break;
+          default: {
+            setQtyWarn(
+              `There are only ${products.quantityInStock} ${products.title}s in stock`
+            );
+          }
+        }
+      }
+    } 
+  
+  else {
+    console.log("item not yet in cart, adding..");
       currentItems.push({
         title: title,
         price: price,
@@ -228,6 +257,7 @@ const ProductInfo = ({ match }) => {
         saleReductionPercent,
       });
     }
+    setNumInCart(numInCart+quantity);
     // localStorage.pushArrayItem(
     //   "cartArray",
     //   `title: ${title}, price: ${price}, image: ${image}`
@@ -252,13 +282,16 @@ const ProductInfo = ({ match }) => {
     */
     // new version, using custom hook:
     setCart(currentItems);
-    console.log("added to cart qty, total:", cart.length);
+    console.log("added to cart qty, cart length:", cart.length);
+  }
   };
 
+  // defining the key={numInCart} in the CartIcon component below forces it to
+  // rerender if numInCart changes
   if (products) {
     return (
       <div>
-        <CartIcon />
+        <CartIcon key={numInCart} numInCart={numInCart} setNumInCart={setNumInCart}/>
         {user.name === "Admin" && (
           <div className="outer-group">
             {!editProduct && (

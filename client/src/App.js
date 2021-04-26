@@ -34,6 +34,7 @@ const App = () => {
   const [theme, setTheme] = useState(themes.light);
   const [user, setUser] = useState(users.guest);
   const [sale, setSale] = useState(sales.endOfYearSale);
+  const [numInCart, setNumInCart] = useState(0);
 
   function toggleTheme() {
     setTheme((theme) => (theme === themes.light ? themes.dark : themes.light));

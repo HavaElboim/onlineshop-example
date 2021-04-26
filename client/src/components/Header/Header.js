@@ -1,4 +1,5 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
+import createPersistedState from "use-persisted-state";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
 import PropTypes from "prop-types";
 import CategorySelect from "../CategorySelect/CategorySelect";
@@ -8,6 +9,7 @@ import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CartIcon from "../CartIcon/CartIcon";
 import UserContext from "../../contexts/UserContexts";
+const useCartState = createPersistedState("cart");
 
 const Header = (props) => {
   const {
@@ -27,11 +29,16 @@ const Header = (props) => {
 
   const { user, toggleUser } = useContext(UserContext);
 
+  const [cart, setCart] = useCartState({});
+  const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
+  console.log("in header, numincart is: ", numInCart);
+
+
   //const theme = useContext(ThemeContext);
 
   return (
     <div>
-      {user.name === "Guest" && <CartIcon />}
+      {user.name === "Guest" && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
       <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}

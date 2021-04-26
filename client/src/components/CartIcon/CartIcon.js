@@ -12,10 +12,12 @@ import CartDisplayContents from "../CartDisplayContents/CartDisplayContents";
 
 const useCartState = createPersistedState("cart");
 
-const CartIcon = (props) => {
+const CartIcon = ({numInCart, setNumInCart}) => {
   const [cart, setCart] = useCartState({});
+ // const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
 
   let showCart = true;
+  console.log("in cartIcon, numincart is: ", numInCart);
 
   // old version using useState / useReducer / useEffect -
   // cart data doesn't re-render automatically on change
@@ -63,7 +65,7 @@ const CartIcon = (props) => {
           </div>
         )}
       </div>
-      {cart.length > 0 && showCart && <CartDisplayContents />}
+      {cart.length > 0 && showCart && <CartDisplayContents numInCart={numInCart} setNumInCart={setNumInCart}/>}
     </div>
   );
 };

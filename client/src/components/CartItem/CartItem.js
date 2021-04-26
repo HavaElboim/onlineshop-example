@@ -12,17 +12,18 @@ import "../../components/storagetools/LocalStorageArrayTools.js";
 import createPersistedState from "use-persisted-state";
 const useCartState = createPersistedState("cart");
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, numInCart, setNumInCart, quantityWarnText = "", setQtyWarn }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [products, setProducts] = useState({});
   const [qtyLabel, setQtyLabel] = useState("");
   const [qty, setQty] = useState(item.quantity);
   const [cart, setCart] = useCartState({});
+  //const {currentItems, setCurrentItems} = useState(cart.length > 0 ? cart : []);
 
   const isSale = true;
   //console.log("cart item: ", item);
   //console.log(`cart item: ${item.title}, ${item.price}`);
-
+console.log("in cartItem, numincart is: ", numInCart);
   console.log("item is ", item);
   useEffect(() => {
     fetch(`/api/products/${item.productid}`)
@@ -37,9 +38,10 @@ const CartItem = ({ item }) => {
     //let currentItems = JSON.parse(localStorage.getItem("cart") || "[]");
 
     // new version using custom hook to access localstorage
-    let currentItems = cart.length > 0 ? cart : [];
+   let currentItems = cart.length > 0 ? cart : [];
 
     // find index of item in cart array
+    if(currentItems.length > 0)  {
     const index = currentItems.findIndex(
       (findItem) => findItem.productid === id
     );
@@ -52,6 +54,10 @@ const CartItem = ({ item }) => {
       ...currentItems.slice(0, index),
       ...currentItems.slice(index + 1),
     ];
+    // setCurrentItems([
+    //   ...currentItems.slice(0, index),
+    //   ...currentItems.slice(index + 1),
+    // ]);
 
     // localStorage.pushArrayItem(
     //   "cartArray",
@@ -70,27 +76,53 @@ const CartItem = ({ item }) => {
 
     // new version, using custom hook:
     setCart(currentItems);
+    setNumInCart(numInCart-1)
     setQty(0);
+    if(quantityWarnText!=="")setQtyWarn("");
+  
+  }
   };
 
   const editItemCartQty = (id, qty) => {
     // currentItems is given an empty array if getItem returns null (i.e. if no items have yet been added to cart):
     //let currentItems = JSON.parse(localStorage.getItem("cartArray") || "[]");
-    let currentItems = cart.length > 0 ? cart : [];
-    console.log("cartitem curritemsL ", currentItems);
+   let currentItems = cart.length > 0 ? cart : [];
+    // let tempCartItem={};
+    if (currentItems.length > 0){
+    // let tempCartItems = currentItems;
+    // console.log("cartitem curritemsL ", currentItems);
     // find index of item in cart array
     const index = currentItems.findIndex(
       (findItem) => findItem.productid === id
     );
+    // const index = tempCartItems.findIndex(
+    //   (findItem) => findItem.productid === id
+    // );
+    //alert("currentItems are: ", currentItems);
+    if(quantityWarnText!=="")setQtyWarn("");
+    
     console.log("item to change: ", index, "from id ", id);
 
     console.log("qty prev in cart ", currentItems[index].quantity);
     console.log("from API: ", products);
     // then use index to take item out of array
     if (currentItems[index].quantity + qty <= products.quantityInStock) {
+      // tempCartItem = currentItems[index];
+      // tempCartItem.quantity += qty;
+      // setCurrentItems([
+      //   ...currentItems.slice(0, index),
+      //   tempCartItem,
+      //   ...currentItems.slice(index + 1),
+      // ]);
       currentItems[index].quantity += qty;
+      console.log(`numInCart: ${numInCart} adding qty: ${qty}, num in stock: ${products.quantityInStock}`);
+
       setQtyLabel("");
+     setNumInCart(numInCart+qty);
     } else {
+      console.log("not enough in stock");
+      console.log(`numInCart: ${numInCart} wanting to add qty: ${qty}, num in stock: ${products.quantityInStock}`);
+
       setQtyLabel(`There are only ${products.quantityInStock} items in stock`);
     }
     console.log(
@@ -121,11 +153,12 @@ const CartItem = ({ item }) => {
       removeFromCart(currentItems[index].productid);
     else {
       // update cart with new quantity of item
-      console.log("cartitem curritemsL ", currentItems);
+      console.log("cartitem curritems ", currentItems);
       // new way to update localstorage - via custom hook :
       setCart(currentItems);
       setQty(currentItems[index].quantity);
     }
+  }
   };
 
   return (
