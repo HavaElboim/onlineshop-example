@@ -9,21 +9,22 @@ const Products = (props) => {
 
   const [filteredData, setFilteredData]= useState(products);
   
+  console.log(`in products, cat: ${selectedCategory}, search: ${selectedCategory}, price rng: ${priceRange[0]} ${priceRange[1]}`);
+  
   useEffect(() => {
 
-    setFilteredData(products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0])));
+    let tempProds1, tempProds2, tempProds3;
+    
+    tempProds1 = products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0]));
+    tempProds2 = (selectedCategory != "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
+    tempProds3 = (searchKeyword != "") ? filteredData.filter( (item) => ( item.category === selectedCategory)) : tempProds2;
+    setFilteredData(tempProds3);
 
-    if(selectedCategory != "") {
-      setFilteredData(filteredData.filter( (item) => ( item.category === selectedCategory)));
-    }
-    if(searchKeyword != "") {
-      setFilteredData(filteredData.filter( (item) => ( item.description.includes(searchKeyword) || item.title.includes(searchKeyword) || item.category.includes(searchKeyword))));
-    }
   console.log("In Products. selected cat: ", selectedCategory, "search keyword", searchKeyword, "filtered shop", filteredData);
 
-  }, priceRange, selectedCategory, searchKeyword);
+  }, [priceRange, selectedCategory, searchKeyword]);
 
-
+console.log("filtered shop: ", filteredData);
 
   // maps the array containing the shop information to set up individual products items
   // and passes via to the ProductsDisplayClass which will starts the sale countdown and which calls the  */

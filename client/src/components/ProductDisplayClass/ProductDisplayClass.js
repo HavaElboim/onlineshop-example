@@ -37,7 +37,9 @@ const ProductDisplayClass = (props) => {
   const newPrice = onSale
     ? ` Sale: $ ${+((price * (100 - saleReductionPercent)) / 100).toFixed(2)}`
     : "";
-
+if ((!selectedCategory || category === selectedCategory) &&
+price < priceRange[1] &&
+price > priceRange[0] )  console.log("rendering product ", title);
   /* renders an individual product card, containing product information and image.
   the information an image are obtained from the props which are passed from the ProductsContainerClass */
 
