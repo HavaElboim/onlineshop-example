@@ -17,7 +17,7 @@ const Products = (props) => {
     
     tempProds1 = products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0]));
     tempProds2 = (selectedCategory != "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
-    tempProds3 = (searchKeyword != "") ? filteredData.filter( (item) => ( item.category === selectedCategory)) : tempProds2;
+    tempProds3 = (searchKeyword != "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
     setFilteredData(tempProds3);
 
   console.log("In Products. selected cat: ", selectedCategory, "search keyword", searchKeyword, "filtered shop", filteredData);

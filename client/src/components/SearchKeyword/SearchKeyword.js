@@ -9,7 +9,7 @@ const SearchKeyword = (props) => {
 
   useEffect(() => {
     console.log(
-      "In searchkeyword, seargcujbg for: ",
+      "In searchkeyword, searching for: ",
       searchKeyword
     );
   }, [searchKeyword]);
@@ -35,12 +35,14 @@ const SearchKeyword = (props) => {
           value={searchKeyword}
           onChange={(e) => setSearch(e.target.value)}
           style={{ color: theme.background, background: theme.foreground }}
+          title="examples of words to search: potted, blue, bulb"
         />
       )}
       <button
         id="clearButton"
         onClick={(e) => setSearch("")}
         style={{ color: theme.background, background: theme.foreground }}
+        title="examples of words to search: potted, blue, bulb"
       >
         Clear search
       </button>

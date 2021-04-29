@@ -9,6 +9,7 @@ const CategorySelect = (props) => {
     setSelectedCategory,
     products,
   } = props;
+  
   const { theme } = useContext(ThemeContext);
 
   // useEffect(() => {
