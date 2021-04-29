@@ -7,6 +7,8 @@ const SearchKeyword = (props) => {
 
   const { theme } = useContext(ThemeContext);
 
+  
+
   useEffect(() => {
     console.log(
       "In searchkeyword, searching for: ",

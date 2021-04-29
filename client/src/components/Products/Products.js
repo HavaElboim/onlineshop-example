@@ -58,6 +58,7 @@ console.log("filtered shop: ", filteredData);
           ))}
         </div>
       )}
+      {filteredData.length === 0 && (<div className="NoProdsWarning">No products in the shop match your search</div>)}
     </div>
   );
 };
