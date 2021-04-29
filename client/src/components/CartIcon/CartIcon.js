@@ -57,6 +57,7 @@ const CartIcon = ({numInCart, setNumInCart}) => {
           onClick={(e) => {
             showCartFn();
           }}
+          title="click here to display or hide cart list"
         />
         {cart.length > 0 && (
           <div>
