@@ -13,12 +13,9 @@ import CartDisplayContents from "../CartDisplayContents/CartDisplayContents";
 const useCartState = createPersistedState("cart");
 
 const CartIcon = ({numInCart, setNumInCart}) => {
-  const [cart, setCart] = useCartState({});
- // const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
+const [cart, setCart] = useCartState({});
 
- const [ShowCart, setShowCart] = useState(false);
-  //let showCart = true;
-  console.log("in cartIcon, numincart is: ", numInCart);
+const [ShowCart, setShowCart] = useState(false);
 
   // old version using useState / useReducer / useEffect -
   // cart data doesn't re-render automatically on change
@@ -40,7 +37,6 @@ const CartIcon = ({numInCart, setNumInCart}) => {
   //   setCartNumItems(localStorage.getItem("cartQty"));
   // }, localStorage);
 
-  console.log("show val now is ", ShowCart);
 
   const showCartFn = () => {
    // showCart = !showCart;

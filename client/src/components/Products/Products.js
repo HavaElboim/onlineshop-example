@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import UserContext from "../../contexts/UserContexts";
 
 const Products = (props) => {
   const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
-
+  const { user, toggleUser } = useContext(UserContext);
   const [filteredData, setFilteredData]= useState(products);
-  
-  console.log(`in products, cat: ${selectedCategory}, search: ${selectedCategory}, price rng: ${priceRange[0]} ${priceRange[1]}`);
-  
+    
   useEffect(() => {
 
-    let tempProds1, tempProds2, tempProds3;
+    let tempProds1, tempProds2;
     
     tempProds1 = products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0]));
     tempProds2 = (selectedCategory != "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
-    tempProds3 = (searchKeyword != "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
-    setFilteredData(tempProds3);
-
-  console.log("In Products. selected cat: ", selectedCategory, "search keyword", searchKeyword, "filtered shop", filteredData);
+    tempProds1 = (searchKeyword != "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
+    setFilteredData(tempProds1);
 
   }, [priceRange, selectedCategory, searchKeyword]);
-
-console.log("filtered shop: ", filteredData);
 
   // maps the array containing the shop information to set up individual products items
   // and passes via to the ProductsDisplayClass which will starts the sale countdown and which calls the  */
 
   return (
     <div>
+           {user.name === "Admin" && <div>Click on product to edit it</div>}
+      {user.name !== "Admin" && (
+        <div>Click on product to see details and order</div>
+      )}
       {filteredData.length > 0 && (
         <div className="product-filter">
           {filteredData.map((product) => (

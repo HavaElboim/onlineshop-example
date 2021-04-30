@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import ThemeContext from "../../contexts/ThemeContexts";
+import "./SearchKeyword.css";
 
 const SearchKeyword = (props) => {
   const { searchKeyword, setSearch, products } = props;
@@ -15,18 +16,6 @@ const SearchKeyword = (props) => {
       searchKeyword
     );
   }, [searchKeyword]);
-
-  // const sendSearch = () => {
-  //   console.log("starting search for words", searchKeyword);
-  //   fetch(`http://10.0.0.193:8000/products?q=${searchKeyword}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setProducts(data));
-  //   console.log(
-  //     "descr is ",
-  //     products,
-  //     ` from http://10.0.0.193:8000/products?q=${searchKeyword}`
-  //   );
-  // };
 
   return (
     <div style={{ color: theme.color, background: theme.background , display: "flex", flexDirection: "row", padding: "5px" }}>

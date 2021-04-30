@@ -31,10 +31,6 @@ const Header = (props) => {
 
   const [cart, setCart] = useCartState({});
   const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
-  console.log("in header, numincart is: ", numInCart);
-
-
-  //const theme = useContext(ThemeContext);
 
   return (
     <div className="headerDiv">

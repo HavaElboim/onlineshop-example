@@ -49,10 +49,6 @@ const Home = () => {
 
   return (
     <div>
-      {user.name === "Admin" && <div>Click on product to edit it</div>}
-      {user.name !== "Admin" && (
-        <div>Click on product to see details and order</div>
-      )}
       <Header
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

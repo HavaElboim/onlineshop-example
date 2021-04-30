@@ -13,6 +13,7 @@ const ChangeThemeColors = () => {
           color: theme.foreground,
         }}
         onClick={toggleTheme}
+        title="Change site colors for better visibility"
       >
         Visibility
       </button>
