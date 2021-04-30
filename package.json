@@ -1,6 +1,6 @@
 {
   "name": "myshop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "plants shop to run on local server",
   "main": "read-write-json-code.js",
   "dependencies": {
