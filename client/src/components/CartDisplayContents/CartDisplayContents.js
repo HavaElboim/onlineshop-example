@@ -10,7 +10,7 @@ import "./CartDisplayContents.css";
 
 const useCartState = createPersistedState("cart");
 
-const CartDisplayContents = () => {
+const CartDisplayContents = ({numInCart, setNumInCart}) => {
   const { theme } = useContext(ThemeContext);
   //const cartItemsArray = JSON.parse(localStorage.getItem("cartArray"));
   const [cart, setCart] = useCartState({});
@@ -21,11 +21,11 @@ const CartDisplayContents = () => {
         <div
           className="shoppingList"
           style={{
-            background: theme.listBackground,
+            color: theme.listColor,
           }}
         >
           {cart.map((item, i) => (
-            <CartItem item={item} key={i} />
+            <CartItem item={item} key={i} numInCart={numInCart} setNumInCart={setNumInCart}/>
           ))}
         </div>
       )}

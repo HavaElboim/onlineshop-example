@@ -1,4 +1,5 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
+import createPersistedState from "use-persisted-state";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
 import PropTypes from "prop-types";
 import CategorySelect from "../CategorySelect/CategorySelect";
@@ -8,6 +9,7 @@ import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CartIcon from "../CartIcon/CartIcon";
 import UserContext from "../../contexts/UserContexts";
+const useCartState = createPersistedState("cart");
 
 const Header = (props) => {
   const {
@@ -27,11 +29,12 @@ const Header = (props) => {
 
   const { user, toggleUser } = useContext(UserContext);
 
-  //const theme = useContext(ThemeContext);
+  const [cart, setCart] = useCartState({});
+  const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
 
   return (
-    <div>
-      {user.name === "Guest" && <CartIcon />}
+    <div className="headerDiv">
+      {user.name === "Guest" && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
       <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
@@ -43,7 +46,6 @@ const Header = (props) => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
-          setProducts={setProducts}
         ></CategorySelect>
       )}
       {products.length > 0 && (
@@ -51,7 +53,6 @@ const Header = (props) => {
           searchKeyword={searchKeyword}
           setSearch={setSearch}
           products={products}
-          setProducts={setProducts}
         ></SearchKeyword>
       )}
       <div className="price-range">

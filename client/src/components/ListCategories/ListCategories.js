@@ -32,22 +32,7 @@ const ListCategories = (props) => {
     console.log("In ListC, number of products from props: ", products.length);
   }, [products]);
 
-  /*
-  if (products.length) {
-    console.log("listing categories");
-    setCategories((products) => Object.keys(groupBy(products, "category")));
-
-    let anothervar = Object.keys(groupBy(products, "category"));
-
-    console.log("anothervar:", anothervar);
-    this.setState({
-      categories: ["Select...", ...anothervar],
-    });
-    console.log("categories: ", categories);
-  } else {
-    console.log("products array empty");
-  }
-*/
+ 
   return (
     <>
       {Object.keys(groupBy(products, "category")).map((category) => (

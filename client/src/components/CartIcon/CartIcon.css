@@ -9,6 +9,7 @@
   border-radius: 14px;
   background-color: #f1fb87;
   right: 55%;
+  cursor: pointer;
 }
 
 .numCartItemsDisplay {

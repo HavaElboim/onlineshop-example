@@ -142,6 +142,11 @@ table {
   border-spacing: 0;
 }
 
+.frameDiv{
+display: flex;
+flex-direction: row;
+}
+
 /*------------------------------------*\
       $MAIN
     \*------------------------------------*/
@@ -194,7 +199,8 @@ h6 {
 }
 
 .hvr-shutter-out-vertical {
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
@@ -237,14 +243,16 @@ h6 {
   transform: scaleY(1);
 }
 .product-image img {
-  width: 70%;
-  padding-left: 5%;
-  padding-right: 5%;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
 }
+
+
 
 .product-banner-sale {
   background-color: green;

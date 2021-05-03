@@ -1,32 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import UserContext from "../../contexts/UserContexts";
 
 const Products = (props) => {
-  const { secondsLeft, selectedCategory, products, isSale, priceRange } = props;
-
-  /* the line
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    stops the warning
-    "React Hook useEffect has a missing dependency: ''"
-    where it expects to see [products] instead of []
-    */
+  const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
+  const { user, toggleUser } = useContext(UserContext);
+  const [filteredData, setFilteredData]= useState(products);
+    
   useEffect(() => {
-    console.log("In Products, products are: ", products);
-    console.log("In products, selected category is: ", selectedCategory);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    let tempProds1, tempProds2;
+    
+    tempProds1 = products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0]));
+    tempProds2 = (selectedCategory != "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
+    tempProds1 = (searchKeyword != "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
+    setFilteredData(tempProds1);
+
+  }, [priceRange, selectedCategory, searchKeyword]);
 
   // maps the array containing the shop information to set up individual products items
   // and passes via to the ProductsDisplayClass which will starts the sale countdown and which calls the  */
 
   return (
     <div>
-      {products.length > 0 && (
+           {user.name === "Admin" && <div>Click on product to edit it</div>}
+      {user.name !== "Admin" && (
+        <div>Click on product to see details and order</div>
+      )}
+      {filteredData.length > 0 && (
         <div className="product-filter">
-          {products.map((product) => (
+          {filteredData.map((product) => (
             <Link
               className="product-card  hvr-shutter-out-vertical"
               to={`/products/${product._id}`}
@@ -51,6 +57,7 @@ const Products = (props) => {
           ))}
         </div>
       )}
+      {filteredData.length === 0 && (<div className="NoProdsWarning">No products in the shop match your search</div>)}
     </div>
   );
 };

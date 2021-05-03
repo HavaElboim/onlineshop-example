@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 //import ProductInfo from "../../pages/ProductInfo/ProductInfo";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
+import LeftFrame from "../../components/icons/green-leaves-left-frame.svg";
 
 /* this component is called from the Products class.
    It renders individual products cards (product title, image, price).
@@ -30,13 +31,11 @@ const ProductDisplayClass = (props) => {
   const { theme } = useContext(ThemeContext);
   const { sale } = useContext(SaleContext);
 
-  // const newPrice =
-  //   onSale && sale.isSale ? ` Sale: $ ${+(price * 0.9).toFixed(2)}` : "";
-
   const newPrice = onSale
     ? ` Sale: $ ${+((price * (100 - saleReductionPercent)) / 100).toFixed(2)}`
     : "";
 
+    
   /* renders an individual product card, containing product information and image.
   the information an image are obtained from the props which are passed from the ProductsContainerClass */
 
@@ -48,6 +47,8 @@ const ProductDisplayClass = (props) => {
         className=" hvr-shutter-out-vertical"
         style={{ color: theme.foreground, background: "white" }}
       >
+        <img src={LeftFrame} alt="frame of green leaves" className="leavesFrame"/>
+        <div className="inner-card">
         <div className="product-info">
           {onSale && <div className="product-banner-sale">SALE</div>}
           {!onSale && <div className="product-banner-nosale"></div>}
@@ -73,6 +74,7 @@ const ProductDisplayClass = (props) => {
             {saleReductionPercent}% off! {newPrice}
           </h5>
           <h5>{quantityInStock} in stock</h5>
+        </div>
         </div>
       </div>
     )

@@ -20,3 +20,9 @@
 .collection-sort:first-child {
   padding-right: 20px;
 }
+
+.NoProdsWarning {
+  text-align: center;
+    color: #c52b2b;
+    font-weight: bold;
+}

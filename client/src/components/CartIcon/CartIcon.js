@@ -12,10 +12,10 @@ import CartDisplayContents from "../CartDisplayContents/CartDisplayContents";
 
 const useCartState = createPersistedState("cart");
 
-const CartIcon = (props) => {
-  const [cart, setCart] = useCartState({});
+const CartIcon = ({numInCart, setNumInCart}) => {
+const [cart, setCart] = useCartState({});
 
-  let showCart = true;
+const [ShowCart, setShowCart] = useState(false);
 
   // old version using useState / useReducer / useEffect -
   // cart data doesn't re-render automatically on change
@@ -37,11 +37,10 @@ const CartIcon = (props) => {
   //   setCartNumItems(localStorage.getItem("cartQty"));
   // }, localStorage);
 
-  console.log("show val now is ", showCart);
 
   const showCartFn = () => {
-    showCart = !showCart;
-    alert(" showcart val now is ", showCart);
+   // showCart = !showCart;
+   setShowCart(!ShowCart);
   };
 
   return (
@@ -54,6 +53,7 @@ const CartIcon = (props) => {
           onClick={(e) => {
             showCartFn();
           }}
+          title="click here to display or hide cart list"
         />
         {cart.length > 0 && (
           <div>
@@ -63,7 +63,7 @@ const CartIcon = (props) => {
           </div>
         )}
       </div>
-      {cart.length > 0 && showCart && <CartDisplayContents />}
+      {cart.length > 0 && ShowCart && <CartDisplayContents numInCart={numInCart} setNumInCart={setNumInCart}/>}
     </div>
   );
 };
