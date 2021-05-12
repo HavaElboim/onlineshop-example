@@ -60,7 +60,7 @@ const ProductInfo = ({ match }) => {
   console.log("in productinfo, theme is: ", theme.foreground);
   //console.log("sale is", sale.isSale);
   const [cart, setCart] = useCartState({});
-  const [numInCart, setNumInCart] = useState(cart.reduce((n, { quantity }) => n + quantity, 0));
+  const [numInCart, setNumInCart] = useState(cart.length>0 ? cart.reduce((n, { quantity }) => n + quantity, 0): 0);
 
   console.log("!!!!!!!!!!!!!!!!!!!!! In ProductInfo, numInCart is: ", numInCart);
   useEffect(() => {
