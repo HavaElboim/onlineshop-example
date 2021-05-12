@@ -1,0 +1,28 @@
+/* Product Layout */
+
+.product-filter {
+  display: flex;
+  padding: 30px 0;
+  flex-wrap: wrap; /* otherwise products would be displayed in one long row and don't wrap onto more rows */
+  align-items: stretch;
+}
+
+.sort {
+  display: flex;
+  align-self: flex-end;
+}
+
+.collection-sort {
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-sort:first-child {
+  padding-right: 20px;
+}
+
+.NoProdsWarning {
+  text-align: center;
+    color: #c52b2b;
+    font-weight: bold;
+}

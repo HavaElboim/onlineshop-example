@@ -1,0 +1,8 @@
+.shoppingList {
+  max-width: 350px;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(226 250 200);
+}
