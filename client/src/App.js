@@ -17,6 +17,7 @@ import UserContext, { users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
 
 import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.svg";
+import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.svg";
 
 /* App calls ProductsContainerClass
   which calls SaleCountdown
@@ -62,6 +63,7 @@ const App = () => {
               className="outer-div"
               style={{ color: theme.foreground, background: theme.background }}
             >
+              <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
               <div className="inner-outer-div">
               <ChangeThemeColors />
               <DisplayUser />
