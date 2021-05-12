@@ -1,5 +1,0 @@
-open vscode in root folder & run by: 
-npm start dev
-
-open vscode in client & run by:
-npm start
