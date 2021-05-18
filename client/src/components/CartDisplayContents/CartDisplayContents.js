@@ -24,16 +24,23 @@ const CartDisplayContents = ({numInCart, setNumInCart}) => {
             color: theme.listColor,
           }}
         >
+         <div className="shoppingListTitle">In your shopping cart:</div>
+
           {cart.map((item, i) => (
             <CartItem item={item} key={i} numInCart={numInCart} setNumInCart={setNumInCart}/>
           ))}
+         <div><span className="shoppingListTitle">Total:</span> ${cart.reduce((accumulator, current) => accumulator + (current.saleReductionPercent > 0 ? current.quantity*(100-current.saleReductionPercent)*current.price/100 : current.quantity*current.price), 0)}</div>
+
         </div>
+
       )}
     </div>
   );
 };
 
 export default CartDisplayContents;
+
+//<div>Total: ${cart.reduce((accumulator, current) => accumulator + (current.finalPrice > 0 ? current.quantity*current.finalPrice : current.quantity*current.price), 0)}</div>
 
 // old version of displaying cart from localStorage,
 // before installing use-persisted-state:
