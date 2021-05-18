@@ -11,6 +11,7 @@ import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySe
 // import saleIcon from "../../components/icons/sale-icon-png-19.png";
 //import saleIcon from "../../components/icons/saleGreenBig.png";
 import saleIcon from "../../components/icons/green-leaf-sale-icon.svg";
+import LeavesFrame from "../../components/icons/green-leaves-left-frame.svg";
 import CartIcon from "../../components/CartIcon/CartIcon";
 
 // custom hook for updating state from local storage
@@ -429,6 +430,11 @@ const ProductInfo = ({ match }) => {
           <div>
             <img className="saleIconImg" src={saleIcon} alt="on sale" />
           </div>
+        )}
+        {!products.onSale && (
+          <div>
+          <img className="saleIconImg" src={LeavesFrame} alt="on sale" />
+        </div>
         )}
         {!editProduct && (
           <div className="product-title">{productName || products.title}</div>

@@ -1,5 +1,6 @@
 button {
   height: 29px;
+  font-size: 70% !important;
 }
 
 .innerSelectionOptions {
@@ -30,5 +31,6 @@ button {
 input, select {
   padding: 0px 5px 0px 5px;
   margin: 0px 15px 0px 15px !important;
+  max-width: 60%;
 }
 

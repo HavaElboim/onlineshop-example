@@ -209,13 +209,13 @@ button {
       $MAIN
     \*------------------------------------*/
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+/* @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500); */
 
 body {
   margin: 0 auto;
   width: 90%;
   max-width: 1240px;
-  font-family: "Roboto", sans-serif;
+  font-family: Segoe Script;
   background-color: #f6f6f6;
 }
 
