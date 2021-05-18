@@ -41,26 +41,33 @@ const Header = (props) => {
         isSale={isSale}
         setSale={setSale}
       ></SaleCountdown>
+      <div className="selectionOptions">
+        <div className="selectionOptionsHeader">Can we help you look for something?</div>
       {products.length > 0 && (
+        <div className="innerSelectionOptions">
         <CategorySelect
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           products={products}
         ></CategorySelect>
+        </div>
       )}
       {products.length > 0 && (
+        <div className="innerSelectionOptions">
         <SearchKeyword
           searchKeyword={searchKeyword}
           setSearch={setSearch}
           products={products}
         ></SearchKeyword>
+        </div>
       )}
-      <div className="price-range">
+      <div className="innerSelectionOptions">
         <SliderFilterPrice
           priceRange={priceRange}
           setPriceRange={setPriceRange}
           products={products}
         ></SliderFilterPrice>
+      </div>
       </div>
     </div>
   );

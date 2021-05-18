@@ -2,14 +2,15 @@ import React, { useEffect, useContext, useState } from "react";
  
 import { Slider, InputNumber } from "antd";
 import "antd/dist/antd.css";
-import "./SliderFilterPrice.css";
+//import "antd/dist/antd.less";
+
+//import "./SliderFilterPrice.css";
+import "../Header/Header.css";
 import ThemeContext, { currentTheme } from "../../contexts/ThemeContexts";
 
 const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;
   const { theme } = useContext(ThemeContext);
-
-  
 
   const formatter = (value) =>{
     return `${value}%`;
@@ -33,7 +34,7 @@ const SliderFilterPrice = (props) => {
   return (
     <>
       <div style={{ color: theme.foreground, background: theme.background }}>
-        Select Price range:
+        I'd like something in the price range:
       </div>
       <Slider
         range
@@ -41,6 +42,7 @@ const SliderFilterPrice = (props) => {
         max={50}
         value={priceRange}
         onChange={setPriceRange}
+        trackStyle={{backgroundColor:'red'}}
       />
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
       <InputNumber

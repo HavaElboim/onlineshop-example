@@ -1,5 +1,11 @@
 /* Product Layout */
 
+.user-instructions {
+  padding-left: 30px;
+  padding-top: 20px;
+  font-family: Segoe Script;
+}
+
 .product-filter {
   display: flex;
   padding: 30px 0;

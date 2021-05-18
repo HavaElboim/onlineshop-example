@@ -1,3 +1,5 @@
+/* @import url(//db.onlinewebfonts.com/c/5c452fb7a0f5751f4e94e9d84eb01154?family=Segoe+Script); */
+
 .product-image img {
   width: 70%;
   padding-left: 5%;
@@ -14,9 +16,10 @@
 }
 
 .product-title {
-  font-size: 20px;
+  font-size: 40px;
   text-align: center;
   padding: 20px;
+  font-family: Segoe Script;
 }
 
 .editProductButton {

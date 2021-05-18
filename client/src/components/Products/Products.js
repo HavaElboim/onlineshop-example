@@ -26,9 +26,9 @@ const Products = (props) => {
 
   return (
     <div>
-           {user.name === "Admin" && <div>Click on product to edit it</div>}
+           {user.name === "Admin" && <div className="user-instructions">Click on product to edit it</div>}
       {user.name !== "Admin" && (
-        <div>Click on product to see details and order</div>
+        <div className="user-instructions">Click on product to see details and order</div>
       )}
       {filteredData.length > 0 && (
         <div className="product-filter">

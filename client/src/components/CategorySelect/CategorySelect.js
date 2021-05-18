@@ -2,7 +2,8 @@ import React, { useEffect, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import ListCategories from "../ListCategories/ListCategories";
 import ThemeContext from "../../contexts/ThemeContexts";
-import "./CategorySelect.css";
+//import "./CategorySelect.css";
+import "../Header/Header.css";
 
 const CategorySelect = (props) => {
   const {

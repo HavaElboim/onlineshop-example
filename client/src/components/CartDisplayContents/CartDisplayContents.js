@@ -40,7 +40,6 @@ const CartDisplayContents = ({numInCart, setNumInCart}) => {
 
 export default CartDisplayContents;
 
-//<div>Total: ${cart.reduce((accumulator, current) => accumulator + (current.finalPrice > 0 ? current.quantity*current.finalPrice : current.quantity*current.price), 0)}</div>
 
 // old version of displaying cart from localStorage,
 // before installing use-persisted-state:

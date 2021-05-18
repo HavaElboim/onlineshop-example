@@ -12,6 +12,7 @@ import "../../components/storagetools/LocalStorageArrayTools.js";
 import createPersistedState from "use-persisted-state";
 const useCartState = createPersistedState("cart");
 
+
 const CartItem = ({ item, numInCart, setNumInCart, quantityWarnText = "", setQtyWarn }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [products, setProducts] = useState({});
@@ -19,7 +20,8 @@ const CartItem = ({ item, numInCart, setNumInCart, quantityWarnText = "", setQty
   const [qty, setQty] = useState(item.quantity);
   const [cart, setCart] = useCartState({});
   //const {currentItems, setCurrentItems} = useState(cart.length > 0 ? cart : []);
-
+  const [ShowCart, setShowCart] = useState(false);
+  
   const isSale = true;
   //console.log("cart item: ", item);
   //console.log(`cart item: ${item.title}, ${item.price}`);
@@ -159,6 +161,7 @@ console.log("in cartItem, numincart is: ", numInCart);
       setQty(currentItems[index].quantity);
     }
   }
+  setShowCart(true);
   };
 
   return (

@@ -15,7 +15,7 @@ const useCartState = createPersistedState("cart");
 const CartIcon = ({numInCart, setNumInCart}) => {
 const [cart, setCart] = useCartState({});
 
-const [ShowCart, setShowCart] = useState(false);
+const [ShowCart, setShowCart] = useState(true);
 
   // old version using useState / useReducer / useEffect -
   // cart data doesn't re-render automatically on change
