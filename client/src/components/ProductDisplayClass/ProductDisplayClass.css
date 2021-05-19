@@ -245,15 +245,26 @@ h6 {
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
-.product-image img {
-  width: 100%;
+.product-display-image {
+  /* width: 100%;
   padding-left: 0px;
   padding-right: 0px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 0 auto;
-}
+  margin: 0 auto;*/
+  display: flex;
+  width: 70%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    margin: 0 auto;
+} 
 
 
 
