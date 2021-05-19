@@ -17,8 +17,7 @@
 
 .product-image {
   flex: 1;
-  /* max-height: 100%; */
-  /* max-width: 70%; */
+  max-height: 20vh;
   left: 15vw;
   overflow: hidden;
   padding-left: 5%;
