@@ -61,7 +61,7 @@ const Header = (props) => {
         ></SearchKeyword>
         </div>
       )}
-      <div className="innerSelectionOptions">
+      <div className="sliderDiv">
         <SliderFilterPrice
           priceRange={priceRange}
           setPriceRange={setPriceRange}
