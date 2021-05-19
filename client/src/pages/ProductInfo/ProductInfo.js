@@ -426,16 +426,7 @@ const ProductInfo = ({ match }) => {
             <div style={{ color: "red" }}>{quantityWarnText}</div>
           </div>
         )}
-        {products.onSale && (
-          <div>
-            <img className="saleIconImg" src={saleIcon} alt="on sale" />
-          </div>
-        )}
-        {!products.onSale && (
-          <div>
-          <img className="saleIconImg" src={LeavesFrame} alt="on sale" />
-        </div>
-        )}
+       
         {!editProduct && (
           <div className="product-title">{productName || products.title}</div>
         )}
@@ -453,8 +444,20 @@ const ProductInfo = ({ match }) => {
             )}
           </div>
         )}
-        <div className="product-image">
-          <img src={products.image} alt={""} />
+        <div className="displayImageOuterBox">
+          <div className="displayImageInnerBox">
+        {products.onSale && (
+          <div className="saleIconImg">
+            <img  src={saleIcon} alt="on sale"className="product-image" />
+          </div>
+        )}
+        {!products.onSale && (
+          <div className="saleIconImg">
+          <img  src={LeavesFrame} alt="not on sale" className="product-image"/>
+        </div>
+        )}
+          <img src={products.image} alt={""} className="product-image"/>
+        </div>
         </div>
         <div>
           {!editProduct && (
