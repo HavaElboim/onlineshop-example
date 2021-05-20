@@ -12,6 +12,7 @@
 @media (max-width: 600px) {
   .shoppingList {
     width: 80vw;
+    margin-bottom: 25px;
   }
 }
 .shoppingListTitle {

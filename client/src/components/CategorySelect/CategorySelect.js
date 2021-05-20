@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import ListCategories from "../ListCategories/ListCategories";
 import ThemeContext from "../../contexts/ThemeContexts";
-//import "./CategorySelect.css";
+import "./CategorySelect.css";
 import "../Header/Header.css";
 
 const CategorySelect = (props) => {
@@ -15,11 +15,11 @@ const CategorySelect = (props) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div style={{ color: theme.color, background: theme.background,  display: "flex", flexDirection: "row", padding: "5px" }}>
-      <div>Choose category of product:</div>
-      {products.length > 0 && (
+    <div className="innerSelectionBox" style={{ color: theme.color, background: theme.background}}>
+      <div className="innerSelectionElements innerSelectionLabel" >Choose category of product:</div>
+      {products.length > 0 && ( 
         <>
-        <select
+        <select className="innerSelectionElements"
           id="selectCat"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -30,7 +30,7 @@ const CategorySelect = (props) => {
         </select>
         </>
       )}
-      <button
+      <button className="innerSelectionElements"
         onClick={(e) => setSelectedCategory("")}
         style={{ color: theme.background, background: theme.foreground }}
       >

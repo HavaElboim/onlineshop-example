@@ -1,3 +1,26 @@
 button {
     height: 25px;
 }
+
+.innerSelectionBox {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+@media (min-width: 920px) {
+    .innerSelectionLabel {
+        width: 16vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .innerSelectionBox {
+        flex-direction: column;
+    }
+
+    .innerSelectionElements {
+        margin: 10px 0px 10px 0px !important;
+        max-width: 100% !important;
+    }
+}

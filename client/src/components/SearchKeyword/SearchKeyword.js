@@ -19,10 +19,11 @@ const SearchKeyword = (props) => {
   }, [searchKeyword]);
 
   return (
-    <div style={{ color: theme.color, background: theme.background , display: "flex", flexDirection: "row", padding: "5px" }}>
-      <div>I'm looking for (free text): </div>
+    <div className="innerSelectionBox" style={{ color: theme.color, background: theme.background}}>
+      <div className="innerSelectionElements innerSelectionLabel">I'm looking for (free text): </div>
       {products.length > 0 && (
         <input
+        className="innerSelectionElements"
           id="setSearch"
           value={searchKeyword}
           onChange={(e) => setSearch(e.target.value)}
@@ -31,6 +32,7 @@ const SearchKeyword = (props) => {
         />
       )}
       <button
+       className="innerSelectionElements"
         id="clearButton"
         onClick={(e) => setSearch("")}
         style={{ color: theme.background, background: theme.foreground }}
