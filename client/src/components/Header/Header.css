@@ -21,6 +21,11 @@ button {
   font-family: Segoe Script;
 }
 
+@media (max-width: 600px) {
+.headerDiv {
+  padding: 10px;
+  }
+}
 .selectionOptions {
   /* border-width: 2px; */
   /* border-style: groove; */

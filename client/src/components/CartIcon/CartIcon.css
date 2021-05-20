@@ -3,13 +3,21 @@
 .cartWindow {
   display: flex;
   justify-content: flex-end;
+  position: relative; /* use position:relative on the flex-parent to provide positioning context */
 }
+@media (max-width: 600px) {
+  .cartWindow {
+    /* justify-content: start; */
+  }
+}
+
 .cartContainer {
   /* position: absolute; */
   border-radius: 14px;
   background-color: #f1fb87;
-  right: 55%;
+  /* right: 55%; */
   cursor: pointer;
+  position: absolute;  /* new*/
 }
 
 .numCartItemsDisplay {
@@ -33,6 +41,7 @@
   border-radius: 16px;
   background-color: #f1fb87;
   padding-right: 10px;
+  left: 0px;  /* new*/
 }
 
 .deleteIcon {
@@ -46,6 +55,7 @@
   display: inline-block;
   vertical-align: middle;
   height: fit-content;
+  width: fit-content; /* new */
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 1px 10px 0;

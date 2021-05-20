@@ -310,6 +310,10 @@ label {
   .products .product-card:nth-child(2) {
     flex: 2 46%;
   }
+
+  .inner-outer-div {
+    padding: 10px;
+  }
 }
 
 @media (max-width: 600px) {
