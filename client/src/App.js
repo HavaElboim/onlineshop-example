@@ -16,8 +16,10 @@ import ThemeContext, { themes } from "./contexts/ThemeContexts";
 import UserContext, { users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
 
-import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.svg";
-import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.svg";
+//import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.svg";
+//import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.svg";
+import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.png";
+import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.png";
 
 /* App calls ProductsContainerClass
   which calls SaleCountdown
