@@ -1,3 +1,10 @@
+/* to start running this app in localhost, type
+npm start dev
+in terminal from within client directory
+and in a separate terminal type same from within server directory
+gocodeshop-server
+*/
+
 import "./App.css";
 import { useState } from "react";
 
