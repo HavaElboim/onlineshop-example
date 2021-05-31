@@ -1,5 +1,20 @@
 /* @import url(//db.onlinewebfonts.com/c/5c452fb7a0f5751f4e94e9d84eb01154?family=Segoe+Script); */
 
+
+
+
+/* import font */
+@font-face {
+  font-family: "Segoe Script";
+  src: url("./components/assets/segoesc.ttf");
+  font-weight: 200;
+  font-style: normal;
+}
+
+:root {
+  font-family: "Segoe Script", cursive;
+}
+
 .App {
   text-align: center;
 }
@@ -294,6 +309,7 @@ label {
 .product-image img {
   width: 100%;
 }
+
 
 .product-info {
   /*margin-top: auto;*/ /*removed this as is adds different amounts of space above the product titles */
