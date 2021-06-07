@@ -1,13 +1,85 @@
 // import the express package, installed earlier using: npm install express
 const express = require("express");
 const path = require("path");
+const createError = require("http-errors");
+const bcrypt = require("bcrypt");
+const cors = require("cors");
+const { authenticateToken, generateAccessToken } = require("./jwt");
+const logger = require("morgan");
 
 // call the express function which returns an express server application
 const app = express();
+// for login:
+//PUT THIS BACK IN:
+// const { usersRouter, tagsRouter, inquiriesRouter } = require("./routes");
+const salt = 10;
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 
 require("dotenv").config();
+
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+app.post("/register", async (req, res) => {
+  const { email, password } = req.body;
+  if (!validateEmail(email)) {
+    res.status(403).send("invalid email").end();
+    return;
+  }
+
+  const existing = await User.findOne({ email }).exec();
+  if (existing) {
+    res.status(403).send("email already existing").end();
+    return;
+  }
+
+  const hash = bcrypt.hashSync(password, salt);
+  const user = await new User({
+    email,
+    password: hash,
+  }).save();
+  const token = generateAccessToken(user);
+  res.send({ token });
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email }).exec();
+  if (!user) {
+    res.status(403).send("user not exist");
+    return;
+  }
+  const isValid = bcrypt.compareSync(password, user.password);
+  if (!isValid) {
+    res.status(403).send("invalid password");
+    return;
+  }
+  const token = generateAccessToken(user);
+  const userObject = user.toObject();
+  const { password: removed, ...resUser } = userObject;
+  res.send({ resUser, token });
+});
+
+//PUT THIS BACK IN:
+// app.use("/users", usersRouter);
+// app.use("/products", productsRouter);
+// app.use("/admin", require("./routes/admin"));
+
+
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
@@ -19,26 +91,40 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+//moved to models/index.js
 
-var cors = require("cors");
 app.use(cors());
 
-const productSchema = new mongoose.Schema({
-  //title: { type: String, required: true },
-  title: String,
-  description: String,
-  price: Number,
-  category: String,
-  image: String,
-  quantityInStock: Number,
-  onSale: {
-    type: Boolean,
-    default: false,
-  },
-  saleReductionPercent: Number,
-});
+// const productSchema = new mongoose.Schema({
+//   //title: { type: String, required: true },
+//   title: String,
+//   description: String,
+//   price: Number,
+//   category: String,
+//   image: String,
+//   quantityInStock: Number,
+//   onSale: {
+//     type: Boolean,
+//     default: false,
+//   },
+//   saleReductionPercent: Number,
+// });
 
-const Product = mongoose.model("Product", productSchema);
+// const Product = mongoose.model("Product", productSchema);
+
+// const userSchema = new mongoose.Schema({
+//   //title: { type: String, required: true },
+//   firstName: String,
+//   lastName: String,
+//   telephone: Number,
+//   email: String,
+//   address1: String,
+//   address2: String,
+//   city: String,
+//   zip: String,
+// });
+
+// const User = mongoose.model("User", userSchema);
 
 // provide data to be displayed on the / page of the server's website
 app.get("/api", (req, res) => {
@@ -63,17 +149,6 @@ app.get("/api/products", async (req, res) => {
       .catch((err) => res.status(404).json({ success: false }));
   }
 });
-
-/*
-app.get("/todos", (req, res) => {
-  const { q } = req.query;
-  if (q) {
-    res.send(todos.filter((todo) => todo.title.includes(q)));
-  } else {
-    res.send(todos);
-  }
-});
-*/
 
 //adding option to serve requests with parameters:
 app.get("/api/products/:_id", async (req, res) => {
