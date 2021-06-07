@@ -1,7 +1,17 @@
 /* @import url(//db.onlinewebfonts.com/c/5c452fb7a0f5751f4e94e9d84eb01154?family=Segoe+Script); */
 
+/* even though the above is commented out, when accessing the online site via heroku
+get the following error:
+Mixed content: load all resources via HTTPS to improve the security of your site
+Even though the initial HTML page is loaded over a secure HTTPS connection, some resources like images, stylesheets or scripts are being accessed over an insecure HTTP connection. Usage of insecure resources is restricted to strengthen the security of your entire site.
+To resolve this issue, load all resources over a secure HTTPS connection.
+Restriction status: blocked:
+http://b.onlinewebfonts.com/t/5c452fb7a0f5751f4e94e9d84eb01154.woff
+- where else is this imported??
 
-
+& in the console online:
+Mixed Content: The page at 'https://online-garden-shop.herokuapp.com/' was loaded over HTTPS, but requested an insecure font 'http://db.onlinewebfonts.com/t/5c452fb7a0f5751f4e94e9d84eb01154.woff2'. This request has been blocked; the content must be served over HTTPS.
+*/
 
 /* import font */
 @font-face {
