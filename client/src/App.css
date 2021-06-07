@@ -14,16 +14,22 @@ Mixed Content: The page at 'https://online-garden-shop.herokuapp.com/' was loade
 */
 
 /* import font */
-@font-face {
+/* @font-face {
   font-family: "Segoe Script";
   src: url("./components/assets/segoesc.ttf");
   font-weight: 200;
   font-style: normal;
-}
+} */
+
+Garamond
 
 :root {
-  font-family: "Segoe Script", cursive;
+  font-family: 'Garamond';
 }
+
+/* :root {
+  font-family: "Segoe Script", cursive;
+} */
 
 .App {
   text-align: center;
@@ -240,7 +246,8 @@ body {
   margin: 0 auto;
   width: 90%;
   max-width: 1240px;
-  font-family: "Segoe Script";
+  /* font-family: "Segoe Script"; */
+  font-family: 'Garamond';
   background-color: #f6f6f6;
 }
 
