@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "./CartItem.css";
-import sale from "../icons/green-leaves-sale.svg";
+import sale from "../icons/green-leaves-sale.png";
 import deleteIcon from "../icons/trash.png";
 import editIcon from "../icons/editIcon.png";
 import upArrow from "../icons/upArrow.png";

@@ -18,7 +18,7 @@ button {
 
 .headerDiv {
   padding: 30px;
-  font-family: Segoe Script;
+  /* font-family: Segoe Script; */
 }
 
 @media (max-width: 600px) {

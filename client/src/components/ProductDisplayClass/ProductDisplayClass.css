@@ -1,4 +1,4 @@
-@import url(//db.onlinewebfonts.com/c/5c452fb7a0f5751f4e94e9d84eb01154?family=Segoe+Script);
+/* @import url(//db.onlinewebfonts.com/c/5c452fb7a0f5751f4e94e9d84eb01154?family=Segoe+Script); */
 
 /*------------------------------------*\
     RESET
@@ -185,7 +185,7 @@ h6 {
   height: 45px;
   padding-top: 15px;
   padding-bottom: 5px;
-  font-family: Segoe Script;
+  /* font-family: Segoe Script; */
 }
 
 .product-card {
@@ -292,7 +292,7 @@ h6 {
   /*margin-top: auto;*/ /*removed this as is adds different amounts of space above the product titles */
   padding-bottom: 20px;
   text-align: center;
-  font-family: Segoe Script;
+  /* font-family: Segoe Script; */
 }
 
 @media (max-width: 920px) {
