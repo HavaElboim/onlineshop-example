@@ -4,7 +4,7 @@ button {
   padding: 2px 5px 2px 5px;
   height: 29px;
   font-size: 70% !important;
-  font-family: Segoe Script;
+  /* font-family: Segoe Script; */
 }
 
 button span {
