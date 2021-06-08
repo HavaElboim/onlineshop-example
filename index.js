@@ -20,6 +20,11 @@ app.use(express.json());
 
 require("dotenv").config();
 
+const {
+  connectDb,
+  models: { User, Product },
+} = require("./models");
+
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -164,7 +169,7 @@ app.get("/api/products/:_id", async (req, res) => {
       console.log("server product = " + JSON.stringify(product));
       res.json(product);
     }
-  });
+  }).catch(err => res.status(404).json({ success: false }));
 });
 
 // post: to add an item to the database
