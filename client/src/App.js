@@ -6,10 +6,10 @@ gocodeshop-server
 */
 
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //for SPAP:
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect, Route, Link } from "react-router-dom";
 
 //imports of pages definitions
 import Home from "./pages/Home/Home";
@@ -18,13 +18,16 @@ import Admin from "./pages/Admin/Admin";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import DisplayUser from "./components/DisplayUser/DisplayUser";
 import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
+import Login from "./components/Login/Login";
 
+//contexts
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
-import UserContext, { users } from "./contexts/UserContexts";
+import {UserContext, users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
+//user login contexts
+import { UserStateProvider, useUserDispatch, useUserState } from "./contexts/UserContexts";
+import { getUser } from "./contexts/ActionUserContexts";
 
-//import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.svg";
-//import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.svg";
 import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.png";
 import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.png";
 
@@ -63,28 +66,42 @@ const App = () => {
     setSale((sale) => sale === sales.endOfYearSale);
   }
 
+  
+    const userState = useUserState();
+    const userDispatch = useUserDispatch();
+
+    console.log("userState is: ", userState);
+    
+    // useEffect(() => {
+    //   if (userState.user == null) {
+    //     if (!localStorage.getItem("currentUser")) return;
+    //     getUser(userDispatch);
+    //   }
+    // }, [userDispatch]);
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <UserContext.Provider value={{ user, toggleUser }}>
-        <SaleContext.Provider value={{ sale, switchSale }}>
-          <Router>
-            <div
-              className="outer-div"
-              style={{ color: theme.foreground, background: theme.background }}
-            >
-              <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
-              <div className="inner-outer-div">
-              <ChangeThemeColors />
-              <DisplayUser />
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/Home">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/About">About</Link>
-                  </li>
-                  {user.name === "Admin" && (
+    <UserStateProvider>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <UserContext.Provider value={{ user, toggleUser }}>
+          <SaleContext.Provider value={{ sale, switchSale }}>
+            <Router>
+              <div
+                className="outer-div"
+                style={{ color: theme.foreground, background: theme.background }}
+              >
+                <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
+                <div className="inner-outer-div">
+                <ChangeThemeColors />
+                {/* <DisplayUser /> */}
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/Home">Home</Link>
+                    </li>
+                    <li>
+                      <Link to="/About">About</Link>
+                    </li>
+                    {user.name === "Admin" && (
                     <li>
                       <Link to="/Admin">Admin - add new product</Link>
                     </li>
@@ -94,6 +111,7 @@ const App = () => {
 
               {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
+         {/* {userState.user && (*/}
               <Switch>
                 <Route path="/Admin">
                   <Admin />
@@ -109,13 +127,34 @@ const App = () => {
                   <Home />
                 </Route>
               </Switch>
+            {/*}  )} */}
+              <Switch>
+              <Route path="/login">
+          {/* {!userState.user ? (
+            <Login />
+          ) : (
+            <Redirect to={{ pathname: "/" }} />
+          )} */}
+        </Route>
+        <Route path="/register">
+          {/* {!userState.user ? (
+            <Login />
+          ) : (
+            <Redirect to={{ pathname: "/" }} />
+          )} */}
+        </Route>
+        {/* <Route path="/">
+          {userState.user ? <Home /> : <Redirect to={{ pathname: "/login" }} />}
+        </Route> */}
+      </Switch>
               </div>
-              <img src={FlowerBaseSVG} className="imgBottom" alt="flower decoration"/>
-            </div>
-          </Router>
-        </SaleContext.Provider>
-      </UserContext.Provider>
-    </ThemeContext.Provider>
+                <img src={FlowerBaseSVG} className="imgBottom" alt="flower decoration"/>
+              </div>
+            </Router>
+          </SaleContext.Provider>
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    </UserStateProvider>
   );
 };
 

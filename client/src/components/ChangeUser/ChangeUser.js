@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import UserContext from "../../contexts/UserContexts";
+import {UserContext} from "../../contexts/UserContexts";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "../ChangeThemeColors/ChangeThemeColors.css";
 import "./ChangeUser.css";
+import Login from "../Login/Login";
 // import "../Header/Header.css";
 
 const ChangeUser = () => {
@@ -10,6 +11,7 @@ const ChangeUser = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
+    <div>
     <button className="button"
       style={{
         background: theme.background,
@@ -21,6 +23,8 @@ const ChangeUser = () => {
       {user.name === "Admin" && <div className="loginButton">Login as Guest</div>}
       {user.name === "Guest" && <div className="loginButton">Login as Admin</div>}
     </button>
+    <Login></Login>
+    </div>
   );
 };
 

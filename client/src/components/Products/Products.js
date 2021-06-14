@@ -3,7 +3,7 @@ import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import UserContext from "../../contexts/UserContexts";
+import {UserContext} from "../../contexts/UserContexts";
 
 const Products = (props) => {
   const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;

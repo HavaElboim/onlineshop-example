@@ -1,5 +1,7 @@
 open vscode in root folder & run by: 
-npm start dev
+(old way - npm start dev
+after changing schemas & routes:)
+node index.js
 
 open vscode in client & run by:
 npm start

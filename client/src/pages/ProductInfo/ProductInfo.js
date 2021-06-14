@@ -2,7 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import "./ProductInfo.css";
-import UserContext from "../../contexts/UserContexts";
+import {UserContext} from "../../contexts/UserContexts";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 
@@ -11,7 +11,7 @@ import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySe
 // import saleIcon from "../../components/icons/sale-icon-png-19.png";
 //import saleIcon from "../../components/icons/saleGreenBig.png";
 import saleIcon from "../../components/icons/green-leaf-sale-icon.png";
-import LeavesFrame from "../../components/icons/green-leaves-left-frame.svg";
+import LeavesFrame from "../../components/icons/green-leaves-left-frame-1.svg";
 import CartIcon from "../../components/CartIcon/CartIcon";
 
 // custom hook for updating state from local storage

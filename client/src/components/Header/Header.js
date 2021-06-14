@@ -8,7 +8,7 @@ import "./Header.css";
 import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CartIcon from "../CartIcon/CartIcon";
-import UserContext from "../../contexts/UserContexts";
+import {UserContext} from "../../contexts/UserContexts";
 const useCartState = createPersistedState("cart");
 
 const Header = (props) => {
