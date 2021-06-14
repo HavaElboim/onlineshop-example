@@ -295,7 +295,7 @@ h6 {
   width: 80%;
 }
 
-.displayImageOuterBox {
+.displayCardOuterBox {
   max-width: 95%;
   height: 60%;
   display: flex;
@@ -304,12 +304,12 @@ h6 {
   margin: auto;
 }
 
-.displayImageInnerBox {
+.displayCardInnerBox {
   display: flex;
   justify-content: left;
   flex-direction: row;
 }
-.saleIconImg {
+.saleIconCard {
   flex: 1;
   /* height: 40%; */
   position: absolute;

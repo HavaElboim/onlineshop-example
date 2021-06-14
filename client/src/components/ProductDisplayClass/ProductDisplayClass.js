@@ -60,9 +60,9 @@ const ProductDisplayClass = (props) => {
             {title}
           </h6>
         </div>
-          <div className="displayImageOuterBox">
-            <div className="displayImageInnerBox">
-              <div className="saleIconImg">
+          <div className="displayCardOuterBox">
+            <div className="displayCardInnerBox">
+              <div className="saleIconCard">
                 <img src={LeftFrame} alt="frame of green leaves" className="product-display-leaves"/>
               </div>
               <img className="product-display-image" src={image} alt={""} />
