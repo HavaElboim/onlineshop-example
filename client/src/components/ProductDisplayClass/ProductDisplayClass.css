@@ -210,6 +210,7 @@ h6 {
   transition-property: color;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  justify-content: center;
 }
 
 .hvr-shutter-out-vertical:before {
@@ -244,14 +245,7 @@ h6 {
   transform: scaleY(1);
 }
 .product-display-image {
-  /* width: 100%;
-  padding-left: 0px;
-  padding-right: 0px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0 auto;*/
-  display: flex;
+  /* display: flex;
   width: 70%;
     padding-left: 5%;
     padding-right: 5%;
@@ -261,9 +255,43 @@ h6 {
     justify-content: center;
     -webkit-flex-direction: column;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 0 auto; */
+    flex: 1;
+  max-height: 50vh;
+  width: 70%;
+  left: 15vw;
+  overflow: hidden;
+  padding-left: 5%;
+  padding-right: 5%;
+  /* max-width: 100%; */
+  max-width: 20vw;
+  /* min-height: 50vw; */
 } 
 
+.inner-card {
+  width: 80%;
+}
+
+.displayImageOuterBox {
+  max-width: 95%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+}
+
+.displayImageInnerBox {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+}
+.saleIconImg {
+  flex: 1;
+  /* height: 40%; */
+  position: absolute;
+  left: 0%;
+}
 
 
 .product-banner-sale {

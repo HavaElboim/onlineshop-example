@@ -47,7 +47,7 @@ const ProductDisplayClass = (props) => {
         className=" hvr-shutter-out-vertical"
         style={{ color: theme.foreground, background: "white" }}
       >
-        <img src={LeftFrame} alt="frame of green leaves" className="leavesFrame"/>
+        {/* <img src={LeftFrame} alt="frame of green leaves" className="leavesFrame"/> */}
         <div className="inner-card">
         <div className="product-info">
           {onSale && <div className="product-banner-sale">SALE</div>}
@@ -60,10 +60,14 @@ const ProductDisplayClass = (props) => {
             {title}
           </h6>
         </div>
-        <div >
-          <img className="product-display-image" src={image} alt={""} />
-        </div>
-        <div className="product-info">
+          <div className="displayImageOuterBox">
+            <div className="displayImageInnerBox">
+              <div className="saleIconImg">
+                <img src={LeftFrame} alt="frame of green leaves" className="product-display-image"/>
+              </div>
+              <img className="product-display-image" src={image} alt={""} />
+            </div>
+            <div className="product-info">
           <h5>$ {price}</h5>
           <h5
             style={{
@@ -75,6 +79,8 @@ const ProductDisplayClass = (props) => {
           </h5>
           <h5>{quantityInStock} in stock</h5>
         </div>
+          </div>
+        
         </div>
       </div>
     )
