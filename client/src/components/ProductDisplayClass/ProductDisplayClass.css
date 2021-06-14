@@ -267,6 +267,29 @@ h6 {
   max-width: 20vw;
   /* min-height: 50vw; */
 } 
+.product-display-leaves {
+  /* display: flex;
+  width: 70%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    margin: 0 auto; */
+    flex: 1;
+  max-height: 50vh;
+  width: 70%;
+  left: 15vw;
+  overflow: hidden;
+  padding-left: 5%;
+  padding-right: 5%;
+  /* max-width: 100%; */
+  max-width: 20vw;
+  /* min-height: 50vw; */
+} 
 
 .inner-card {
   width: 80%;
