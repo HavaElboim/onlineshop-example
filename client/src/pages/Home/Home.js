@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import DisplayUser from "../../components/DisplayUser/DisplayUser";
-import UserContext from "../../contexts/UserContexts";
+import {UserContext} from "../../contexts/UserContexts";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 //components of content:
@@ -45,7 +45,7 @@ const Home = () => {
     // }));
     // console.log("%%%%%% In Home, new list of products: ", products);
   // }, products.length, priceRange );
-}, products.length );
+}, [products.length] );
 
   return (
     <div>
