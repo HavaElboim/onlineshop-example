@@ -1,37 +1,41 @@
 import { useCallback, useEffect, useState } from "react";
-import { loginUser, registerUser } from "../../contexts/ActionUserContexts"; 
-import { useUserDispatch, useUserState } from "../../contexts/UserContexts";
-import InputLogin from "./InputLogin";
+// import { loginUser, registerUser } from "../../contexts/oldActionUserContexts"; 
+// import { useUserDispatch, useUserState } from "../../contexts/oldUserContexts";
+import InputLogin from "./oldInputLogin";
 import "./Login.css";
 import { useHistory, useLocation } from "react-router";
 
 let isProfileFullFilled = true;
 
-function login(email, password) {
-  console.log("login", email, password);
-}
+// function login(email, password) {
+//   console.log("in Login.js, fn: login, args: email= ", email, "password=", password);
+// }
 
-function register(email, password) {
-  console.log("register", email, password);
-}
+// function register(email, password) {
+//   console.log("in Login.js, fn: register, args: email= ", email, "password=", password);
+// }
 
 const Login = () => {
   const {pathname} = useLocation();
   const history = useHistory();
   const isLogin = pathname.replace(/\//g,'') === 'login'
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
-  const userState = useUserState();
-  const dispatch = useUserDispatch();
-  // isLogin ? (
-  //console.log("Login userState", userState);
+  // const userState = useUserState();
+  console.log("inside Login function");
+  // const dispatch = useUserDispatch();
+  // console.log("set up dispatch in App.js: ", dispatch);
+
 
   const onClick = useCallback(async () => {
     if (isLogin) {
-      await loginUser(dispatch, loginDetails);
+      // await loginUser(dispatch, loginDetails);
     } else {
-      await registerUser(dispatch, loginDetails);
+      // console.log("onclick useCallback, loginDetails are: ", loginDetails);
+      // console.log("dispatch is: ", dispatch);
+      // await registerUser(dispatch, loginDetails);
     }
-  }, [loginDetails, isLogin, dispatch]);
+  // }, [loginDetails, isLogin, dispatch]);
+  });
   return (
     <div className="container">
       <div className="details">

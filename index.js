@@ -1,3 +1,6 @@
+/* new for login: */
+import { userRoutes } from './routes/index';
+
 // import the express package, installed earlier using: npm install express
 const express = require("express");
 const path = require("path");
@@ -5,7 +8,9 @@ const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const { authenticateToken, generateAccessToken } = require("./jwt");
-const logger = require("morgan");
+// const logger = require("morgan");
+
+const PORT = process.env.PORT || 5000;
 
 // call the express function which returns an express server application
 const app = express();
@@ -13,12 +18,32 @@ const app = express();
 //PUT THIS BACK IN:
 // const { usersRouter, tagsRouter, inquiriesRouter } = require("./routes");
 const salt = 10;
-app.use(logger("dev"));
-app.use(express.urlencoded({ extended: false }));
 
-app.use(express.json());
+
+app.use(logger("dev"));
 
 require("dotenv").config();
+
+
+/* new addition: minimize disclosure of stack details, to make hacking site more difficult:*/
+app.disable('x-powered-by');
+
+app.use(express.urlencoded({ extended: false }));
+/* in new version, switch this to:
+app.use(express.urlencoded({ extended: true }));
+*/
+app.use(express.json());
+
+
+/* new for login: */
+/* this tells app to to use this router for any path beginning with “/api”.*/
+const apiRouter = express.Router();
+app.use('/api', apiRouter);
+/* tell our apiRouter to use our userRoutes, for any path beginning with “/users”.: */
+apiRouter.use('/users', userRoutes);
+
+
+
 
 const {
   connectDb,
@@ -311,7 +336,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-const PORT = process.env.PORT || 5000;
+
 
 //  listen for any requests that come in on port PORT (8000)
 

@@ -25,8 +25,8 @@ import ThemeContext, { themes } from "./contexts/ThemeContexts";
 import {UserContext, users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
 //user login contexts
-import { UserStateProvider, useUserDispatch, useUserState } from "./contexts/UserContexts";
-import { getUser } from "./contexts/ActionUserContexts";
+// import { UserStateProvider, useUserDispatch, useUserState } from "./contexts/UserContexts";
+import { getUser } from "./contexts/oldActionUserContexts";
 
 import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.png";
 import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.png";
@@ -67,10 +67,10 @@ const App = () => {
   }
 
   
-    const userState = useUserState();
-    const userDispatch = useUserDispatch();
+    // const userState = useUserState();
+    // const userDispatch = useUserDispatch();
 
-    console.log("userState is: ", userState);
+    // console.log("userState is: ", userState);
     
     // useEffect(() => {
     //   if (userState.user == null) {
@@ -80,7 +80,6 @@ const App = () => {
     // }, [userDispatch]);
 
   return (
-    <UserStateProvider>
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <UserContext.Provider value={{ user, toggleUser }}>
           <SaleContext.Provider value={{ sale, switchSale }}>
@@ -92,7 +91,7 @@ const App = () => {
                 <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
                 <div className="inner-outer-div">
                 <ChangeThemeColors />
-                {/* <DisplayUser /> */}
+                <DisplayUser />
                 <nav>
                   <ul>
                     <li>
@@ -154,8 +153,87 @@ const App = () => {
           </SaleContext.Provider>
         </UserContext.Provider>
       </ThemeContext.Provider>
-    </UserStateProvider>
   );
 };
 
 export default App;
+
+/*
+ return (
+    <UserStateProvider>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <UserContext.Provider value={{ user, toggleUser }}>
+          <SaleContext.Provider value={{ sale, switchSale }}>
+            <Router>
+              <div
+                className="outer-div"
+                style={{ color: theme.foreground, background: theme.background }}
+              >
+                <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
+                <div className="inner-outer-div">
+                <ChangeThemeColors />
+                <DisplayUser />
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/Home">Home</Link>
+                    </li>
+                    <li>
+                      <Link to="/About">About</Link>
+                    </li>
+                    {user.name === "Admin" && (
+                    <li>
+                      <Link to="/Admin">Admin - add new product</Link>
+                    </li>
+                  )}
+                </ul>
+              </nav>
+
+        //      { A <Switch> looks through its children <Route>s and
+        //renders the first one that matches the current URL. }
+        //  {{userState.user && (}
+          <Switch>
+          <Route path="/Admin">
+            <Admin />
+          </Route>
+          <Route exact path="/Home">
+            <Home />
+          </Route>
+          <Route path="/About">
+            <About />
+          </Route>
+          <Route path="/products/:_id" component={ProductInfo}></Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      // {}  )} }
+        <Switch>
+        <Route path="/login">
+    {!userState.user ? (
+      <Login />
+    ) : (
+      <Redirect to={{ pathname: "/" }} />
+    )}
+  </Route>
+  <Route path="/register">
+    {!userState.user ? (
+      <Login />
+    ) : (
+      <Redirect to={{ pathname: "/" }} />
+    )}
+  </Route>
+  <Route path="/">
+    {userState.user ? <Home /> : <Redirect to={{ pathname: "/login" }} />}
+  </Route>
+</Switch>
+        </div>
+          <img src={FlowerBaseSVG} className="imgBottom" alt="flower decoration"/>
+        </div>
+      </Router>
+    </SaleContext.Provider>
+  </UserContext.Provider>
+</ThemeContext.Provider>
+</UserStateProvider>
+);
+*/
