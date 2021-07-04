@@ -1,8 +1,13 @@
+/****************************************************/
+/*                                                  */ 
+/*    ProductInfo page for regular user (Customer)  */
+/*                                                  */
+/****************************************************/
+
 import { React, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import "./ProductInfo.css";
-import {UserContext} from "../../contexts/UserContexts";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 
@@ -37,7 +42,7 @@ useEffect(() => {
 
 const ProductInfo = ({ match }) => {
   const [products, setProducts] = useState({});
-  const { user, toggleUser } = useContext(UserContext);
+
   const { theme } = useContext(ThemeContext);
   const { sale } = useContext(SaleContext);
   const [quantity, setQuantity] = useState(1);
@@ -64,7 +69,6 @@ const ProductInfo = ({ match }) => {
   const [cart, setCart] = useCartState({});
   const [numInCart, setNumInCart] = useState(cart.length>0 ? cart.reduce((n, { quantity }) => n + quantity, 0): 0);
 
-  console.log("!!!!!!!!!!!!!!!!!!!!! In ProductInfo, numInCart is: ", numInCart);
   useEffect(() => {
     fetch(`/api/products/${match.params._id}`)
       .then((response) => response.json())
@@ -318,65 +322,18 @@ const ProductInfo = ({ match }) => {
        // load array of items into cart state using custom hook:
     setCart(currentItems);
   }
-  console.log("got to end");
-  };
+};
 
   // defining the key={numInCart} in the CartIcon component below forces it to
   // rerender if numInCart changes
   if (products) {
     return (
       <div>
+        <div>
         <CartIcon key={numInCart} numInCart={numInCart} setNumInCart={setNumInCart}/>
-        {user.name === "Admin" && (
-          <div className="outer-group">
-            {!editProduct && (
-              <button
-                id="setEditingButton"
-                style={{
-                  background: theme.background,
-                  color: theme.foreground,
-                }}
-                onClick={(e) => {
-                  setEditProduct(!editProduct);
-                  copyProductDetails();
-                }}
-              >
-                Edit/delete product
-              </button>
-            )}
-            {editProduct && (
-              <>
-                <button
-                  id="exitEditButton"
-                  style={{
-                    background: theme.background,
-                    color: theme.foreground,
-                  }}
-                  onClick={(e) => setEditProduct(false)}
-                >
-                  {stopEditText}
-                </button>
-                <Link to={`/products`}>
-                  <button
-                    id="deleteProductButton"
-                    style={{
-                      background: theme.background,
-                      color: theme.foreground,
-                    }}
-                    onClick={(e) => deleteProductFn()}
-                  >
-                    {deleteProductText}
-                  </button>
-                </Link>
-              </>
-            )}
-          </div>
-        )}
-
-        {user.name !== "Admin" && (
-          <div className="outer-group">
-            <div className="quantity-group">
-              <button
+        <div className="outer-group">
+          <div className="quantity-group">
+            <button
                 style={{
                   background: theme.background,
                   color: theme.foreground,
@@ -385,11 +342,11 @@ const ProductInfo = ({ match }) => {
                 onClick={() => {
                   selectNumberToBuyAddOrRemoveOne(-1);
                 }}
-              >
+            >
                 -
-              </button>
-              <div className="quantityBox quantity-display">{quantity}</div>
-              <button
+            </button>
+            <div className="quantityBox quantity-display">{quantity}</div>
+            <button
                 style={{
                   background: theme.background,
                   color: theme.foreground,
@@ -398,10 +355,10 @@ const ProductInfo = ({ match }) => {
                 onClick={() => {
                   selectNumberToBuyAddOrRemoveOne(1);
                 }}
-              >
+            >
                 +
-              </button>
-              <button
+            </button>
+            <button
                 className="addToCartButton"
                 style={{
                   background: theme.background,
@@ -419,31 +376,15 @@ const ProductInfo = ({ match }) => {
                     products.saleReductionPercent
                   );
                 }}
-              >
+            >
                 Add to cart{" "}
-              </button>
-            </div>
-            <div style={{ color: "red" }}>{quantityWarnText}</div>
+            </button>
           </div>
-        )}
-       
-        {!editProduct && (
+          <div style={{ color: "red" }}>{quantityWarnText}</div>
+          </div>
+    
           <div className="product-title">{productName || products.title}</div>
-        )}
-        {user.name === "Admin" && editProduct && (
-          <div>
-            <div>Input name of product:</div>
-            <input
-              id="productName"
-              value={productName}
-              onChange={(e) => setName(e.target.value)}
-              style={{ color: theme.background, background: theme.foreground }}
-            />
-            {productName.length === 0 && notAllFieldsFilled && (
-              <label for="productName">Enter name of product</label>
-            )}
-          </div>
-        )}
+ 
         <div className="displayImageOuterBox">
           <div className="displayImageInnerBox">
         {products.onSale && (
@@ -460,52 +401,22 @@ const ProductInfo = ({ match }) => {
         </div>
         </div>
         <div>
-          {!editProduct && (
-            <>
+ 
               <div className="product-info">
                 {productDescription || products.description}
               </div>
               <div className="product-info">
                 {products.quantityInStock} items in stock
               </div>
-            </>
-          )}
-          {user.name === "Admin" && editProduct && (
-            <div>
-              <div>Input description of product:</div>
-              <input
-                id="productDescription"
-                value={productDescription}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{
-                  color: theme.background,
-                  background: theme.foreground,
-                }}
-              />{" "}
-            </div>
-          )}
-          {!editProduct && !products.onSale && (
+
+          {!products.onSale && (
             <div className="product-info">
               $ {productPrice || products.price}
             </div>
           )}
-          {user.name === "Admin" && editProduct && (
-            <div>
-              <div>Input price of product:</div>
-              <input
-                id="productPrice"
-                value={productPrice}
-                onChange={(e) => setPrice(e.target.value)}
-                style={{
-                  color: theme.background,
-                  background: theme.foreground,
-                }}
-              />
-              {products.price.length === 0 && notAllFieldsFilled && (
-                <label for="productPrice">Enter price of product</label>
-              )}
+
             </div>
-          )}
+
           {products.onSale && (
             <div>
               <div className="product-info" style={{ color: "red" }}>
@@ -519,114 +430,23 @@ const ProductInfo = ({ match }) => {
                         products.saleReductionPercent))) /
                   100
                 ).toFixed(2)}
-              </div>
             </div>
-          )}
-        </div>
-        {!editProduct && (
-          <div className="product-info">
-            Category: {selectedCategory || products.category}
-          </div>
-        )}
-        {user.name === "Admin" && !editProduct && (
-          <div className="product-info">
-            Number of product in stock: {products.quantityInStock}{" "}
-          </div>
-        )}
-        {user.name === "Admin" && editProduct && (
-          <div>
-            {products.length > 0 && (
-              <CategorySelectAdmin
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                products={products}
-              ></CategorySelectAdmin>
-            )}
-            <div>Number of product in stock:</div>
-            <input
-              id="quantityInStock"
-              value={quantityInStock}
-              onChange={(e) => setStockQuantity(e.target.value)}
-              style={{ color: theme.background, background: theme.foreground }}
-            />
-            <div>Put item on sale:</div>
-            <input
-              id="setSale"
-              type="checkbox"
-              value={onSale}
-              onChange={(e) => setSale(!onSale)}
-              style={{ color: theme.background, background: theme.foreground }}
-            />
-            {onSale && (
-              <div>
-                <div>Percentage price reduction: </div>
-                <input
-                  id="reductionInput"
-                  value={saleReductionPercent}
-                  onChange={(e) => {
-                    setReduction(e.target.value);
-                  }}
-                  style={{
-                    color: theme.background,
-                    background: theme.foreground,
-                  }}
-                ></input>
-                <div>{saleReductionPercent}</div>
-              </div>
-            )}
-            {quantityInStock.length === 0 && notAllFieldsFilled && (
-              <label for="quantityInStock">
-                How many of product are in stock?
-              </label>
-            )}
-
-            <button
-              id="addNewProductButton"
-              style={{ background: theme.background, color: theme.foreground }}
-              onClick={(e) =>
-                editProductFn(
-                  productName,
-                  productDescription,
-                  productPrice,
-                  selectedCategory,
-                  productURL,
-                  quantityInStock,
-                  onSale,
-                  saleReductionPercent,
-                  match.params._id
-                )
-              }
-            >
-              Update product details
-            </button>
-
-            {notAllFieldsFilled && (
-              <label for="addNewProductButton" style={{ display: "block" }}>
-                Complete all fields before uploading product update.
-              </label>
-            )}
           </div>
         )}
       </div>
-    );
+        
+      <div className="product-info">
+            Category: {selectedCategory || products.category}
+      </div>
+
+      <div className="product-info">
+            Number of product in stock: {products.quantityInStock}{" "}
+      </div>
+    </div>
+    )
   }
 };
+
 export default ProductInfo;
 
-// {sale.isSale && onSale && (
-//   <div>
-//     <img src={saleIcon} alt="on sale" />
-//   </div>
-// )}
 
-/*
-<div style={{ color: "red" }}>
-                Product on sale! Original price: $ {productPrice} Reduced to ${" "}
-                {
-                  +(
-                    productPrice *
-                    ((100 - saleReductionPercent) / 100).toFixed(2)
-                  )
-                }
-              </div>
-              */
