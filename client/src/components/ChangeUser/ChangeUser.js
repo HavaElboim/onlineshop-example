@@ -19,10 +19,8 @@ const ChangeUser = () => {
         color: theme.foreground,
         marginLeft: 10
       }}
-      // onClick={toggleUser}
     >
-      {/* {user.name === "Admin" && <div className="loginButton">Login as Guest</div>}
-      {user.name === "Guest" && <div className="loginButton">Login as Admin</div>} */}
+      {currentUser && (<div className="loginButton">Logout</div>)}
     </button>
     <Login></Login>
     </div>
