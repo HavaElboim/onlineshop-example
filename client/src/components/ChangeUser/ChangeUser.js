@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import {UserContext} from "../../contexts/oldUserContexts";
+import { useSelector } from "react-redux";
 
 import ThemeContext from "../../contexts/ThemeContexts";
 import "../ChangeThemeColors/ChangeThemeColors.css";
@@ -8,7 +8,7 @@ import Login from "../Login/Login";
 // import "../Header/Header.css";
 
 const ChangeUser = () => {
-  // const { user, toggleUser } = useContext(UserContext);
+  const { user: currentUser } = useSelector((state) => state.auth);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (

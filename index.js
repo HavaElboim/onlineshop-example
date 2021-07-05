@@ -1,10 +1,7 @@
-/// module.exports = require("./server.js");
-// require = require("esm")(module);
-// module.exports = require("./routes/user");
+
 
 /* new for login: */
-// import userRoutes from './routes/user';
-// const userRoutes = require('./routes/user'); 
+
 const userRoutes = require('./routes/index'); 
 
 // syntactic sugar for { userRoutes: userRoutes }
@@ -18,29 +15,22 @@ const path = require("path");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-// const { authenticateToken, generateAccessToken } = require("./jwt");
 const { authenticateToken, generateAccessToken } = require('jsonwebtoken');
 
 // routes for user authentication:
-// require('./routes/auth.routes')(app);
-// require('./routes/user.routes')(app);
+
 require('./routes/auth.routes');
 require('./routes/user.routes');
 require('./models/index');
-
-// const logger = require("morgan");
 
 const PORT = process.env.PORT || 5000;
 
 // call the express function which returns an express server application
 const app = express();
 // for login:
-//PUT THIS BACK IN:
-// const { usersRouter, tagsRouter, inquiriesRouter } = require("./routes");
 const salt = 7; //could be any number
 
 
-// app.use(logger("dev"));
 
 require("dotenv").config();
 
@@ -49,9 +39,7 @@ require("dotenv").config();
 app.disable('x-powered-by');
 
 app.use(express.urlencoded({ extended: false }));
-/* in new version, switch this to:
-app.use(express.urlencoded({ extended: true }));
-*/
+
 app.use(express.json());
 
 
@@ -95,30 +83,13 @@ app.use(function (err, req, res, next) {
   next();
 });
 
-/*
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-
-  // pass control to the next middleware function,
-  // without this, a request to /api/auth/signup in postman is left hanging:
-  next();
-}, function (req,res) {
-  res.end();
-});
-*/
 
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 
-// app.post("/register", async (req, res) => {
 app.post("/api/auth/signup", async (req, res) => {
   console.log("attempting signup");
   const { email, password } = req.body;
@@ -153,7 +124,6 @@ app.post("/api/auth/signup", async (req, res) => {
   });
 });
 
-// app.post("/login", async (req, res) => {
 app.post("/api/auth/signin", async (req, res) => {
 
   console.log('attempting login');
@@ -171,7 +141,6 @@ app.post("/api/auth/signin", async (req, res) => {
     .catch(err => {console.log("failed login, error: ", err)});
     return;
   }
-  // const isValid = bcrypt.compareSync(password, user.password);
   var passwordIsValid = bcrypt.compareSync(
     req.body.password,
     user.password
@@ -190,11 +159,6 @@ app.post("/api/auth/signin", async (req, res) => {
   const { password: removed, ...resUser } = userObject;
   res.send({ resUser, token });
 });
-
-//PUT THIS BACK IN:
-// app.use("/users", usersRouter);
-// app.use("/products", productsRouter);
-// app.use("/admin", require("./routes/admin"));
 
 
 
@@ -239,7 +203,7 @@ const initial =  async () => {
   const checkAdmin = await User.findOne({ role: 'admin' }).exec();
   if(checkAdmin) console.log("Admin user: ", checkAdmin) 
   else {
-    console.log("no admin user exists, creating:");
+    console.log("no admin user exists, creating a new admin user");
     const newAdmin = await new User({
       email: process.env.ADMIN_MAIL,
       password: bcrypt.hashSync(process.env.ADMIN_PWD, salt),
@@ -250,70 +214,12 @@ const initial =  async () => {
       throw err;
     })
   }
-  /*
-  console.log("initializing roles in DB:");
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "customer"
-      }).save(err => {
-        if (err) {
-          console.log("error adding Customer role to roles collection", err);
-        }
-
-        console.log("added 'customer' to roles collection");
-      });
-
-      new Role({
-        name: "admin"
-      }).save(err => {
-        if (err) {
-          console.log("error adding admin to roles collection", err);
-        }
-
-        console.log("added 'admin' to roles collection");
-      });
-    }
-    else {
-      console.log("count is: ", count, "error is: ", err);
-    }
-  });
-  */
+  
 }
-//moved to models/index.js
 
 app.use(cors());
 
-// const productSchema = new mongoose.Schema({
-//   //title: { type: String, required: true },
-//   title: String,
-//   description: String,
-//   price: Number,
-//   category: String,
-//   image: String,
-//   quantityInStock: Number,
-//   onSale: {
-//     type: Boolean,
-//     default: false,
-//   },
-//   saleReductionPercent: Number,
-// });
 
-// const Product = mongoose.model("Product", productSchema);
-
-// const userSchema = new mongoose.Schema({
-//   //title: { type: String, required: true },
-//   firstName: String,
-//   lastName: String,
-//   telephone: Number,
-//   email: String,
-//   address1: String,
-//   address2: String,
-//   city: String,
-//   zip: String,
-// });
-
-// const User = mongoose.model("User", userSchema);
 
 // provide data to be displayed on the / page of the server's website
 app.get("/api", (req, res) => {
@@ -339,23 +245,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-/*
-app.get("/api/products/:_id", async (req, res) => {
-  console.log("req.params are: ", req.params);
-  console.log("Received request for product id: ", req.params._id);
 
-  const { id } = req.params._id; ///here we do destructuring - we take out the params called id from the params array
-
-Product.findById(req.params._id).exec(function (err, product) {
-  if (err) {
-    console.error("Error retrieving product by id!");
-  } else {
-    console.log("server product = " + JSON.stringify(product));
-    res.json(product);
-  }
-}).catch(err => res.status(404).json({ success: false }));
-});
-*/
 //adding option to serve requests with parameters:
 app.get("/api/products/:_id", async (req, res) => {
   console.log("req.params are: ", req.params);
@@ -443,9 +333,8 @@ app.put("/api/products/:_id", async (req, res) => {
     onSale,
     saleReductionPercent,
   } = req.body; // pass the new title in the body of the put request
-  // const product = products.find((product) => product.id === +productId);
-  // product.title = title; // here have changed the title of the product in the database
-  //res.send("ok!");
+ 
+  
   console.log("*** request to update product id: ", req.params._id);
   console.log("req.body are: ", req.body);
 
@@ -478,14 +367,7 @@ app.put("/api/products/:_id", async (req, res) => {
   });
 });
 
-/*
-Product.findById(req.params._id).exec(function (err, product) {
-    if (err) {
-      console.error("Error retrieving product by id!");
-    } else {
-      console.log("server product = " + JSON.stringify(product));
-      res.json(product)
-      */
+
 
 // delete: to delete an item in the db
 // has to be async since need to first wait until db finished deleting record
@@ -524,7 +406,6 @@ app.listen(PORT, () => {
   db.once("open", function () {
     // we're connected!
   });
-  //  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
   console.log(`CORS-enabled web server listening on port ${PORT}`);
 });
 
