@@ -256,15 +256,16 @@ h6 {
     -webkit-flex-direction: column;
     flex-direction: column;
     margin: 0 auto; */
+    object-fit: cover;
     flex: 1;
-  max-height: 50vh;
+  /* max-height: 50vh; */
   width: 70%;
   left: 15vw;
   overflow: hidden;
   padding-left: 5%;
   padding-right: 5%;
   /* max-width: 100%; */
-  max-width: 20vw;
+  /* max-width: 20vw; */
   /* min-height: 50vw; */
 } 
 .product-display-leaves {
@@ -280,19 +281,19 @@ h6 {
     flex-direction: column;
     margin: 0 auto; */
     flex: 1;
-  max-height: 50vh;
+  /* max-height: 50vh; */
   width: 70%;
   left: 15vw;
   overflow: hidden;
-  padding-left: 5%;
-  padding-right: 5%;
+  /* padding-left: 5%;
+  padding-right: 5%; */
   /* max-width: 100%; */
-  max-width: 20vw;
+  /* max-width: 20vw; */
   /* min-height: 50vw; */
 } 
 
 .inner-card {
-  width: 80%;
+  /* width: 80%; */
 }
 
 .displayCardOuterBox {
@@ -310,12 +311,13 @@ h6 {
   flex-direction: row;
 }
 .saleIconCard {
-  flex: 1;
-  /* height: 40%; */
-  position: absolute;
-  left: 0%;
+  flex: 1 1;
+    height: 90%;
+    width: 30%;
+    position: absolute;
+    left: 0%;
+    top: 1%;
 }
-
 
 .product-banner-sale {
   background-color: green;
@@ -365,6 +367,7 @@ h6 {
     margin-bottom: 20px;
   }
 
+  
   .product-filter {
     flex-direction: column;
   }
@@ -372,4 +375,21 @@ h6 {
   .sort {
     align-self: flex-start;
   }
+}
+
+
+@media (min-width: 600px) {
+  .product-display-leaves {
+      flex: 1;
+    /* max-height: 50vh; */
+    width: 70%;
+    left: 15vw;
+    overflow: hidden;
+    /* padding-left: 5%;
+    padding-right: 5%; */
+    /* max-width: 100%; */
+    /* max-width: 20vw; */
+    /* min-height: 50vw; */
+    height: 90%;
+  }  
 }
