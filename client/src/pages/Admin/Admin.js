@@ -66,32 +66,7 @@ const Admin = () => {
     console.log("fetched ");
   }, []);
 
-  const addButtonLabelStyle = {
-    display: "block",
-  };
-
-  const checkFieldsFilled = (
-    title,
-    description,
-    price,
-    category,
-    image,
-    quantityInStock,
-    onSale
-  ) => {
-    if (
-      title.length === 0 ||
-      description.length === 0 ||
-      price.length === 0 ||
-      category.length === 0 ||
-      image.length === 0 ||
-      quantityInStock.length === 0
-    ) {
-      setFieldsFilled(true);
-    } else {
-      setFieldsFilled(false);
-    }
-  };
+  
 
   const addProduct = async (
     title,
@@ -103,10 +78,7 @@ const Admin = () => {
     onSale,
     saleReductionPercent
   ) => {
-    //alert("adding");
-    console.log("in add product in client");
-    // check here if all fields have been filled in:
-    //alert("checking fields");
+
     if (
       title.length === 0 ||
       description.length === 0 ||
@@ -115,10 +87,8 @@ const Admin = () => {
       image.length === 0 ||
       quantityInStock.length === 0
     ) {
-      //alert("not all filled");
       setFieldsFilled(true);
     } else {
-      //alert("all filled");
       setFieldsFilled(false);
       // upload new product to server
       const res = await fetch("/api/products", {
@@ -137,9 +107,7 @@ const Admin = () => {
           saleReductionPercent,
         }),
       });
-      //alert("res is ", res);
       const product = await res.json();
-      //alert("adding product ", product);
       console.log("adding product ", product);
 
       setProducts([products, ...products]);
@@ -163,7 +131,6 @@ const Admin = () => {
         id="productName"
         value={productName}
         onChange={(e) => setName(e.target.value)}
-        //onChange={setName(e.target.value)}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productName.length === 0 && notAllFieldsFilled && (
@@ -233,7 +200,7 @@ const Admin = () => {
           setSale(!onSale);
         }}
       >
-        on slae?
+        on sale?
       </button>
       <div>Put item on sale:</div>
       <input

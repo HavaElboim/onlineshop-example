@@ -1,5 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 import ListCategories from "../ListCategories/ListCategories";
 import ThemeContext from "../../contexts/ThemeContexts";
 import "./CategorySelect.css";

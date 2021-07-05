@@ -5,11 +5,10 @@ import ThemeContext from "../../contexts/ThemeContexts";
 import "../ChangeThemeColors/ChangeThemeColors.css";
 import "./ChangeUser.css";
 import Login from "../Login/Login";
-// import "../Header/Header.css";
 
 const ChangeUser = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div>

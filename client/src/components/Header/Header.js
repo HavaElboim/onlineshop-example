@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useState } from "react";
 import { useSelector } from "react-redux";
 import createPersistedState from "use-persisted-state";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
@@ -9,7 +9,6 @@ import "./Header.css";
 import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import "../../components/storagetools/LocalStorageArrayTools.js";
 import CartIcon from "../CartIcon/CartIcon";
-import {UserContext} from "../../contexts/UserContexts";
 const useCartState = createPersistedState("cart");
 
 const Header = (props) => {
@@ -21,7 +20,6 @@ const Header = (props) => {
     isSale,
     setSale,
     products,
-    setProducts,
     priceRange,
     setPriceRange,
     searchKeyword,
@@ -30,7 +28,7 @@ const Header = (props) => {
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
-  const [cart, setCart] = useCartState({});
+  const [cart] = useCartState({});
   const [numInCart, setNumInCart] = useState((cart.length>0? cart.reduce((n, { quantity }) => n + quantity, 0): 0));
 
   return (

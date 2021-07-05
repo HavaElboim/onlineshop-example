@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import ThemeContext from "../../contexts/ThemeContexts";
+import React, { useState, useEffect } from "react";
 import "./CartItem.css";
 import sale from "../icons/green-leaves-sale.png";
 import deleteIcon from "../icons/trash.png";
-import editIcon from "../icons/editIcon.png";
 import upArrow from "../icons/upArrow.png";
 import downArrow from "../icons/downArrow.png";
 import "../../components/storagetools/LocalStorageArrayTools.js";
@@ -14,19 +12,16 @@ const useCartState = createPersistedState("cart");
 
 
 const CartItem = ({ item, numInCart, setNumInCart, quantityWarnText = "", setQtyWarn }) => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
   const [products, setProducts] = useState({});
   const [qtyLabel, setQtyLabel] = useState("");
   const [qty, setQty] = useState(item.quantity);
   const [cart, setCart] = useCartState({});
-  //const {currentItems, setCurrentItems} = useState(cart.length > 0 ? cart : []);
+
+    /*if ShowCart is removed from the next line, the site throws an error.
+  If left in, the compiler complains that it is defined but never used - 
+  just ignore without deleting it from the code: */
   const [ShowCart, setShowCart] = useState(false);
-  
-  const isSale = true;
-  //console.log("cart item: ", item);
-  //console.log(`cart item: ${item.title}, ${item.price}`);
-console.log("in cartItem, numincart is: ", numInCart);
-  console.log("item is ", item);
+
   useEffect(() => {
     fetch(`/api/products/${item.productid}`)
       .then((response) => response.json())
@@ -49,9 +44,6 @@ console.log("in cartItem, numincart is: ", numInCart);
     );
 
     // then use index to take item out of array
-    console.log("id of item: ", id);
-    //const quantityInCart = currentItems[index].quantity;
-    console.log("index of item to remove: ", index);
     currentItems = [
       ...currentItems.slice(0, index),
       ...currentItems.slice(index + 1),
@@ -91,51 +83,27 @@ console.log("in cartItem, numincart is: ", numInCart);
    let currentItems = cart.length > 0 ? cart : [];
     // let tempCartItem={};
     if (currentItems.length > 0){
-    // let tempCartItems = currentItems;
-    // console.log("cartitem curritemsL ", currentItems);
+ 
     // find index of item in cart array
     const index = currentItems.findIndex(
       (findItem) => findItem.productid === id
     );
-    // const index = tempCartItems.findIndex(
-    //   (findItem) => findItem.productid === id
-    // );
-    //alert("currentItems are: ", currentItems);
+
     if(quantityWarnText!=="")setQtyWarn("");
 
-    console.log("item to change: ", index, "from id ", id);
-
-    console.log("qty prev in cart ", currentItems[index].quantity);
-    console.log("from API: ", products);
     // then use index to take item out of array
     if (currentItems[index].quantity + qty <= products.quantityInStock) {
-      // tempCartItem = currentItems[index];
-      // tempCartItem.quantity += qty;
-      // setCurrentItems([
-      //   ...currentItems.slice(0, index),
-      //   tempCartItem,
-      //   ...currentItems.slice(index + 1),
-      // ]);
+
       currentItems[index].quantity += qty;
       console.log(`numInCart: ${numInCart} adding qty: ${qty}, num in stock: ${products.quantityInStock}`);
 
       setQtyLabel("");
      setNumInCart(numInCart+qty);
     } else {
-      console.log("not enough in stock");
-      console.log(`numInCart: ${numInCart} wanting to add qty: ${qty}, num in stock: ${products.quantityInStock}`);
 
       setQtyLabel(`There are only ${products.quantityInStock} items in stock`);
     }
-    console.log(
-      "num in stock: ",
-      products.quantityInStock,
-      " num wanted b4",
-      currentItems[index].quantity,
-      " more: ",
-      qty
-    );
-    console.log("qty now in cart ", currentItems[index].quantity);
+ 
     // localStorage.pushArrayItem(
     //   "cartArray",
     //   `title: ${title}, price: ${price}, image: ${image}`
@@ -168,7 +136,7 @@ console.log("in cartItem, numincart is: ", numInCart);
     <div className="cartItemDisplay">
       <div className="itemIconImage">
         {(item.saleReductionPercent>0) && <img className="saleIcon" src={sale} alt="sale icon" />}
-        {(item.saleReductionPercent==0) && <div className="noSaleBox"></div>}
+        {(item.saleReductionPercent===0) && <div className="noSaleBox"></div>}
         <img className="itemIcon" src={item.image} alt="showing the item" />
       </div>
       <div className="itemNamePrice">

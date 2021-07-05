@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-// import {UserContext} from "../../contexts/UserContexts";
 
 const Products = (props) => {
   const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
-  // const { user, toggleUser } = useContext(UserContext);
   const { user: currentUser } = useSelector((state) => state.auth);
   const [filteredData, setFilteredData]= useState(products);
     
@@ -21,7 +19,7 @@ const Products = (props) => {
     tempProds2 = (selectedCategory !== "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
     tempProds1 = (searchKeyword !== "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
     setFilteredData(tempProds1);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceRange, selectedCategory, searchKeyword]);
 
   // maps the array containing the shop information to set up individual products items

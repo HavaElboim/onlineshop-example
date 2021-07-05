@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { withRouter } from "react-router";
 
 const sales = {
   endOfYearSale: {

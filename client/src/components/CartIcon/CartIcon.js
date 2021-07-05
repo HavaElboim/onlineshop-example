@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useReducer } from "react";
+import { React, useState } from "react";
 
 // installed custom hook use-persisted-state from https://github.com/donavon/use-persisted-state
 // to keep localStorage in state for automatic render update of
@@ -13,7 +13,7 @@ import CartDisplayContents from "../CartDisplayContents/CartDisplayContents";
 const useCartState = createPersistedState("cart");
 
 const CartIcon = ({numInCart, setNumInCart}) => {
-const [cart, setCart] = useCartState({});
+const [cart] = useCartState({});
 
 const [ShowCart, setShowCart] = useState(true);
 

@@ -1,20 +1,15 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext} from "react";
  
 import { Slider, InputNumber } from "antd";
 import "antd/dist/antd.css";
-//import "antd/dist/antd.less";
 
-//import "./SliderFilterPrice.css";
 import "../Header/Header.css";
-import ThemeContext, { currentTheme } from "../../contexts/ThemeContexts";
+import ThemeContext from "../../contexts/ThemeContexts";
 
 const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;
   const { theme } = useContext(ThemeContext);
 
-  const formatter = (value) =>{
-    return `${value}%`;
-  }
   useEffect(() => {
   if (products.length) {
         console.log("prods are ", products);

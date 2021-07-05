@@ -13,8 +13,8 @@ const useCartState = createPersistedState("cart");
 const CartDisplayContents = ({numInCart, setNumInCart}) => {
   const { theme } = useContext(ThemeContext);
   //const cartItemsArray = JSON.parse(localStorage.getItem("cartArray"));
-  const [cart, setCart] = useCartState({});
-
+  const [cart] = useCartState({});
+  
   return (
     <div>
       {cart.length > 0 && (
@@ -29,7 +29,8 @@ const CartDisplayContents = ({numInCart, setNumInCart}) => {
           {cart.map((item, i) => (
             <CartItem item={item} key={i} numInCart={numInCart} setNumInCart={setNumInCart}/>
           ))}
-         <div><span className="shoppingListTitle">Total:</span> ${cart.reduce((accumulator, current) => accumulator + (current.saleReductionPercent > 0 ? current.quantity*(100-current.saleReductionPercent)*current.price/100 : current.quantity*current.price), 0)}</div>
+          {/*Use the toFixed() method in JavaScript to format a number with two decimals. */}
+         <div><span className="shoppingListTitle">Total:</span> ${cart.reduce((accumulator, current) => accumulator + (current.saleReductionPercent > 0 ? current.quantity*(100-current.saleReductionPercent)*current.price/100 : current.quantity*current.price), 0).toFixed(2)}</div>
 
         </div>
 

@@ -1,13 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
-import ThemeContext from "../../contexts/ThemeContexts";
 import ChangeUser from "../ChangeUser/ChangeUser";
 import "./DisplayUser.css";
 
 const DisplayUser = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { theme, toggleTheme } = useContext(ThemeContext);
 
   if (currentUser) console.log("in Display User, user is ", currentUser.email);
 else console.log("no user logged in");

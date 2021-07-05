@@ -8,10 +8,9 @@ gocodeshop-server
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import rootReducer from "./reducers";
 
 //for SPAP:
-import { BrowserRouter as Router, Switch, Redirect, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch,  Route, Link } from "react-router-dom";
 
 //imports of pages definitions
 import Home from "./pages/Home/Home";
