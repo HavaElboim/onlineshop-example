@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import "./ProductDisplayClass.css";
 import PropTypes from "prop-types";
 //import saleIcon from "../icons/sale.png";
-import SaleContext, { sales } from "../../contexts/SaleContexts";
-//import ProductInfo from "../../pages/ProductInfo/ProductInfo";
-import ThemeContext, { themes } from "../../contexts/ThemeContexts";
+import SaleContext from "../../contexts/SaleContexts";
+import ThemeContext from "../../contexts/ThemeContexts";
 import LeftFrame from "../../components/icons/green-leaves-left-frame.svg";
 
 /* this component is called from the Products class.
@@ -19,7 +18,6 @@ const ProductDisplayClass = (props) => {
     title,
     image,
     price,
-    productid,
     category,
     onSale,
     saleReductionPercent,
@@ -47,7 +45,6 @@ const ProductDisplayClass = (props) => {
         className=" hvr-shutter-out-vertical"
         style={{ color: theme.foreground, background: "white" }}
       >
-        {/* <img src={LeftFrame} alt="frame of green leaves" className="leavesFrame"/> */}
         <div className="inner-card">
         <div className="product-info">
           {onSale && <div className="product-banner-sale">SALE</div>}
@@ -61,6 +58,7 @@ const ProductDisplayClass = (props) => {
           </h6>
         </div>
           <div className="displayCardOuterBox">
+         
             <div className="displayCardInnerBox">
               <div className="saleIconCard">
                 <img src={LeftFrame} alt="frame of green leaves" className="product-display-leaves"/>
