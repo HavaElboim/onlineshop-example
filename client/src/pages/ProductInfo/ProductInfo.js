@@ -5,16 +5,12 @@
 /****************************************************/
 
 import { React, useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 
 import "./ProductInfo.css";
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 import "../../components/storagetools/LocalStorageArrayTools.js";
-import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
-// import saleIcon from "../../components/icons/sale-icon-png-19.png";
-//import saleIcon from "../../components/icons/saleGreenBig.png";
 import saleIcon from "../../components/icons/green-leaf-sale-icon.png";
 import LeavesFrame from "../../components/icons/green-leaves-left-frame-1.svg";
 import CartIcon from "../../components/CartIcon/CartIcon";
@@ -22,23 +18,7 @@ import CartIcon from "../../components/CartIcon/CartIcon";
 // custom hook for updating state from local storage
 import createPersistedState from "use-persisted-state";
 const useCartState = createPersistedState("cart");
-/*
-mongodb+srv://test-user1:12345@cluster0.u00wy.mongodb.net/gocodeshop-hava?retryWrites=true&w=majority&tlsInsecure=true
-*/
 
-/* mongoDB version on localhost:
-useEffect(() => {
-    fetch(`http://10.0.0.193:8000/products/${match.params.productid}`)
-      .then((response) => response.json())
-      .then((data) => setData(data));
-    console.log(
-      "descr is ",
-      productData,
-      ` from http://10.0.0.193:8000/products/${match.params.productid}`
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  */
 
 const ProductInfo = ({ match }) => {
   const [products, setProducts] = useState({});
@@ -46,26 +26,19 @@ const ProductInfo = ({ match }) => {
   const { theme } = useContext(ThemeContext);
   const { sale } = useContext(SaleContext);
   const [quantity, setQuantity] = useState(1);
-  const [editProduct, setEditProduct] = useState(false);
-  const [notAllFieldsFilled, setFieldsFilled] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [onSale, setSale] = useState("false");
-  const [saleReductionPercent, setReduction] = useState("");
 
-  const [productId, setId] = useState("");
-  const [productName, setName] = useState("");
-  const [productDescription, setDescription] = useState("");
-  const [productURL, setURL] = useState("");
-  const [productPrice, setPrice] = useState("");
-  const [quantityInStock, setStockQuantity] = useState("");
+  const [selectedCategory] = useState("");
+  const [onSale] = useState("false");
+  const [saleReductionPercent] = useState("");
 
-  const [stopEditText, setStopEditText] = useState("Exit product update");
+  const [productName] = useState("");
+  const [productDescription] = useState("");
+  const [productPrice] = useState("");
+
   const [quantityWarnText, setQtyWarn] = useState("");
 
-  const deleteProductText = "Delete product";
   console.log("in productinfo, theme is: ", theme.foreground);
-  //console.log("sale is", sale.isSale);
   const [cart, setCart] = useCartState({});
   const [numInCart, setNumInCart] = useState(cart.length>0 ? cart.reduce((n, { quantity }) => n + quantity, 0): 0);
 
@@ -77,80 +50,8 @@ const ProductInfo = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //const newPrice = +(productPrice * 0.9).toFixed(2);
 
-  const deleteProductFn = async (id) => {
-    console.log(`deleting product ${id}`);
-
-    if (window.confirm("Delete this product?")) {
-      const res = await fetch(`/api/products/${match.params._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const result = await res.json();
-    }
-  };
-
-  const editProductFn = async (
-    title,
-    description,
-    price,
-    category,
-    url,
-    quantityInStock,
-    onSale,
-    saleReductionPercent,
-    id
-  ) => {
-    console.log("in edit product in client");
-
-    setStockQuantity(quantityInStock);
-    setDescription(description);
-    setPrice(price);
-    setName(title);
-    setSelectedCategory(category);
-    setSale(onSale);
-
-    setEditProduct(false);
-    setStopEditText("Done");
-    setReduction(saleReductionPercent);
-
-    const res = await fetch(`/api/products/${match.params._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        description,
-        price,
-        category,
-        url,
-        quantityInStock,
-        onSale,
-        saleReductionPercent,
-      }),
-    });
-
-    const product = await res.json();
-
-    console.log("editing product ", product);
-  };
-
-  const copyProductDetails = () => {
-    setStockQuantity(products.quantityInStock);
-    setDescription(products.description);
-    setPrice(products.price);
-    setName(products.title);
-    setSelectedCategory(products.category);
-    setSale(products.onSale);
-    setReduction(products.saleReductionPercent);
-    setId(match.params._id);
-  };
-
+  
   const selectNumberToBuyAddOrRemoveOne = (qty) => {
     if (quantity + qty < 0) {
       setQtyWarn("");
@@ -194,9 +95,6 @@ const ProductInfo = ({ match }) => {
     // if item is not on sale, change price reduction to 0
     if (!onSale) saleReductionPercent = 0;
  
-    console.log("adding to cart.................");
-    console.log("cart contains ", cart);
-
     let currentItems = cart.length > 0 ? cart : [];
 
     // new version using custom hook:
@@ -217,28 +115,19 @@ const ProductInfo = ({ match }) => {
         console.log("cart[" + index + "]: " + cartItem);
       });
 
-      console.log("###### searching for id ", id, "in currentItems ", currentItems);
 
       // search to see if item already exists in cart
       var checkItem = currentItems.find(
         (checkItem) => checkItem.productid === id
       );
-      console.log("checkitme is ", checkItem);
 
       //// opened if checkItem undefined
       // if checkItem is undefined, this particular item has not yet been added to the cart
     if (checkItem !== undefined) {
-      // check if there is enough in stock
-      console.log("products are: ", products);
-         console.log(`there are ${checkItem.quantityInStock} in stock, ${checkItem.quantity} in the cart, and you want to add another ${quantity}`)
-      
-      //// opened if checkItem quantity
-      // check if there are enough items in stock to add the new quantity:
+        // check if there are enough items in stock to add the new quantity:
       if(checkItem.quantity + quantity <= products.quantityInStock) {
         //update the number of items of this item in the cart
       checkItem.quantity += quantity;
-      //id = checkItem.productid;
-      console.log("item found in cart, need to update qty of item ", id);
       // update the state displaying the total number of items in the cart
       setNumInCart(numInCart+quantity);
       }
@@ -257,18 +146,14 @@ const ProductInfo = ({ match }) => {
             );
             ///end default case:
           }
-          console.log("got to end block 2");
          /// end switch of number of products left in stock, when not enough:
         }
-        console.log("got to end block 3");
          //// end of check for enough items in stock:
       }
-      console.log("got to end block 4");
       ///// end of situation that this item is already in the cart:
     } 
     //// if this item is not yet in the cart (but the cart is not empty):
   else {
-    console.log("item not yet in cart, adding..");
       currentItems.push({
         title: title,
         price: price,
