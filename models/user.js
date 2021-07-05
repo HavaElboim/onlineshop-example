@@ -21,20 +21,27 @@ const UserSchema = new mongoose.Schema(
       //   message: "Email already exists"
       // }
     },
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
-    hash: {
+    password: {
       type: String,
-      // required: true
+      required: true,
     },
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
-    ],
+    // the password stored is already hashed
+    // hash: {
+    //   type: String,
+    //   // required: true
+    // },
+    // the following is if we would need more than one role per user account,
+    // roles would link to the separate "roles" collection in the database:
+    // roles: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Role"
+    //   }
+    // ],
+    role: {
+      type: String,
+      default: "customer"
+    },
     firstName: {
       type: String,
       default: ''},

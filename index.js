@@ -1,5 +1,16 @@
+/// module.exports = require("./server.js");
+// require = require("esm")(module);
+// module.exports = require("./routes/user");
+
 /* new for login: */
-import { userRoutes } from './routes/index';
+// import userRoutes from './routes/user';
+// const userRoutes = require('./routes/user'); 
+const userRoutes = require('./routes/index'); 
+
+// syntactic sugar for { userRoutes: userRoutes }
+// export { userRoutes };
+module.exports = userRoutes;
+
 
 // import the express package, installed earlier using: npm install express
 const express = require("express");
@@ -7,7 +18,16 @@ const path = require("path");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-const { authenticateToken, generateAccessToken } = require("./jwt");
+// const { authenticateToken, generateAccessToken } = require("./jwt");
+const { authenticateToken, generateAccessToken } = require('jsonwebtoken');
+
+// routes for user authentication:
+// require('./routes/auth.routes')(app);
+// require('./routes/user.routes')(app);
+require('./routes/auth.routes');
+require('./routes/user.routes');
+require('./models/index');
+
 // const logger = require("morgan");
 
 const PORT = process.env.PORT || 5000;
@@ -17,10 +37,10 @@ const app = express();
 // for login:
 //PUT THIS BACK IN:
 // const { usersRouter, tagsRouter, inquiriesRouter } = require("./routes");
-const salt = 10;
+const salt = 7; //could be any number
 
 
-app.use(logger("dev"));
+// app.use(logger("dev"));
 
 require("dotenv").config();
 
@@ -42,14 +62,25 @@ app.use('/api', apiRouter);
 /* tell our apiRouter to use our userRoutes, for any path beginning with “/users”.: */
 apiRouter.use('/users', userRoutes);
 
-
-
-
 const {
   connectDb,
-  models: { User, Product },
+  models: { User, Product, Role },
 } = require("./models");
 
+// app.use() to specify middleware as the callback function
+// see here: https://expressjs.com/en/guide/routing.html
+// and here: https://expressjs.com/en/guide/using-middleware.html :
+// "Middleware functions are functions that have access to the request object (req), 
+// the response object (res), and the next middleware function in the application’s 
+// request-response cycle. The next middleware function is commonly denoted by a variable named next.
+// Middleware functions can perform the following tasks:
+// - Execute any code.
+// - Make changes to the request and the response objects.
+// - End the request-response cycle.
+// - Call the next middleware function in the stack.
+// - If the current middleware function does not end the request-response cycle, 
+// it must call next() to pass control to the next middleware function. 
+// Otherwise, the request will be left hanging."
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -58,13 +89,38 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+
+  // pass control to the next middleware function,
+  // without this, a request to /api/auth/signup in postman is left hanging:
+  next();
 });
+
+/*
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+
+  // pass control to the next middleware function,
+  // without this, a request to /api/auth/signup in postman is left hanging:
+  next();
+}, function (req,res) {
+  res.end();
+});
+*/
+
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 
-app.post("/register", async (req, res) => {
+// app.post("/register", async (req, res) => {
+app.post("/api/auth/signup", async (req, res) => {
+  console.log("attempting signup");
   const { email, password } = req.body;
   if (!validateEmail(email)) {
     res.status(403).send("invalid email").end();
@@ -73,31 +129,62 @@ app.post("/register", async (req, res) => {
 
   const existing = await User.findOne({ email }).exec();
   if (existing) {
-    res.status(403).send("email already existing").end();
+    res.status(403).send("email already exists").end();
     return;
   }
+
+  console.log("received email and password, hashing");
 
   const hash = bcrypt.hashSync(password, salt);
   const user = await new User({
     email,
     password: hash,
-  }).save();
+  }).save()
+  .catch(err => {
+      console.log("rejected with error ", err);
+      throw err;
+  });
+  console.log("registration successful, generating access token");
   const token = generateAccessToken(user);
-  res.send({ token });
+  res.send({ token })
+  .catch(err => {
+    console.log("unsuccessful generation of access token, ", err);
+    throw err;
+  });
 });
 
-app.post("/login", async (req, res) => {
+// app.post("/login", async (req, res) => {
+app.post("/api/auth/signin", async (req, res) => {
+
+  console.log('attempting login');
   const { email, password } = req.body;
-  const user = await User.findOne({ email }).exec();
+  const user = await User.findOne({ email }).exec()
+  .catch(err => {
+    if (err instanceof HttpError && err.response.status == 404) {
+      alert("No such user, please reenter.");
+    } else {
+      throw err;
+    }
+  });;
   if (!user) {
-    res.status(403).send("user not exist");
+    res.status(404).send("user does not exist")
+    .catch(err => {console.log("failed login, error: ", err)});
     return;
   }
-  const isValid = bcrypt.compareSync(password, user.password);
-  if (!isValid) {
-    res.status(403).send("invalid password");
+  // const isValid = bcrypt.compareSync(password, user.password);
+  var passwordIsValid = bcrypt.compareSync(
+    req.body.password,
+    user.password
+  );
+
+  if (!passwordIsValid) {
+    res.status(401).send({
+      accessToken: null,
+          message: "Invalid Password!"
+        });
     return;
   }
+  console.log('login - user and pwd are valid');
   const token = generateAccessToken(user);
   const userObject = user.toObject();
   const { password: removed, ...resUser } = userObject;
@@ -112,15 +199,87 @@ app.post("/login", async (req, res) => {
 
 
 // Serve static files from the React app
+// app.use() to specify middleware as the callback function
+// see here: https://expressjs.com/en/guide/routing.html
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // add mongoose to communicate with mongoDB
 // - see https://mongoosejs.com/docs/index.html
 const mongoose = require("mongoose");
+// use "useNewUrlParser: true", "mongoose.set('useFindAndModify', false);
+// and  mongoose.set('useCreateIndex', true);" to attempt to avoid deprecation warning
+// "DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead"
+// - see here: https://mongoosejs.com/docs/deprecations.html :
+// "To test your app with { useNewUrlParser: true }, you only need to check whether 
+// your app successfully connects. Once Mongoose has successfully connected, 
+// the URL parser is no longer important. "
+// & see also here:
+// https://stackoverflow.com/questions/51960171/node63208-deprecationwarning-collection-ensureindex-is-deprecated-use-creat
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+})
+.then(() => {
+  console.log("Successfully connected to MongoDB. Initializing roles:");
+  initial();
+})
+.catch( err => {
+  console.error("Connection error", err);
+  process.exit();
 });
+
+/* this function is activated once and creates a roles collection if it doesn't yet exist
+NB do not create manually the roles collection in Mongo - otherwise the count will not be zero
+and the roles will not automatically be added */
+
+const initial =  async () => {
+  console.log("checking if Admin user exists:");
+  const checkAdmin = await User.findOne({ role: 'admin' }).exec();
+  if(checkAdmin) console.log("Admin user: ", checkAdmin) 
+  else {
+    console.log("no admin user exists, creating:");
+    const newAdmin = await new User({
+      email: process.env.ADMIN_MAIL,
+      password: bcrypt.hashSync(process.env.ADMIN_PWD, salt),
+      role: "admin"
+    }).save()
+    .catch(err => {
+      console.log("error creating admin user ", err);
+      throw err;
+    })
+  }
+  /*
+  console.log("initializing roles in DB:");
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "customer"
+      }).save(err => {
+        if (err) {
+          console.log("error adding Customer role to roles collection", err);
+        }
+
+        console.log("added 'customer' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save(err => {
+        if (err) {
+          console.log("error adding admin to roles collection", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
+    }
+    else {
+      console.log("count is: ", count, "error is: ", err);
+    }
+  });
+  */
+}
 //moved to models/index.js
 
 app.use(cors());
@@ -180,6 +339,23 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+/*
+app.get("/api/products/:_id", async (req, res) => {
+  console.log("req.params are: ", req.params);
+  console.log("Received request for product id: ", req.params._id);
+
+  const { id } = req.params._id; ///here we do destructuring - we take out the params called id from the params array
+
+Product.findById(req.params._id).exec(function (err, product) {
+  if (err) {
+    console.error("Error retrieving product by id!");
+  } else {
+    console.log("server product = " + JSON.stringify(product));
+    res.json(product);
+  }
+}).catch(err => res.status(404).json({ success: false }));
+});
+*/
 //adding option to serve requests with parameters:
 app.get("/api/products/:_id", async (req, res) => {
   console.log("req.params are: ", req.params);
@@ -187,15 +363,17 @@ app.get("/api/products/:_id", async (req, res) => {
 
   const { id } = req.params._id; ///here we do destructuring - we take out the params called id from the params array
 
-  Product.findById(req.params._id).exec(function (err, product) {
-    if (err) {
-      console.error("Error retrieving product by id!");
-    } else {
-      console.log("server product = " + JSON.stringify(product));
-      res.json(product);
-    }
-  }).catch(err => res.status(404).json({ success: false }));
+Product.findById(req.params._id).exec(function (err, product) {
+  if (err) {
+    console.error("Error retrieving product by id! Error:", err);
+  } else {
+    console.log("server product = " + JSON.stringify(product));
+    res.json(product);
+  }
+})
 });
+
+
 
 // post: to add an item to the database
 // - must define Schema for documents (records) in the database
@@ -349,3 +527,4 @@ app.listen(PORT, () => {
   //  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
   console.log(`CORS-enabled web server listening on port ${PORT}`);
 });
+

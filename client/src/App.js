@@ -7,6 +7,8 @@ gocodeshop-server
 
 import "./App.css";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import rootReducer from "./reducers";
 
 //for SPAP:
 import { BrowserRouter as Router, Switch, Redirect, Route, Link } from "react-router-dom";
@@ -16,9 +18,9 @@ import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Admin from "./pages/Admin/Admin";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
+import ProductInfoAdmin from "./pages/ProductInfo/ProductInfoAdmin";
 import DisplayUser from "./components/DisplayUser/DisplayUser";
 import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
-import Login from "./components/Login/Login";
 
 //contexts
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
@@ -26,7 +28,15 @@ import {UserContext, users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
 //user login contexts
 // import { UserStateProvider, useUserDispatch, useUserState } from "./contexts/UserContexts";
-import { getUser } from "./contexts/oldActionUserContexts";
+// import { getUser } from "./contexts/oldActionUserContexts";
+
+//login
+import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
+
+import { logout } from "./actions/auth";
+import { clearMessage } from "./actions/message";
+import { history } from "./helpers/history";
 
 import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.png";
 import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.png";
@@ -47,19 +57,44 @@ Header also calls CategorySelect component to choose products filter.
 
 const App = () => {
   const [theme, setTheme] = useState(themes.light);
-  const [user, setUser] = useState(users.guest);
+  // const [user, setUser] = useState(users.guest);
   const [sale, setSale] = useState(sales.endOfYearSale);
   const [numInCart, setNumInCart] = useState(0);
+
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    history.listen((location) => {
+      dispatch(clearMessage()); // clear message when changing location
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log("Running as Admin user");
+      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+    }
+    else  console.log("Running as regular user");
+  }, [currentUser]);
+
+  const logOut = () => {
+    dispatch(logout());
+  };
+
+
 
   function toggleTheme() {
     setTheme((theme) => (theme === themes.light ? themes.dark : themes.light));
   }
 
-  function toggleUser() {
-    console.log("request to change user");
-    setUser((user) => (user === users.guest ? users.admin : users.guest));
-    console.log("logged in as user ", user.name);
-  }
+  // function toggleUser() {
+  //   console.log("request to change user");
+  //   setUser((user) => (user === users.guest ? users.admin : users.guest));
+  //   console.log("logged in as user ", user.name);
+  // }
 
   function switchSale(specialOffer) {
     console.log("set sale to ", sales.name);
@@ -81,9 +116,9 @@ const App = () => {
 
   return (
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <UserContext.Provider value={{ user, toggleUser }}>
+        {/* <UserContext.Provider value={{ user, toggleUser }}> */}
           <SaleContext.Provider value={{ sale, switchSale }}>
-            <Router>
+            <Router history={history}>
               <div
                 className="outer-div"
                 style={{ color: theme.foreground, background: theme.background }}
@@ -92,6 +127,35 @@ const App = () => {
                 <div className="inner-outer-div">
                 <ChangeThemeColors />
                 <DisplayUser />
+                {currentUser ? (
+                  <div>
+                  <li className="nav-item">
+                  <Link to={"/profile"} className="nav-link">
+                    {currentUser.username}
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <a href="/login" className="nav-link" onClick={logOut}>
+                    LogOut
+                  </a>
+                </li>
+              </div>
+                ):
+                (
+                  <div>
+                   <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link">
+                  Sign Up
+                </Link>
+              </li>
+                  </div>
+                )}
                 <nav>
                   <ul>
                     <li>
@@ -100,11 +164,13 @@ const App = () => {
                     <li>
                       <Link to="/About">About</Link>
                     </li>
-                    {user.name === "Admin" && (
-                    <li>
-                      <Link to="/Admin">Admin - add new product</Link>
-                    </li>
-                  )}
+                    {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/Admin"} className="nav-link">
+                  Admin Board
+                </Link>
+              </li>
+            )}
                 </ul>
               </nav>
 
@@ -112,6 +178,8 @@ const App = () => {
         renders the first one that matches the current URL. */}
          {/* {userState.user && (*/}
               <Switch>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} /> 
                 <Route path="/Admin">
                   <Admin />
                 </Route>
@@ -121,7 +189,12 @@ const App = () => {
                 <Route path="/About">
                   <About />
                 </Route>
-                <Route path="/products/:_id" component={ProductInfo}></Route>
+                { currentUser && currentUser.roles.includes("ROLE_ADMIN") ? (
+                  <Route path="/products/:_id" component={ProductInfoAdmin}></Route>
+                ) : (
+                  <Route path="/products/:_id" component={ProductInfo}></Route>
+                )
+}
                 <Route path="/">
                   <Home />
                 </Route>
@@ -151,7 +224,7 @@ const App = () => {
               </div>
             </Router>
           </SaleContext.Provider>
-        </UserContext.Provider>
+        {/* </UserContext.Provider> */}
       </ThemeContext.Provider>
   );
 };
