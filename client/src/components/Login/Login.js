@@ -1,78 +1,125 @@
-import { useCallback, useEffect, useState } from "react";
-// import { loginUser, registerUser } from "../../contexts/oldActionUserContexts"; 
-// import { useUserDispatch, useUserState } from "../../contexts/oldUserContexts";
-import InputLogin from "./oldInputLogin";
-import "./Login.css";
-import { useHistory, useLocation } from "react-router";
+// This page has a Form with verification of 2 required fields: email & password.
+// – If the verification is ok, we call AuthService.login() method, then direct user to Profile page: props.history.push("/profile");, or show message with response error.
 
-let isProfileFullFilled = true;
+// For getting the application state and dispatching actions, we use React Redux Hooks useSelector and useDispatch.
+// – by checking isLoggedIn, we can redirect user to Profile page.
+// – message gives us response message.
 
-// function login(email, password) {
-//   console.log("in Login.js, fn: login, args: email= ", email, "password=", password);
-// }
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom';
 
-// function register(email, password) {
-//   console.log("in Login.js, fn: register, args: email= ", email, "password=", password);
-// }
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
-const Login = () => {
-  const {pathname} = useLocation();
-  const history = useHistory();
-  const isLogin = pathname.replace(/\//g,'') === 'login'
-  const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
-  // const userState = useUserState();
-  console.log("inside Login function");
-  // const dispatch = useUserDispatch();
-  // console.log("set up dispatch in App.js: ", dispatch);
+import { login } from "../../actions/auth";
 
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
 
-  const onClick = useCallback(async () => {
-    if (isLogin) {
-      // await loginUser(dispatch, loginDetails);
+const Login = (props) => {
+  const form = useRef();
+  const checkBtn = useRef();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { message } = useSelector(state => state.message);
+
+  const dispatch = useDispatch();
+
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch(login(email, password))
+        .then(() => {
+          props.history.push("/profile");
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
     } else {
-      // console.log("onclick useCallback, loginDetails are: ", loginDetails);
-      // console.log("dispatch is: ", dispatch);
-      // await registerUser(dispatch, loginDetails);
+      setLoading(false);
     }
-  // }, [loginDetails, isLogin, dispatch]);
-  });
+  };
+
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />;
+  }
+
   return (
-    <div className="container">
-      <div className="details">
-        <h3 className="login-title">{isLogin ? "Login" : "Register"}</h3>
-        <p className="description">
-Login or create an account.        </p>
+    <div className="col-md-12">
+      <div className="card card-container">
+        <Form onSubmit={handleLogin} ref={form}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <Input
+              type="text"
+              className="form-control"
+              name="username"
+              value={email}
+              onChange={onChangeEmail}
+              validations={[required]}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={onChangePassword}
+              validations={[required]}
+            />
+          </div>
+
+          <div className="form-group">
+            <button className="btn btn-primary btn-block" disabled={loading}>
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        </Form>
       </div>
-
-      <InputLogin
-        loginDetails={loginDetails}
-        setLoginDetails={setLoginDetails}
-        isLogin={!isLogin}
-      />
-
-      <div className="buttons">
-        {/* <button className="email-button" style={{ top: "470px" }}>
-         Connect to Google account
-        </button> */}
-        {/* <Link to={isProfileFullFilled ? "/home" : "/profile/edit"}></Link> */}
-        <button
-          onClick={() => {
-            onClick(loginDetails);
-          }}
-        >
-          {isLogin ? "Connect via email account" : "Register with email account"}
-        </button>
-      </div>
-
-      <h4 className="footer">
-        {isLogin ? " Account not found" : "Logged in "}
-        <span
-          style={{ textDecoration: "underline" }}
-          onClick={() => {history.push(isLogin?'/register':'/login')}}
-        >
-          {isLogin ? "Register now" : "Login now"}
-        </span>
-      </h4>
     </div>
   );
 };

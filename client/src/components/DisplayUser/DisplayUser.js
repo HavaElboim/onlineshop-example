@@ -1,18 +1,22 @@
 import React, { useContext, useState, useEffect } from "react";
-import {UserContext} from "../../contexts/UserContexts";
+// import {UserContext} from "../../contexts/UserContexts";
+import { useSelector } from "react-redux";
+
 import ThemeContext from "../../contexts/ThemeContexts";
 import ChangeUser from "../ChangeUser/ChangeUser";
 import "./DisplayUser.css";
 
 const DisplayUser = () => {
-  const { user, toggleUser } = useContext(UserContext);
+  // const { user, toggleUser } = useContext(UserContext);
+  const { user: currentUser } = useSelector((state) => state.auth);
   const { theme, toggleTheme } = useContext(ThemeContext);
-console.log("in DIsplay Userm user is ", user.name);
+  const { isLoggedIn } = useSelector(state => state.auth);
+if (currentUser) console.log("in Display User, user is ", currentUser.email);
+else console.log("no user logged in");
 
   return (
     <div style={{ paddingBottom: "20px" }}>
-      <div>Welcome {user.name}! <ChangeUser /></div>
-      
+      {currentUser && <div>Welcome {currentUser.email}! <ChangeUser /></div>}
     </div>
   );
 };
