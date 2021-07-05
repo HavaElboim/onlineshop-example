@@ -1,7 +1,7 @@
 /* to start running this app in localhost, type
-npm start dev
+npm start
 in terminal from within client directory
-and in a separate terminal type same from within server directory
+and in a separate terminal type "node index.js" from within server directory
 gocodeshop-server
 */
 
@@ -24,11 +24,8 @@ import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors"
 
 //contexts
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
-import {UserContext, users } from "./contexts/UserContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
-//user login contexts
-// import { UserStateProvider, useUserDispatch, useUserState } from "./contexts/UserContexts";
-// import { getUser } from "./contexts/oldActionUserContexts";
+
 
 //login
 import Login from "./components/Login/Login";
@@ -57,9 +54,7 @@ Header also calls CategorySelect component to choose products filter.
 
 const App = () => {
   const [theme, setTheme] = useState(themes.light);
-  // const [user, setUser] = useState(users.guest);
   const [sale, setSale] = useState(sales.endOfYearSale);
-  const [numInCart, setNumInCart] = useState(0);
 
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
@@ -90,33 +85,14 @@ const App = () => {
     setTheme((theme) => (theme === themes.light ? themes.dark : themes.light));
   }
 
-  // function toggleUser() {
-  //   console.log("request to change user");
-  //   setUser((user) => (user === users.guest ? users.admin : users.guest));
-  //   console.log("logged in as user ", user.name);
-  // }
-
   function switchSale(specialOffer) {
     console.log("set sale to ", sales.name);
     setSale((sale) => sale === sales.endOfYearSale);
   }
 
-  
-    // const userState = useUserState();
-    // const userDispatch = useUserDispatch();
-
-    // console.log("userState is: ", userState);
-    
-    // useEffect(() => {
-    //   if (userState.user == null) {
-    //     if (!localStorage.getItem("currentUser")) return;
-    //     getUser(userDispatch);
-    //   }
-    // }, [userDispatch]);
 
   return (
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        {/* <UserContext.Provider value={{ user, toggleUser }}> */}
           <SaleContext.Provider value={{ sale, switchSale }}>
             <Router history={history}>
               <div
@@ -176,7 +152,6 @@ const App = () => {
 
               {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
-         {/* {userState.user && (*/}
               <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} /> 
@@ -199,32 +174,11 @@ const App = () => {
                   <Home />
                 </Route>
               </Switch>
-            {/*}  )} */}
-              <Switch>
-              <Route path="/login">
-          {/* {!userState.user ? (
-            <Login />
-          ) : (
-            <Redirect to={{ pathname: "/" }} />
-          )} */}
-        </Route>
-        <Route path="/register">
-          {/* {!userState.user ? (
-            <Login />
-          ) : (
-            <Redirect to={{ pathname: "/" }} />
-          )} */}
-        </Route>
-        {/* <Route path="/">
-          {userState.user ? <Home /> : <Redirect to={{ pathname: "/login" }} />}
-        </Route> */}
-      </Switch>
               </div>
                 <img src={FlowerBaseSVG} className="imgBottom" alt="flower decoration"/>
               </div>
             </Router>
           </SaleContext.Provider>
-        {/* </UserContext.Provider> */}
       </ThemeContext.Provider>
   );
 };
