@@ -47,6 +47,7 @@ const ProductInfoAdmin = ({ match }) => {
       .then((response) => response.json())
       .then((data) => setProducts(data));
     console.log("descr is ", products, ` /api/products/${match.params._id}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
