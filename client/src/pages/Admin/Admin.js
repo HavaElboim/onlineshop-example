@@ -2,12 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Admin.css";
 
 //components of content:
-import Header from "../../components/Header/Header";
-import Products from "../../components/Products/Products";
+// import Header from "../../components/Header/Header";
+// import Products from "../../components/Products/Products";
 //import SearchKeyword from "../SearchKeyword/SearchKeyword";
 import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySelectAdmin";
 import ThemeContext from "../../contexts/ThemeContexts";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
+
+// user state information
+import UserService from "../../services/user.service";
 
 /*****
  * NEED TO ADD NEW FIELDS TO FORM
@@ -33,6 +36,26 @@ const Admin = () => {
   const { sale } = useContext(SaleContext);
 
   console.log("theme", theme, "on sale?", onSale);
+
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    UserService.getAdminBoard().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const _content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setContent(_content);
+      }
+    );
+  }, []);
 
   useEffect(() => {
     fetch("/api/products")
@@ -261,15 +284,3 @@ const Admin = () => {
 };
 
 export default Admin;
-
-/*
-addProduct(
-            productName,
-            productDescription,
-            productPrice,
-            selectedCategory,
-            productURL,
-            quantityInStock,
-            onSale
-          )
-          */

@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useSelector } from "react-redux";
+
 import ProductDisplayClass from "../ProductDisplayClass/ProductDisplayClass";
 import "./Products.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import {UserContext} from "../../contexts/UserContexts";
+// import {UserContext} from "../../contexts/UserContexts";
 
 const Products = (props) => {
   const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
-  const { user, toggleUser } = useContext(UserContext);
+  // const { user, toggleUser } = useContext(UserContext);
+  const { user: currentUser } = useSelector((state) => state.auth);
   const [filteredData, setFilteredData]= useState(products);
     
   useEffect(() => {
@@ -15,8 +18,8 @@ const Products = (props) => {
     let tempProds1, tempProds2;
     
     tempProds1 = products.filter( (item) => ( item.price <= priceRange[1] && item.price >= priceRange[0]));
-    tempProds2 = (selectedCategory != "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
-    tempProds1 = (searchKeyword != "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
+    tempProds2 = (selectedCategory !== "") ? tempProds1.filter( (item) => ( item.category === selectedCategory)) : tempProds1;
+    tempProds1 = (searchKeyword !== "") ? tempProds2.filter( (item) => ( item.category.includes(searchKeyword) || item.description.includes(searchKeyword) || item.title.includes(searchKeyword))) : tempProds2;
     setFilteredData(tempProds1);
 
   }, [priceRange, selectedCategory, searchKeyword]);
@@ -26,8 +29,8 @@ const Products = (props) => {
 
   return (
     <div>
-           {user.name === "Admin" && <div className="user-instructions">Click on product to edit it</div>}
-      {user.name !== "Admin" && (
+           {currentUser && currentUser.roles.includes("ROLE_ADMIN") && <div className="user-instructions">Click on product to edit it</div>}
+      {currentUser && !currentUser.roles.includes("ROLE_ADMIN") && (
         <div className="user-instructions">Click on product to see details and order</div>
       )}
       {filteredData.length > 0 && (
@@ -44,7 +47,7 @@ const Products = (props) => {
                 title={product.title}
                 image={product.image}
                 price={product.price}
-                productid={product._id}
+                // productid={product._id}
                 category={product.category}
                 onSale={product.onSale}
                 saleReductionPercent={product.saleReductionPercent}

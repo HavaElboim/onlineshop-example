@@ -1,4 +1,5 @@
 import { React, useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import createPersistedState from "use-persisted-state";
 import SaleCountdown from "../SaleCountdown/SaleCountdown";
 import PropTypes from "prop-types";
@@ -27,20 +28,20 @@ const Header = (props) => {
     setSearch,
   } = props;
 
-  const { user, toggleUser } = useContext(UserContext);
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   const [cart, setCart] = useCartState({});
   const [numInCart, setNumInCart] = useState((cart.length>0? cart.reduce((n, { quantity }) => n + quantity, 0): 0));
 
   return (
     <div className="headerDiv">
-      {user.name === "Guest" && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
-      <SaleCountdown
+      {currentUser && !currentUser.roles.includes("ROLE_ADMIN") && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
+     {/* <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
         isSale={isSale}
         setSale={setSale}
-      ></SaleCountdown>
+      ></SaleCountdown> */}
       <div className="selectionOptions">
         <div className="selectionOptionsHeader">Can we help you look for something?</div>
       {products.length > 0 && (
@@ -83,23 +84,3 @@ Header.propTypes = {
 
 export default Header;
 
-/*      return (
-        <div>
-          <h1> App</h1>
-          <SaleCountdown
-            secondsLeft={secondsLeft}
-            setSecondsLeft={setSecondsLeft}
-            isSale={isSale}
-            setSale={setSale}
-          ></SaleCountdown>
-          {products.length > 0 && (
-            <CategorySelect
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              products={products}
-            ></CategorySelect>
-            <SliderFilterPrice priceRange={priceRange}></SliderFilterPrice}
-          )}
-        </div>
-      );
-      */
