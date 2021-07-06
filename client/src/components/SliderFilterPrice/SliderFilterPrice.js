@@ -12,14 +12,11 @@ const SliderFilterPrice = (props) => {
 
   useEffect(() => {
   if (products.length) {
-        console.log("prods are ", products);
         let max = 0;
         for (let i = 0; i < products.length; i++) {
           max = products[i].price > max ? products[i].price : max;
-          console.log("max: ", max);
         }
         setPriceRange([0, max + 5]);
-        console.log("max price is: ", max);
       }
     }, [products, setPriceRange]);
 

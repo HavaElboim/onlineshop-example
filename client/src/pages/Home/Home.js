@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import DisplayUser from "../../components/DisplayUser/DisplayUser";
 import SaleContext, { sales } from "../../contexts/SaleContexts";
 
 //components of content:

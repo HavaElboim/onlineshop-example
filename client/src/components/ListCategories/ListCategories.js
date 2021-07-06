@@ -29,7 +29,6 @@ const ListCategories = (props) => {
   const { products } = props;
 
   useEffect(() => {
-    console.log("In ListC, number of products from props: ", products.length);
   }, [products]);
 
  

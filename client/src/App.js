@@ -10,7 +10,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //for SPAP:
-import { BrowserRouter as Router, Switch,  Route, Link } from "react-router-dom";
+//import { BrowserRouter as Router, Switch,  Route, Link } from "react-router-dom";
+import { Router, Switch,  Route, Link } from "react-router-dom";
 
 //bootstrap for design tools such as a spinner on loading:
 import "bootstrap/dist/css/bootstrap.min.css"; 
@@ -58,7 +59,8 @@ const App = () => {
   const [theme, setTheme] = useState(themes.light);
   const [sale, setSale] = useState(sales.endOfYearSale);
 
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  //const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showAdminBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -71,10 +73,15 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log("Running as Admin user");
-      setShowAdminBoard(currentUser.role === ("ROLE_ADMIN"));
+      if(currentUser.role === ("ROLE_ADMIN") ) {
+        console.log("Logged in as Admin");
+        // setShowAdminBoard(currentUser.role === ("ROLE_ADMIN"));
+      } else {
+        console.log("Running as logged-in user");
+      // setShowCustomerBoard(currentUser.role === ("ROLE_ADMIN"));}
+      }
     }
-    else  console.log("Running as regular user");
+    else  console.log("Running as regular visitor");
   }, [currentUser]);
 
   const logOut = () => {
@@ -109,7 +116,7 @@ const App = () => {
                   <div>
                   <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
-                    {currentUser.username}
+                    {/* {currentUser.email} */} My details
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -137,7 +144,7 @@ const App = () => {
                 <nav>
                   <ul>
                     <li>
-                      <Link to="/Home">Home</Link>
+                      <Link to="/Home">See our products</Link>
                     </li>
                     <li>
                       <Link to="/About">About</Link>

@@ -10,7 +10,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import { register } from "../../actions/auth";
+import { register, login } from "../../actions/auth";
 
 const required = (value) => {
   if (!value) {
@@ -42,13 +42,14 @@ const vpassword = (value) => {
   }
 };
 
-const Register = () => {
+const Register = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
@@ -82,6 +83,18 @@ const Register = () => {
         .catch(() => {
           setSuccessful(false);
           console.log("registration unsuccessful");
+        });
+        //automatically login straight away as the new user:
+        dispatch(login(email, password))
+        .then(() => {
+          console.log("pushing profile:");
+          props.history.push("/profile");
+          // window.location.reload();
+          console.log("pushed profile");
+        })
+        .catch(() => {
+          setLoading(false);
+          console.log("stopping loading false 1");
         });
     }
   };

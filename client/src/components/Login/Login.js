@@ -36,6 +36,9 @@ const Login = (props) => {
   const { isLoggedIn } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
 
+  console.log("login state is: ", useSelector(state => state.auth));
+  console.log("login msg is: ", useSelector(state => state.message));
+
   const dispatch = useDispatch();
 
   const onChangeEmail = (e) => {
@@ -47,38 +50,43 @@ const Login = (props) => {
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
+    console.log("set pwd");
   };
 
   const handleLogin = (e) => {
+    console.log("handling login");
     e.preventDefault();
 
     setLoading(true);
-
+console.log("setting loading");
     form.current.validateAll();
 console.log("validated form");
     if (checkBtn.current.context._errors.length === 0) {
-      console.log("errors length 0");
+      console.log("no errors in checkbtn");
       dispatch(login(email, password))
         .then(() => {
-          console.log("pushing progile:");
+          console.log("pushing profile:");
           props.history.push("/profile");
-          window.location.reload();
-          console.log("push profile");
+          // window.location.reload();
+          console.log("pushed profile");
         })
         .catch(() => {
           setLoading(false);
-          console.log("set loading false 1");
+          console.log("stopping loading false 1");
         });
     } else {
       setLoading(false);
-      console.log("set loading false 2");
+      console.log("stopping loading false  2");
     }
   };
 
   if (isLoggedIn) {
     console.log("is logged in");
     return <Redirect to="/profile" />;
+  } else{
+console.log("not redirecting...");
   }
+  
 
   return (
     <div className="col-md-12">

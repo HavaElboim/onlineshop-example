@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import ThemeContext from "../../contexts/ThemeContexts";
-//import "./SearchKeyword.css";
 import "../Header/Header.css";
 
 const SearchKeyword = (props) => {
