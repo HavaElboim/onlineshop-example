@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 //for SPAP:
 import { BrowserRouter as Router, Switch,  Route, Link } from "react-router-dom";
 
+//bootstrap for design tools such as a spinner on loading:
+import "bootstrap/dist/css/bootstrap.min.css"; 
+
 //imports of pages definitions
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
