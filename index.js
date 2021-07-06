@@ -3,7 +3,6 @@
 /* new for login: */
 
 const userRoutes = require('./routes/index'); 
-
 // syntactic sugar for { userRoutes: userRoutes }
 // export { userRoutes };
 module.exports = userRoutes;
@@ -11,12 +10,13 @@ module.exports = userRoutes;
 
 // import the express package, installed earlier using: npm install express
 const express = require("express");
+const bodyParser = require("body-parser");
 const path = require("path");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const { authenticateToken, generateAccessToken } = require('jsonwebtoken');
-
+// const generateAccessToken = require('./middleware/jwt');
 // routes for user authentication:
 
 require('./routes/auth.routes');
@@ -52,7 +52,7 @@ apiRouter.use('/users', userRoutes);
 
 const {
   connectDb,
-  models: { User, Product, Role },
+  models: { User, Product},
 } = require("./models");
 
 // app.use() to specify middleware as the callback function
@@ -90,9 +90,11 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+
 app.post("/api/auth/signup", async (req, res) => {
-  console.log("attempting signup");
+  
   const { email, password } = req.body;
+  console.log("attempting signup for user: ", email, password);
   if (!validateEmail(email)) {
     res.status(403).send("invalid email").end();
     return;
@@ -107,21 +109,22 @@ app.post("/api/auth/signup", async (req, res) => {
   console.log("received email and password, hashing");
 
   const hash = bcrypt.hashSync(password, salt);
+  console.log("hash is: ", hash);
+
   const user = await new User({
     email,
     password: hash,
-  }).save()
-  .catch(err => {
-      console.log("rejected with error ", err);
-      throw err;
-  });
-  console.log("registration successful, generating access token");
-  const token = generateAccessToken(user);
-  res.send({ token })
-  .catch(err => {
-    console.log("unsuccessful generation of access token, ", err);
-    throw err;
-  });
+  }).save();
+  console.log("POST!", user);
+
+  try {
+    res.json(user);
+  } catch (err) {
+    console.log("error adding user ", err);
+    res.status(400).json({ success: false });
+  }
+  console.log("POST successful, added user: ", user);
+
 });
 
 app.post("/api/auth/signin", async (req, res) => {
@@ -135,7 +138,7 @@ app.post("/api/auth/signin", async (req, res) => {
     } else {
       throw err;
     }
-  });;
+  });
   if (!user) {
     res.status(404).send("user does not exist")
     .catch(err => {console.log("failed login, error: ", err)});
@@ -154,10 +157,19 @@ app.post("/api/auth/signin", async (req, res) => {
     return;
   }
   console.log('login - user and pwd are valid');
-  const token = generateAccessToken(user);
-  const userObject = user.toObject();
-  const { password: removed, ...resUser } = userObject;
-  res.send({ resUser, token });
+  // const token = generateAccessToken(user);
+  // const userObject = user.toObject();
+  // const { password: removed, ...resUser } = userObject;
+  // res.send({ resUser, token });
+
+  try {
+    res.json(user);
+  } catch (err) {
+    console.log("error logging in user ", err);
+    res.status(400).json({ success: false });
+  }
+  console.log("POST successful, logged in user: ", user);
+
 });
 
 
@@ -186,7 +198,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 })
 .then(() => {
-  console.log("Successfully connected to MongoDB. Initializing roles:");
+  console.log("Successfully connected to MongoDB. Initializing admin user if does not exist:");
   initial();
 })
 .catch( err => {
@@ -194,9 +206,8 @@ mongoose.connect(process.env.MONGO_URI, {
   process.exit();
 });
 
-/* this function is activated once and creates a roles collection if it doesn't yet exist
-NB do not create manually the roles collection in Mongo - otherwise the count will not be zero
-and the roles will not automatically be added */
+/* this function is activated once and creates an admin user if it doesn't yet exist
+- using the email and password stored in the .env file */
 
 const initial =  async () => {
   console.log("checking if Admin user exists:");
@@ -308,16 +319,18 @@ app.post("/api/products", async (req, res) => {
     onSale,
     saleReductionPercent,
   }).save();
-  console.log("POST!", product);
 
   //insertOne is in Mongo but not in Mongoose...
   //Product.insertOne({ title, description, price, category, url }).exec();
 
   try {
-    res.status(status).send(product);
+    res.json(product);
+    // res.status(status).send(product);
   } catch (err) {
-    res.status(404).json({ success: false });
+    console.log("error adding product ", err);
+    res.status(400).json({ success: false });
   }
+  console.log("POST successful, added", product);
 });
 
 // put : to change a value of an item in the database

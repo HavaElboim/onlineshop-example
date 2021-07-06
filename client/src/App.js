@@ -72,7 +72,7 @@ const App = () => {
   useEffect(() => {
     if (currentUser) {
       console.log("Running as Admin user");
-      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+      setShowAdminBoard(currentUser.role === ("ROLE_ADMIN"));
     }
     else  console.log("Running as regular user");
   }, [currentUser]);
@@ -166,7 +166,7 @@ const App = () => {
                 <Route path="/About">
                   <About />
                 </Route>
-                { currentUser && currentUser.roles.includes("ROLE_ADMIN") ? (
+                { currentUser && currentUser.role === ("ROLE_ADMIN") ? (
                   <Route path="/products/:_id" component={ProductInfoAdmin}></Route>
                 ) : (
                   <Route path="/products/:_id" component={ProductInfo}></Route>

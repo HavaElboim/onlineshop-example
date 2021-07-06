@@ -41,6 +41,7 @@ const Login = (props) => {
   const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
+    console.log("set email to ", email);
   };
 
   const onChangePassword = (e) => {
@@ -54,22 +55,28 @@ const Login = (props) => {
     setLoading(true);
 
     form.current.validateAll();
-
+console.log("validated form");
     if (checkBtn.current.context._errors.length === 0) {
+      console.log("errors length 0");
       dispatch(login(email, password))
         .then(() => {
+          console.log("pushing progile:");
           props.history.push("/profile");
           window.location.reload();
+          console.log("push profile");
         })
         .catch(() => {
           setLoading(false);
+          console.log("set loading false 1");
         });
     } else {
       setLoading(false);
+      console.log("set loading false 2");
     }
   };
 
   if (isLoggedIn) {
+    console.log("is logged in");
     return <Redirect to="/profile" />;
   }
 

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
-const {User, Role} = require("../models");
+const {User} = require("../models");
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -22,30 +22,15 @@ isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
+      console.log("user status 500, message: ", err);
       return;
     }
-
-    Role.find(
-      {
-        _id: { $in: user.roles }
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
-            next();
-            return;
-          }
-        }
-
-        res.status(403).send({ message: "Require Admin Role!" });
-        return;
-      }
-    );
+    console.log("found user: ", User);
+    console.log("looking for user role: ", User.role);
+    if(User.role === "admin"){
+      next();
+      return;
+    };
   });
 };
 

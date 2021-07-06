@@ -10,13 +10,20 @@ module.exports = function(app) {
     next();
   });
 
-  //process.env.MONGO_URI
-  
+  /*
   app.post(
     "/api/auth/signup",
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted
+    ],
+    controller.signup
+  );
+*/
+  app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail
     ],
     controller.signup
   );

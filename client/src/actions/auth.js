@@ -20,7 +20,7 @@ import {
           type: SET_MESSAGE,
           payload: response.data.message,
         });
-  
+  console.log("after dispathc 1 in register");
         return Promise.resolve();
       },
       (error) => {
@@ -30,7 +30,7 @@ import {
             error.response.data.message) ||
           error.message ||
           error.toString();
-  
+  console.log("dispatching error in register");
         dispatch({
           type: REGISTER_FAIL,
         });
@@ -52,7 +52,7 @@ import {
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
-  
+        console.log("after dispathc 1 in login");
         return Promise.resolve();
       },
       (error) => {
@@ -62,7 +62,8 @@ import {
             error.response.data.message) ||
           error.message ||
           error.toString();
-  
+          console.log("dispatching error in login");
+
         dispatch({
           type: LOGIN_FAIL,
         });

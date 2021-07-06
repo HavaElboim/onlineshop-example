@@ -27,8 +27,8 @@ const Products = (props) => {
 
   return (
     <div>
-           {currentUser && currentUser.roles.includes("ROLE_ADMIN") && <div className="user-instructions">Click on product to edit it</div>}
-      {currentUser && !currentUser.roles.includes("ROLE_ADMIN") && (
+           {currentUser && currentUser.role === ("ROLE_ADMIN") && <div className="user-instructions">Click on product to edit it</div>}
+      {currentUser && !currentUser.role === ("ROLE_ADMIN") && (
         <div className="user-instructions">Click on product to see details and order</div>
       )}
       {filteredData.length > 0 && (

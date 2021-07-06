@@ -10,10 +10,13 @@ module.exports = function(app) {
     next();
   });
 
+  // here endpoint for access to public (non-protected) information 
   app.get("/api/test/all", controller.allAccess);
 
+  //here endpoint for access to protected information for logged-in user:
   app.get("/api/test/user", [authJwt.verifyToken], controller.customerBoard);
 
+  //here endpoint for access to protected information for admin
   app.get(
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],

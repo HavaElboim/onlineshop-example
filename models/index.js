@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 
 const User = require("./user");
-const Role = require("./role");
 
 const Product = require("./product");
-const ROLES = ["Customer", "Admin"];
 
 const connectDb = async () => {
 //   const mongoUrl = (process.env.NODE_ENV === "test" && process.env.MONGO_TEST_URL) || process.env.MONGO_URL;
@@ -17,6 +15,6 @@ const connectDb = async () => {
 };
 
 
-const models = { User, Product, Role, ROLES};
+const models = { User, Product};
 
 module.exports = { connectDb, models };

@@ -56,6 +56,7 @@ try {
   }
 });
 
+// route for login
 router.post('/login', async (req, res) => {
     const {user:userReq} = req.body;
     const user = await User.findOne({email: userReq.email});
