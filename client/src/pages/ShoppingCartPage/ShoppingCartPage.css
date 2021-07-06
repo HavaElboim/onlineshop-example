@@ -1,0 +1,16 @@
+.PaymentListContents {
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.PayButton {
+  padding: 10px;
+  margin: auto;
+  color: darkgreen;
+  border-radius: 16px;
+  background-color: #f1fb87;
+  padding-right: 10px;
+  background-color: #f1fb87;
+  box-shadow: 0 1px 10px 0;
+}

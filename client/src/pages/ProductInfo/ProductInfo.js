@@ -19,7 +19,30 @@ import CartIcon from "../../components/CartIcon/CartIcon";
 import createPersistedState from "use-persisted-state";
 const useCartState = createPersistedState("cart");
 
-
+/*
+const selectNumberToBuyAddOrRemoveOne = (qty) => {
+  if (quantity + qty < 0) {
+    setQtyWarn("");
+  } else if (quantity + qty <= products.quantityInStock) {
+    setQuantity(quantity + qty);
+    setQtyWarn("");
+  } else {
+    switch (products.quantityInStock) {
+      case 0:
+        setQtyWarn(`There are no more ${products.title}s in stock`);
+        break;
+      case 1:
+        setQtyWarn(`There is only 1 ${products.title} in stock`);
+        break;
+      default: {
+        setQtyWarn(
+          `There are only ${products.quantityInStock} ${products.title}s in stock`
+        );
+      }
+    }
+  }
+};
+*/
 const ProductInfo = ({ match }) => {
   const [products, setProducts] = useState({});
 
@@ -50,8 +73,6 @@ const ProductInfo = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  
   const selectNumberToBuyAddOrRemoveOne = (qty) => {
     if (quantity + qty < 0) {
       setQtyWarn("");
@@ -332,6 +353,7 @@ const ProductInfo = ({ match }) => {
   }
 };
 
+// export { selectNumberToBuyAddOrRemoveOne };
 export default ProductInfo;
 
 

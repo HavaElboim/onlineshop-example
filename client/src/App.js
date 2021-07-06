@@ -24,7 +24,7 @@ import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import ProductInfoAdmin from "./pages/ProductInfo/ProductInfoAdmin";
 import DisplayUser from "./components/DisplayUser/DisplayUser";
 import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
-
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 //contexts
 import ThemeContext, { themes } from "./contexts/ThemeContexts";
 import SaleContext, { sales } from "./contexts/SaleContexts";
@@ -40,6 +40,7 @@ import { history } from "./helpers/history";
 
 import FlowerHeadSVG from "./components/icons/SpringFlowerWithGrassArtHeading.png";
 import FlowerBaseSVG from "./components/icons/SpringFlowerWithGrassArtBackground.png";
+import ShoppingCartPage from "./pages/ShoppingCartPage/ShoppingCartPage";
 
 /* App calls ProductsContainerClass
   which calls SaleCountdown
@@ -177,8 +178,13 @@ const App = () => {
                   <Route path="/products/:_id" component={ProductInfoAdmin}></Route>
                 ) : (
                   <Route path="/products/:_id" component={ProductInfo}></Route>
-                )
-}
+                )}
+                <Route path="/Payment">
+                  <PaymentPage />
+                </Route>
+                <Route path="/Cart">
+                  <ShoppingCartPage/>
+                </Route>
                 <Route path="/">
                   <Home />
                 </Route>

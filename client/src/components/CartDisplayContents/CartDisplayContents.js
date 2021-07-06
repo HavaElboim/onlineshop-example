@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+
 import ThemeContext from "../../contexts/ThemeContexts";
 import CartItem from "../CartItem/CartItem";
 
@@ -30,7 +32,8 @@ const CartDisplayContents = ({numInCart, setNumInCart}) => {
             <CartItem item={item} key={i} numInCart={numInCart} setNumInCart={setNumInCart}/>
           ))}
           {/*Use the toFixed() method in JavaScript to format a number with two decimals. */}
-         <div><span className="shoppingListTitle">Total:</span> ${cart.reduce((accumulator, current) => accumulator + (current.saleReductionPercent > 0 ? current.quantity*(100-current.saleReductionPercent)*current.price/100 : current.quantity*current.price), 0).toFixed(2)}</div>
+         <div className="TotalRow"><span className="shoppingListTitle">Total:</span> ${cart.reduce((accumulator, current) => accumulator + (current.saleReductionPercent > 0 ? current.quantity*(100-current.saleReductionPercent)*current.price/100 : current.quantity*current.price), 0).toFixed(2)}</div>
+         <Link to={`/Cart`} className="PaymentLink">I've finished choosing plants!</Link>
 
         </div>
 
