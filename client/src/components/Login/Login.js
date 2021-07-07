@@ -97,7 +97,7 @@ console.log("not redirecting...");
             <Input
               type="text"
               className="form-control"
-              name="username"
+              name="email"
               value={email}
               onChange={onChangeEmail}
               validations={[required]}

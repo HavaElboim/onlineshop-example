@@ -13,4 +13,7 @@
   padding-right: 10px;
   background-color: #f1fb87;
   box-shadow: 0 1px 10px 0;
+  font-size: 20px !important;
+  height: 40px;
+  margin: 0 5px 0 5px;
 }
