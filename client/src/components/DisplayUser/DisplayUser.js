@@ -18,3 +18,4 @@ else console.log("no user logged in");
 };
 
 export default DisplayUser;
+

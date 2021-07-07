@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import {  useSelector } from "react-redux";
 import "./Admin.css";
 
 //components of content:
@@ -31,9 +32,12 @@ const Admin = () => {
   const [productPrice, setPrice] = useState("");
   const [quantityInStock, setStockQuantity] = useState("");
   const [notAllFieldsFilled, setFieldsFilled] = useState(false);
+  const [testAdminWarning, setTestWarning] = useState(null);
 
   const { theme } = useContext(ThemeContext);
   const { sale } = useContext(SaleContext);
+
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   console.log("theme", theme, "on sale?", onSale);
 
@@ -78,7 +82,10 @@ const Admin = () => {
     onSale,
     saleReductionPercent
   ) => {
-
+    if(currentUser.role !== ("admin") ) {
+      setTestWarning("Sorry adding new products is allowed for real Admins only, we never know what a visitor might enter in our database!")
+      return;
+    }
     if (
       title.length === 0 ||
       description.length === 0 ||
@@ -131,6 +138,7 @@ const Admin = () => {
         id="productName"
         value={productName}
         onChange={(e) => setName(e.target.value)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productName.length === 0 && notAllFieldsFilled && (
@@ -141,6 +149,7 @@ const Admin = () => {
         id="productDescription"
         value={productDescription}
         onChange={(e) => setDescription(e.target.value)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productDescription.length === 0 && notAllFieldsFilled && (
@@ -151,6 +160,7 @@ const Admin = () => {
         id="productURL"
         value={productURL}
         onChange={(e) => setURL(e.target.value)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productURL.length === 0 && notAllFieldsFilled && (
@@ -170,6 +180,7 @@ const Admin = () => {
         id="productPrice"
         value={productPrice}
         onChange={(e) => setPrice(e.target.value)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {productPrice.length === 0 && notAllFieldsFilled && (
@@ -187,6 +198,7 @@ const Admin = () => {
         id="quantityInStock"
         value={quantityInStock}
         onChange={(e) => setStockQuantity(e.target.value)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
 
@@ -208,6 +220,7 @@ const Admin = () => {
         type="checkbox"
         value={onSale}
         onChange={(e) => setSale(!onSale)}
+        onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
       {onSale && (
@@ -219,6 +232,7 @@ const Admin = () => {
             onChange={(e) => {
               setReduction(e.target.value);
             }}
+            onFocus={(e)=>{setTestWarning(null)}}
             style={{ color: theme.background, background: theme.foreground }}
           ></input>
         </div>
@@ -246,6 +260,11 @@ const Admin = () => {
           Complete all fields before uploading new product.
         </label>
       )}
+
+        <label for="addNewProductButton" style={{ display: "block" }}>
+          {testAdminWarning}
+        </label>
+  
     </div>
   );
 };

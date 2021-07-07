@@ -62,7 +62,6 @@ const App = () => {
   const [theme, setTheme] = useState(themes.light);
   const [sale, setSale] = useState(sales.endOfYearSale);
 
-  //const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showAdminBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -160,10 +159,10 @@ const App = () => {
                     <li>
                       <Link to="/About">About</Link>
                     </li>
-                    {showAdminBoard && (
+                    {currentUser && (currentUser.role === ("admin") || currentUser.role === ("testadmin")) && (
               <li className="nav-item">
                 <Link to={"/Admin"} className="nav-link">
-                  Admin Board
+                  Admin - Add new product
                 </Link>
               </li>
             )}

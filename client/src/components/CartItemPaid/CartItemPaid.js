@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../CartItem/CartItem.css";
 import sale from "../icons/green-leaves-sale.png";
-import deleteIcon from "../icons/trash.png";
-import upArrow from "../icons/upArrow.png";
-import downArrow from "../icons/downArrow.png";
+
 import "../../components/storagetools/LocalStorageArrayTools.js";
 
 // custom hook for updating state from local storage
@@ -13,9 +11,8 @@ const useCartState = createPersistedState("cart");
 
 const CartItemPaid = ({ item, numInCart}) => {
   const [products, setProducts] = useState({});
-  const [qtyLabel, setQtyLabel] = useState("");
-  const [qty, setQty] = useState(item.quantity);
-  const [cart, setCart] = useCartState({});
+  const [qtyLabel] = useState("");
+  const [qty] = useState(item.quantity);
 
     /*if ShowCart is removed from the next line, the site throws an error.
   If left in, the compiler complains that it is defined but never used - 

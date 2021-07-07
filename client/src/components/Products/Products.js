@@ -10,6 +10,7 @@ const Products = (props) => {
   const { secondsLeft, selectedCategory, products, isSale, priceRange, searchKeyword } = props;
   const { user: currentUser } = useSelector((state) => state.auth);
   const [filteredData, setFilteredData]= useState(products);
+  const [addWarning, setAddWarning] = useState(null);
     
   useEffect(() => {
 
@@ -22,13 +23,26 @@ const Products = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceRange, selectedCategory, searchKeyword]);
 
+  const addNewProduct =() => {
+    if (currentUser.role === ("admin")) {
+
+    }
+    else {
+      setAddWarning("Public testing of admin user. You have to be a real Admin to add a product (We never know what you might add here!) ")
+    }
+  }
+
   // maps the array containing the shop information to set up individual products items
   // and passes via to the ProductsDisplayClass which will starts the sale countdown and which calls the  */
 
   return (
     <div>
+      <div className="instructionRow">
            {currentUser && (currentUser.role === ("admin") || currentUser.role===("testadmin") )? (<div className="user-instructions">Admin user - Click on product to see details or edit it</div>) :
            (<div className="user-instructions">Non-admin user - Click on product to see details and order</div>)}
+           {currentUser && ((currentUser.role === ("admin") || currentUser.role===("testadmin") )&& <button className="addItemButton" onClick={(e) => addNewProduct()}>Add new product</button>)}
+           <div className="warningStyle">{addWarning}</div>
+           </div>
       {filteredData.length > 0 && (
         <div className="product-filter">
           {filteredData.map((product) => (

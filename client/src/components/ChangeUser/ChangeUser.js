@@ -5,13 +5,21 @@ import ThemeContext from "../../contexts/ThemeContexts";
 import "../ChangeThemeColors/ChangeThemeColors.css";
 import "./ChangeUser.css";
 import Login from "../Login/Login";
+import { useDispatch } from "react-redux";
+import { logout } from  "../../actions/auth";
 
 const ChangeUser = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(logout());
+  };
 
   return (
     <div>
+    
     <button className="button"
       style={{
         background: theme.background,
@@ -19,7 +27,7 @@ const ChangeUser = () => {
         marginLeft: 10
       }}
     >
-      {currentUser && (<div className="loginButton">Logout</div>)}
+      {currentUser && ( <div className="loginButton" onClick={(e) => logOut()}>Logout</div>)}
     </button>
     <Login></Login>
     </div>

@@ -1,5 +1,28 @@
 /* Product Layout */
 
+.instructionRow{
+  display: flex;
+}
+
+.warningStyle{
+  color: red;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.addItemButton {
+  padding: 10px;
+  margin: auto;
+  color: darkgreen;
+  border-radius: 16px;
+  background-color: #f1fb87;
+  padding-right: 10px;
+  background-color: #f1fb87;
+  box-shadow: 0 1px 10px 0;
+  font-size: 15px !important;
+    line-height: 0.5em;
+}
+
 .user-instructions {
   padding-left: 30px;
     padding-top: 20px;
