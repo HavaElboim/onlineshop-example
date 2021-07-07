@@ -13,6 +13,8 @@ else console.log("no user logged in");
   return (
     <div style={{ paddingBottom: "20px" }}>
       {currentUser && <div>Welcome {currentUser.email}! <ChangeUser /></div>}
+      <div>To test Admin functions, login as a test admin with email: testadmin@mytest.test and password: t7e6f3e4</div>
+      <div>(This will not grant you full admin privileges, which are reserved for the real admin user)</div>
     </div>
   );
 };
