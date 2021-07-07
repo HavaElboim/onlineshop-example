@@ -5,8 +5,8 @@ const About = () => {
     <div>
       <h2>About</h2>
       <div>
-        Welcome to the new online shop. Choose your products category to
-        display.
+        Welcome to the new online shop. Choose products category / price range / search keyword to display products of your choice.
+	      Click on an individual product to see more details
 
         This is a test project displaying the use of react with express and mongoDB to create an online shop.
         The site is hosted on Heroku, with the repository lying on Github.
