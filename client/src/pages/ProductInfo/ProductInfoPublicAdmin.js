@@ -1,6 +1,11 @@
 /************************************************/
 /*                                              */ 
-/*    ProductInfo page for Admin user           */
+/*  ProductInfo page for Public Admin user      */
+/*  This is a display page for the general      */
+/*  public displaying how the admin page works  */
+/*  but without access to deleting or changing  */
+/*  products data other than changing sale price*/
+/*  information and number in stock             */
 /*                                              */
 /************************************************/
 
@@ -18,7 +23,7 @@ import CategorySelectAdmin from "../../components/CategorySelectAdmin/CategorySe
 import saleIcon from "../../components/icons/green-leaf-sale-icon.png";
 import LeavesFrame from "../../components/icons/green-leaves-left-frame-1.svg";
 
-const ProductInfoAdmin = ({ match }) => {
+const ProductInfoPublicAdmin = ({ match }) => {
   const [products, setProducts] = useState({});
 
   const { theme } = useContext(ThemeContext);
@@ -39,6 +44,10 @@ const ProductInfoAdmin = ({ match }) => {
   const [quantityInStock, setStockQuantity] = useState("");
 
   const [stopEditText, setStopEditText] = useState("Exit product update");
+
+  const [descriptionWarning, setDescriptionWarning] = useState(null);
+  const [nameWarning, setNameWarning] = useState(null);
+  const [stockWarning, setStockWarning] = useState(null);
 
   const deleteProductText = "Delete product";
 
@@ -80,12 +89,12 @@ const ProductInfoAdmin = ({ match }) => {
     console.log("in edit product in client");
 
     setStockQuantity(quantityInStock);
-    setDescription(description);
+    
     setPrice(price);
-    setName(title);
+
     setSelectedCategory(category);
     setSale(onSale);
-    setURL(url); /* I put this back in today 5/7 */
+    
     setEditProduct(false);
     setStopEditText("Done");
     setReduction(saleReductionPercent);
@@ -112,6 +121,8 @@ const ProductInfoAdmin = ({ match }) => {
     console.log("editing product ", product);
   };
 
+
+
   const copyProductDetails = () => {
     setStockQuantity(products.quantityInStock);
     setDescription(products.description);
@@ -124,6 +135,15 @@ const ProductInfoAdmin = ({ match }) => {
     setURL(products.url); /* I put this back in today 5/7 */
   };
   
+  const publicSetStockQuantity =(value) =>{
+    if(value>0) {
+        setStockQuantity(value);
+    }
+    else {
+        setStockWarning("Public admin testing - can only change to number in stock greater than 0");
+    }
+  };
+
   if (products) {
     return (
            <div className="outer-group">       
@@ -134,8 +154,8 @@ const ProductInfoAdmin = ({ match }) => {
               <div>
                 <div>
                   <button
+                  className="productInfoButton"
                     id="exitEditButton"
-                    className="productInfoButton"
                     style={{
                       background: theme.background,
                       color: theme.foreground,
@@ -159,10 +179,13 @@ const ProductInfoAdmin = ({ match }) => {
                   </Link>
               </div>
                <div>Input name of product:</div>
+               <label htmlFor="nameInput">{nameWarning}</label>
                <input
+                 name="nameInput"
                  id="productName"
                  value={productName}
-                 onChange={(e) => setName(e.target.value)}
+                 onChange={(e) => setNameWarning("Public testing of Admin - not allowed to change name of product")}
+                 onBlur={(e) => setNameWarning(null)}
                  style={{ color: theme.background, background: theme.foreground }}
                />
                {productName.length === 0 && notAllFieldsFilled && (
@@ -187,10 +210,13 @@ const ProductInfoAdmin = ({ match }) => {
                 <div>
             <div>
               <div>Input description of product:</div>
+              <label htmlFor="descriptionInput">{descriptionWarning}</label>
               <input
+                name="descriptionInput"
                 id="productDescription"
                 value={productDescription}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescriptionWarning("Public testing of Admin - not allowed to change product description")}
+                onBlur={(e) => setDescriptionWarning(null)}
                 style={{
                   color: theme.background,
                   background: theme.foreground,
@@ -221,10 +247,14 @@ const ProductInfoAdmin = ({ match }) => {
                   ></CategorySelectAdmin>
                 )}
                 <div>Number of product in stock:</div>
+                
+                <label htmlFor="stockInput">{stockWarning}</label>
                 <input
+                  name="stockInput"
                   id="quantityInStock"
                   value={quantityInStock}
-                  onChange={(e) => setStockQuantity(e.target.value)}
+                  onChange={(e) => publicSetStockQuantity(e.target.value)}
+                  onBlur={(e) => setStockWarning(null)}
                   style={{ color: theme.background, background: theme.foreground }}
                 />
                 <div>Put item on sale:</div>
@@ -374,7 +404,7 @@ const ProductInfoAdmin = ({ match }) => {
 }
  
   
-export default ProductInfoAdmin;
+export default ProductInfoPublicAdmin;
 
 // {sale.isSale && onSale && (
 //   <div>

@@ -27,8 +27,8 @@ const Products = (props) => {
 
   return (
     <div>
-           {currentUser && currentUser.role === ("ROLE_ADMIN") ? (<div className="user-instructions">Click on product to edit it</div>) :
-           (<div className="user-instructions">Click on product to see details and order</div>)}
+           {currentUser && (currentUser.role === ("admin") || currentUser.role===("testadmin") )? (<div className="user-instructions">Admin user - Click on product to see details or edit it</div>) :
+           (<div className="user-instructions">Non-admin user - Click on product to see details and order</div>)}
       {filteredData.length > 0 && (
         <div className="product-filter">
           {filteredData.map((product) => (

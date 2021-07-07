@@ -8,6 +8,20 @@
   margin: auto;
 }
 
+.productInfoButton {
+  padding: 10px;
+  margin: auto;
+  color: darkgreen;
+  border-radius: 16px;
+  background-color: #f1fb87;
+  padding-right: 10px;
+  background-color: #f1fb87;
+  box-shadow: 0 1px 10px 0;
+  font-size: 20px !important;
+  height: 40px;
+  margin: 20px 5px 20px 5px;
+}
+
 .displayImageInnerBox {
   display: flex;
   justify-content: left;
@@ -25,7 +39,7 @@
   justify-content: center;
   flex-direction: column; */
   max-width: 100%;
-  min-height: 50vw;
+  min-height: 30vw;
 }
 
 .saleIconImg {

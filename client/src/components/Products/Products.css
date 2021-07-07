@@ -2,7 +2,10 @@
 
 .user-instructions {
   padding-left: 30px;
-  padding-top: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
 }
 
 .product-filter {

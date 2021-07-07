@@ -225,6 +225,21 @@ const initial =  async () => {
       throw err;
     })
   }
+  console.log("checking if Public Admin user exists:");
+  const checkPublicAdmin = await User.findOne({ role: 'testadmin' }).exec();
+  if(checkPublicAdmin) console.log("Public Admin user: ", checkPublicAdmin) 
+  else {
+    console.log("no public admin user exists (for display), creating a new public admin user");
+    const newPublicAdmin = await new User({
+      email: process.env.PUBLIC_ADMIN_MAIL,
+      password: bcrypt.hashSync(process.env.PUBLIC_ADMIN_PWD, salt),
+      role: "testadmin"
+    }).save()
+    .catch(err => {
+      console.log("error creating public admin user ", err);
+      throw err;
+    })
+  }
   
 }
 

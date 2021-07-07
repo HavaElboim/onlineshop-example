@@ -22,6 +22,8 @@ import About from "./pages/About/About";
 import Admin from "./pages/Admin/Admin";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import ProductInfoAdmin from "./pages/ProductInfo/ProductInfoAdmin";
+import ProductInfoPublicAdmin from "./pages/ProductInfo/ProductInfoPublicAdmin";
+
 import DisplayUser from "./components/DisplayUser/DisplayUser";
 import ChangeThemeColors from "./components/ChangeThemeColors/ChangeThemeColors";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
@@ -74,15 +76,23 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      if(currentUser.role === ("ROLE_ADMIN") ) {
-        console.log("Logged in as Admin");
+      console.log("role of logged-in user: ", currentUser.role);
+      switch(currentUser.role) {
+        case "admin": { 
+          console.log("Logged in as Admin");
         // setShowAdminBoard(currentUser.role === ("ROLE_ADMIN"));
-      } else {
-        console.log("Running as logged-in user");
-      // setShowCustomerBoard(currentUser.role === ("ROLE_ADMIN"));}
+        }
+        case "testadmin":{
+          console.log("Logged in as Public Admin Tester");
+        // setShowAdminBoard(currentUser.role === ("ROLE_PUBLIC_ADMIN"));
+        }
+        default: {
+          console.log("Running as logged-in user");
+      // setShowCustomerBoard(currentUser.role === ("ROLE_ADMIN"));
+        }
       }
     }
-    else  console.log("Running as regular visitor");
+    else  console.log("Running as regular visitor ");
   }, [currentUser]);
 
   const logOut = () => {
@@ -174,11 +184,14 @@ const App = () => {
                 <Route path="/About">
                   <About />
                 </Route>
-                { currentUser && currentUser.role === ("ROLE_ADMIN") ? (
+                { currentUser && currentUser.role === ("admin") ? (
                   <Route path="/products/:_id" component={ProductInfoAdmin}></Route>
                 ) : (
-                  <Route path="/products/:_id" component={ProductInfo}></Route>
-                )}
+                    currentUser && currentUser.role === ("testadmin") ? (
+                  <Route path="/products/:_id" component={ProductInfoPublicAdmin}></Route>
+                ) : <Route path="/products/:_id" component={ProductInfo}></Route>
+                )
+              }
                 <Route path="/Payment">
                   <PaymentPage />
                 </Route>

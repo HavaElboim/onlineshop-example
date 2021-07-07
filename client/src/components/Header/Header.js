@@ -33,7 +33,7 @@ const Header = (props) => {
 
   return (
     <div className="headerDiv">
-      {(currentUser==null || currentUser.role !== ("ROLE_ADMIN")) && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
+      {(currentUser==null || (currentUser.role !== ("admin")) && (currentUser.role !== ("testadmin"))) && <CartIcon numInCart={numInCart} setNumInCart={setNumInCart}/>}
      {/* <SaleCountdown
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
