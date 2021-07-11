@@ -198,7 +198,7 @@ const App = () => {
                   <ShoppingCartPage/>
                 </Route>
                 <Route path="/">
-                  <Home />
+                  <About />
                 </Route>
               </Switch>
               </div>

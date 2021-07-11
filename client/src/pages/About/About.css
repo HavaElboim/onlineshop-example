@@ -1,0 +1,27 @@
+
+ul.noBullet {
+    list-style-type: none;
+    padding: 10px 0px 10px 0px;
+    margin: 0;
+    text-indent: 20px;
+    position:relative;
+    display:block;
+    text-indent: -2em;
+}
+
+li.leafIcon {
+    background:url("../../components/icons/leafSmall.png") no-repeat left top;
+
+    left:0;
+    text-indent: 60px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.aboutDiv {
+    padding: 5px 0px 5px 0px;
+}
+
+h1{
+    margin-top: 20px
+}
