@@ -1,5 +1,6 @@
 import React from "react";
 import "./About.css";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -35,12 +36,14 @@ const About = () => {
 <div className="aboutDiv">
         The site uses a Router to navigate between pages; Admin and Test Admin users are automatically directed to pages relevant to admin users.
         </div>
-<div className="aboutDiv">
+<div className="bottomAboutDiv">
         The site displays email and password of the Test Admin users, to allow visitors to see the Admin version of the site in action, with the exception that the Test Admin user is not able to delete or change vital information from the database, not to add new products (for obvious reasons).
 </div>
  
-
+<Link to={`/Home`} className="PayButton">Take me to the shop</Link>
     </div>
+
+   
   );
 };
 
