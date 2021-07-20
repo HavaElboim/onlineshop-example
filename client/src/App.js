@@ -124,13 +124,13 @@ const App = () => {
                 <DisplayUser />
                 {currentUser ? (
                   <div>
-                  <li className="nav-item">
-                  <Link to={"/profile"} className="nav-link">
+                  <li className="nav-item-topmenu">
+                  <Link to={"/profile"} className="nav-link-topmenu">
                     {/* {currentUser.email} */} My details
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <a href="/login" className="nav-link" onClick={logOut}>
+                <li className="nav-item-topmenu">
+                  <a href="/login" className="nav-link-topmenu" onClick={logOut}>
                     LogOut
                   </a>
                 </li>
@@ -138,30 +138,30 @@ const App = () => {
                 ):
                 (
                   <div>
-                   <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
+                   <li className="nav-item-topmenu">
+                <Link to={"/login"} className="nav-link-topmenu-green">
                   Login
                 </Link>
               </li>
 
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
+              <li className="nav-item-topmenu">
+                <Link to={"/register"} className="nav-link-topmenu-green">
                   Sign Up
                 </Link>
               </li>
                   </div>
                 )}
                 <nav>
-                  <ul>
-                    <li>
-                      <Link to="/Home">See our products</Link>
+                  <ul className="nav-item-topmenu-ul">
+                    <li className="nav-item-topmenu">
+                      <Link to="/Home" className="nav-link-topmenu">See our products</Link>
                     </li>
-                    <li>
-                      <Link to="/About">About</Link>
+                    <li className="nav-item-topmenu">
+                      <Link to="/About" className="nav-link-topmenu">About</Link>
                     </li>
                     {currentUser && (currentUser.role === ("admin") || currentUser.role === ("testadmin")) && (
               <li className="nav-item">
-                <Link to={"/Admin"} className="nav-link">
+                <Link to={"/Admin"} className="nav-link-topmenu">
                   Admin - Add new product
                 </Link>
               </li>

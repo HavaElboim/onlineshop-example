@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 
 import "../Header/Header.css";
 import ThemeContext from "../../contexts/ThemeContexts";
+ import "./SliderFilterPrice.css";
 
 const SliderFilterPrice = (props) => {
   const { priceRange, setPriceRange, products } = props;
@@ -46,7 +47,6 @@ const SliderFilterPrice = (props) => {
              <button
         id="clearButton"
         onClick={(e) => setPriceRange([1,50])}
-        style={{ color: theme.background, background: theme.foreground }}
         title="examples of words to search: potted, blue, bulb"
       >
         Clear price filter

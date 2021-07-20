@@ -1,8 +1,8 @@
 
 button {
-  padding: 2px 5px 2px 5px;
-  height: 29px;
-  font-size: 70% !important;
+  /* padding: 2px 5px 2px 5px;
+  height: 29px; */
+  font-size: 100% !important;
 }
 
 button span {

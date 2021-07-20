@@ -212,6 +212,39 @@ button {
   box-shadow: 0 1px 10px 0;
   border-color: darkgreen;
 }
+
+.nav-link-topmenu {
+  text-align: center;
+    padding: 10px;
+    color: darkgreen;
+    padding-right: 10px;
+    background-color: #f1fb87;
+    box-shadow: 0 1px 10px 0;
+    width: 500px;
+    font-size: 20px;
+}
+
+.nav-link-topmenu-green {
+  text-align: center;
+    padding: 10px;
+    color: darkgreen;
+    padding-right: 10px;
+    background-color: rgb(185, 249, 115);
+    box-shadow: 0 1px 10px 0;
+    width: 500px;
+}
+
+.nav-item-topmenu-ul{
+  margin: 10px 0px 10px 0px;
+}
+ 
+.nav-item-topmenu {
+  list-style-type: none;
+  margin-bottom: 30px;
+    margin-top: 30px;
+    max-width: 300px;
+    width: 160px;
+}
 /*------------------------------------*\
       $MAIN
     \*------------------------------------*/
