@@ -27,7 +27,7 @@ const ChangeUser = () => {
         marginLeft: 10
       }}
     >
-      {currentUser && ( <div className="loginButton" onClick={(e) => logOut()}>Logout</div>)}
+      {currentUser && ( <div onClick={(e) => logOut()}>Logout</div>)}
     </button>
     <Login></Login>
     </div>

@@ -3,6 +3,7 @@ button {
   /* padding: 2px 5px 2px 5px;
   height: 29px; */
   font-size: 100% !important;
+  margin: 0px;
 }
 
 button span {
@@ -15,3 +16,4 @@ button span {
 button:hover span {
   padding-right: 25px;
 }
+

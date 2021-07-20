@@ -8,6 +8,7 @@
     color: darkgreen;
     box-shadow: 0 1px 10px 0;
     height: 44px;
+    margin-left: 0px !important;
   }
 
 .button:hover span {

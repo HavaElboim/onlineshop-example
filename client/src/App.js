@@ -129,11 +129,11 @@ const App = () => {
                     {/* {currentUser.email} */} My details
                   </Link>
                 </li>
-                <li className="nav-item-topmenu">
+                {/* <li className="nav-item-topmenu">
                   <a href="/login" className="nav-link-topmenu" onClick={logOut}>
                     LogOut
                   </a>
-                </li>
+                </li> */}
               </div>
                 ):
                 (

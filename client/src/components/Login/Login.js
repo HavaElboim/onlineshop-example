@@ -13,6 +13,9 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+import "../ChangeThemeColors/ChangeThemeColors.css";
+import "./Login.css";
+
 import { login } from "../../actions/auth";
 
 const required = (value) => {
@@ -115,16 +118,16 @@ console.log("not redirecting...");
               validations={[required]}
             />
           </div>
-
+<div className="login-button-div">
           <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
+            <button className="button " disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
               <span>Login</span>
             </button>
           </div>
-
+          </div>
           {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
