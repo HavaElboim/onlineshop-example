@@ -16,6 +16,32 @@ Garamond
   pointer-events: none;
 }
 
+.login-buttons-div {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 40px;
+}
+
+.navigation-buttons-div {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.nav-item-topmenu {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  margin: 10px 0px 10px 0px !important; 
+}
+
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .outer-div {
   /* padding: 20px; */
 }
@@ -208,7 +234,6 @@ table {
 }
 
 button {
-  border-radius: 5px;
   box-shadow: 0 1px 10px 0;
   border-color: darkgreen;
 }
@@ -227,6 +252,7 @@ button {
 .nav-link-topmenu-green {
   text-align: center;
     padding: 10px;
+    margin: 0px 5px 0px 5px;
     color: darkgreen;
     padding-right: 10px;
     background-color: rgb(185, 249, 115);

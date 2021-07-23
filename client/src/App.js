@@ -120,10 +120,12 @@ const App = () => {
               >
                 <img src={FlowerHeadSVG} className="imgBottom" alt="Garden shop"/>
                 <div className="inner-outer-div">
+                  <div className="header-section">
                 <ChangeThemeColors />
                 <DisplayUser />
+                
                 {currentUser ? (
-                  <div>
+                  <div className="login-buttons-div">
                   <li className="nav-item-topmenu">
                   <Link to={"/profile"} className="nav-link-topmenu">
                     {/* {currentUser.email} */} My details
@@ -137,7 +139,7 @@ const App = () => {
               </div>
                 ):
                 (
-                  <div>
+                  <div className="login-buttons-div">
                    <li className="nav-item-topmenu">
                 <Link to={"/login"} className="nav-link-topmenu-green">
                   Login
@@ -151,13 +153,14 @@ const App = () => {
               </li>
                   </div>
                 )}
+                <div className="navigation-buttons-div">
                 <nav>
                   <ul className="nav-item-topmenu-ul">
                     <li className="nav-item-topmenu">
                       <Link to="/Home" className="nav-link-topmenu">See our products</Link>
                     </li>
                     <li className="nav-item-topmenu">
-                      <Link to="/About" className="nav-link-topmenu">About</Link>
+                      <Link to="/About" className="nav-link-topmenu">About this site</Link>
                     </li>
                     {currentUser && (currentUser.role === ("admin") || currentUser.role === ("testadmin")) && (
               <li className="nav-item">
@@ -168,7 +171,8 @@ const App = () => {
             )}
                 </ul>
               </nav>
-
+              </div>
+              </div>
               {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}
               <Switch>
