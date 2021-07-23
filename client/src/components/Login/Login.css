@@ -53,3 +53,8 @@
     margin: 10px 0px 10px 0px;
     text-align: center;
   }
+
+  .form-box {
+    display: flex;
+    justify-content: space-around;
+  }

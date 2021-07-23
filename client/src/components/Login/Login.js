@@ -92,7 +92,7 @@ console.log("not redirecting...");
   
 
   return (
-    <div className="col-md-12">
+    <div className="form-box">
       <div className="card card-container">
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
