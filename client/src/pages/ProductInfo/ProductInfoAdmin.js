@@ -131,8 +131,8 @@ const ProductInfoAdmin = ({ match }) => {
             
             
             (
-              <div>
-                <div>
+              <div className="edit-product">
+                <div className="end-edit-buttons-div">
                   <button
                     id="exitEditButton"
                     className="productInfoButton"
@@ -158,7 +158,8 @@ const ProductInfoAdmin = ({ match }) => {
                     </button>
                   </Link>
               </div>
-               <div>Input name of product:</div>
+              <div className="input-div">
+               <div className="input-title">Input name of product:</div>
                <input
                  id="productName"
                  value={productName}
@@ -168,7 +169,7 @@ const ProductInfoAdmin = ({ match }) => {
                {productName.length === 0 && notAllFieldsFilled && (
                  <label for="productName">Enter name of product</label>
                )}
-               
+               </div>
                <div className="displayImageOuterBox">
                   <div className="displayImageInnerBox">
                     {products.onSale ? (
@@ -186,7 +187,8 @@ const ProductInfoAdmin = ({ match }) => {
      
                 <div>
             <div>
-              <div>Input description of product:</div>
+            <div className="input-div">
+               <div className="input-title">Input description of product:</div>
               <input
                 id="productDescription"
                 value={productDescription}
@@ -197,8 +199,10 @@ const ProductInfoAdmin = ({ match }) => {
                 }}
               />{" "}
             </div>
+            </div>
              <div>
-             <div>Input price of product:</div>
+             <div className="input-div">
+               <div className="input-title">Input price of product:</div>
              <input
                id="productPrice"
                value={productPrice}
@@ -211,7 +215,8 @@ const ProductInfoAdmin = ({ match }) => {
              {products.price.length === 0 && notAllFieldsFilled && (
                <label for="productPrice">Enter price of product</label>
              )}
-           </div>      
+           </div> 
+           </div>     
               <div>
                 {products.length > 0 && (
                   <CategorySelectAdmin
@@ -220,14 +225,19 @@ const ProductInfoAdmin = ({ match }) => {
                     products={products}
                   ></CategorySelectAdmin>
                 )}
-                <div>Number of product in stock:</div>
+                <div className="input-div">
+               <div className="input-title">Number of product in stock:</div>
                 <input
                   id="quantityInStock"
                   value={quantityInStock}
                   onChange={(e) => setStockQuantity(e.target.value)}
                   style={{ color: theme.background, background: theme.foreground }}
                 />
-                <div>Put item on sale:</div>
+                </div>
+                <div className="input-div"> 
+      <div className="input-div-col">
+      <div className="input-div"> 
+               <div className="input-title">Put item on sale:</div>
                 <input
                   id="setSale"
                   type="checkbox"
@@ -235,9 +245,10 @@ const ProductInfoAdmin = ({ match }) => {
                   onChange={(e) => setSale(!onSale)}
                   style={{ color: theme.background, background: theme.foreground }}
                 />
+                </div>
                 {onSale && (
-                  <div>
-                    <div>Percentage price reduction: </div>
+                  <div className="input-div">
+                  <div className="input-title">Percentage price reduction: </div>
                     <input
                       id="reductionInput"
                       value={saleReductionPercent}
@@ -252,12 +263,15 @@ const ProductInfoAdmin = ({ match }) => {
                     <div>{saleReductionPercent}</div>
                   </div>
                 )}
+                </div>
+                </div>
+  
                 {quantityInStock.length === 0 && notAllFieldsFilled && (
                   <label for="quantityInStock">
                     How many of product are in stock?
                   </label>
                 )}
-
+<div className="add-product-button-div">
                 <button
                 className="productInfoButton"
                   id="addNewProductButton"
@@ -287,12 +301,12 @@ const ProductInfoAdmin = ({ match }) => {
             </div>
           </div>
           </div>
-
+          </div>
         ) : (
 
 
           <div>
-              <div>
+              <div className="product-info-header">
                 <button
                 className="productInfoButton"
                   id="setEditingButton"

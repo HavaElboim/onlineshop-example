@@ -164,6 +164,7 @@ const Admin = () => {
         <label for="productDescription">Enter description of product</label>
       )}
       </div>
+      <div className="input-div-col">
       <div className="input-div">
       <div className="input-title">Input image URL of product:</div>
       <input
@@ -173,16 +174,20 @@ const Admin = () => {
         onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
+      </div>
       {productURL.length === 0 && notAllFieldsFilled && (
         <label for="productURL">Enter url of picture of product</label>
       )}
       {productURL.length !== 0 && (
+        <div className="image-display-div">
+        <div className="input-title"></div>
         <div>
           <img
             className="thumbImg"
             src={productURL}
             alt={{ productName }}
           ></img>
+        </div>
         </div>
       )}
       </div>
@@ -220,8 +225,7 @@ const Admin = () => {
         <label for="quantityInStock">How many of product are in stock?</label>
       )}
       </div>
-      <div className="input-div">
-      <div className="col">
+      <div className="input-div-col">
       <div className="input-div">
       <div className="input-title">Put item on sale:</div>
       <input
@@ -248,7 +252,7 @@ const Admin = () => {
         </div>
       )}
       </div>
-      </div>
+
 <div className="add-product-button-div">
       <button
         id="addNewProductButton"
