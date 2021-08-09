@@ -132,8 +132,14 @@ const Admin = () => {
   };
 
   return (
+    <div className="add-product">
+      
     <div style={{ background: theme.background }}>
-      <div>Input name of product:</div>
+    <div className="add-product-title">
+        Add New Product
+      </div>
+         <div className="input-div">
+      <div className="input-title">Input name of product:</div>
       <input
         id="productName"
         value={productName}
@@ -144,7 +150,9 @@ const Admin = () => {
       {productName.length === 0 && notAllFieldsFilled && (
         <label for="productName">Enter name of product</label>
       )}
-      <div>Input description of product:</div>
+      </div>
+        <div className="input-div">
+      <div className="input-title">Input description of product:</div>
       <input
         id="productDescription"
         value={productDescription}
@@ -155,7 +163,9 @@ const Admin = () => {
       {productDescription.length === 0 && notAllFieldsFilled && (
         <label for="productDescription">Enter description of product</label>
       )}
-      <div>Input image URL of product:</div>
+      </div>
+      <div className="input-div">
+      <div className="input-title">Input image URL of product:</div>
       <input
         id="productURL"
         value={productURL}
@@ -175,7 +185,9 @@ const Admin = () => {
           ></img>
         </div>
       )}
-      <div>Input price of new product:</div>
+      </div>
+      <div className="input-div">
+        <div className="input-title">Input price of new product:</div>
       <input
         id="productPrice"
         value={productPrice}
@@ -186,6 +198,7 @@ const Admin = () => {
       {productPrice.length === 0 && notAllFieldsFilled && (
         <label for="productPrice">Enter price of product</label>
       )}
+      </div>
       {products.length > 0 && (
         <CategorySelectAdmin
           selectedCategory={selectedCategory}
@@ -193,7 +206,8 @@ const Admin = () => {
           products={products}
         ></CategorySelectAdmin>
       )}
-      <div>Number of product in stock:</div>
+      <div className="input-div">
+      <div className="input-title">Number of product in stock:</div>
       <input
         id="quantityInStock"
         value={quantityInStock}
@@ -205,16 +219,11 @@ const Admin = () => {
       {quantityInStock.length === 0 && notAllFieldsFilled && (
         <label for="quantityInStock">How many of product are in stock?</label>
       )}
-      <button
-        style={{ color: theme.background, background: theme.foreground }}
-        onClick={(e) => {
-          alert("on slae?", onSale);
-          setSale(!onSale);
-        }}
-      >
-        on sale?
-      </button>
-      <div>Put item on sale:</div>
+      </div>
+      <div className="input-div">
+      <div className="col">
+      <div className="input-div">
+      <div className="input-title">Put item on sale:</div>
       <input
         id="setSale"
         type="checkbox"
@@ -223,9 +232,10 @@ const Admin = () => {
         onFocus={(e)=>{setTestWarning(null)}}
         style={{ color: theme.background, background: theme.foreground }}
       />
+      </div>
       {onSale && (
-        <div>
-          <div>Percentage price reduction: </div>
+        <div className="input-div">
+          <div className="input-title">Percentage price reduction: </div>
           <input
             id="reductionInput"
             value={saleReductionPercent}
@@ -237,6 +247,9 @@ const Admin = () => {
           ></input>
         </div>
       )}
+      </div>
+      </div>
+<div className="add-product-button-div">
       <button
         id="addNewProductButton"
         style={{ background: theme.background, color: theme.foreground }}
@@ -264,7 +277,8 @@ const Admin = () => {
         <label for="addNewProductButton" style={{ display: "block" }}>
           {testAdminWarning}
         </label>
-  
+        </div>
+    </div>
     </div>
   );
 };

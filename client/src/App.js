@@ -163,9 +163,9 @@ const App = () => {
                       <Link to="/About" className="nav-link-topmenu">About this site</Link>
                     </li>
                     {currentUser && (currentUser.role === ("admin") || currentUser.role === ("testadmin")) && (
-              <li className="nav-item">
+              <li className="nav-item-topmenu">
                 <Link to={"/Admin"} className="nav-link-topmenu">
-                  Admin - Add new product
+                  Add new product
                 </Link>
               </li>
             )}

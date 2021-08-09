@@ -18,7 +18,7 @@ const ChangeUser = () => {
   };
 
   return (
-    <div>
+    <div className="logout-div">
     
     <button className="button"
       style={{
@@ -31,6 +31,7 @@ const ChangeUser = () => {
     </button>
     <Login></Login>
     </div>
+ 
   );
 };
 

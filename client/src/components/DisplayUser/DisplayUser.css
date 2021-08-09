@@ -2,3 +2,14 @@
 div {
     font-family: 'Garamond';
 }
+
+.expln-div{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+.welcome-div{
+    text-align: center;
+    font-weight: bold;
+}

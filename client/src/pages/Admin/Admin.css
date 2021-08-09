@@ -1,3 +1,40 @@
+.add-product {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 10px 10px rgba(2, 97, 31, 0.25);
+  justify-content: center;
+  display: flex;
+}
+
+.add-product-title {
+font-size: larger;
+margin: 20px;
+text-align: center;
+}
+
 .thumbImg {
   max-width: 190px;
+}
+
+#addNewProductButton {
+  margin-top: 5px;
+}
+
+.input-div{
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-div .col {
+  flex-direction: column;
+}
+
+.input-title {
+  width: 190px;
+}
+
+.add-product-button-div {
+  justify-content: center;
+  display: flex;
 }
