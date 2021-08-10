@@ -1,8 +1,10 @@
 button {
     text-align: center;
-    color: darkgreen;
+    /* color: darkgreen; */
+    color: var(--foreground);
     padding: 10px;
-    background-color: #f1fb87;
+    /* background-color: #f1fb87; */
+    background-color: var(--splashColor);
     box-shadow: 0 1px 10px 0;
     width: 150px;
     height: 40px;

@@ -178,9 +178,9 @@ const App = () => {
               <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} /> 
-                <Route path="/Admin">
+              {currentUser && (currentUser.role === ("admin") || currentUser.role === ("testadmin")) && ( <Route path="/Admin">
                   <Admin />
-                </Route>
+                </Route> )}
                 <Route exact path="/Home">
                   <Home />
                 </Route>

@@ -37,10 +37,10 @@ const SliderFilterPrice = (props) => {
         onChange={setPriceRange}
         trackStyle={{backgroundColor:'red'}}
       />
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+      <div id="sliderid" style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
       <InputNumber
             min={0}
-            style={{ margin: '0 16px' }}
+            style={{ margin: '0 16px', backgroundColor: theme.background, color: theme.foreground }}
             value={priceRange[0]}
             onChange={setPriceRange}
           />
@@ -53,7 +53,7 @@ const SliderFilterPrice = (props) => {
       </button>
           <InputNumber
             max={storeMaxPrice}
-            style={{ margin: '0 16px' }}
+            style={{ margin: '0 16px', backgroundColor: theme.background, color: theme.foreground  }}
             value={priceRange[1]}
             onChange={setPriceRange}
           />

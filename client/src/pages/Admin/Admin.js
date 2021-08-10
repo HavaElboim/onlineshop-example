@@ -83,7 +83,7 @@ const Admin = () => {
     saleReductionPercent
   ) => {
     if(currentUser.role !== ("admin") ) {
-      setTestWarning("Sorry adding new products is allowed for real Admins only, we never know what a visitor might enter in our database!")
+      setTestWarning("Sorry, adding new products is allowed for real Admins only, we never know what a visitor might enter in our database!")
       return;
     }
     if (

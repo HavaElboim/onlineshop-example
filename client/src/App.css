@@ -4,6 +4,19 @@ Garamond
 
 :root {
   font-family: 'Garamond';
+  --foreground: darkgreen;
+  --background: "rgb(185 249 115)";
+  --splashColor: "#f1fb87";
+  --splashColor2: "rgb(185, 249, 115)";
+  --borderColor: "rgb(185 249 115)";
+  --borderWidth: "2px";
+  --bodyBackground: "#f6f6f6";
+  --label: "#666";
+  --salePriceColor: "green";
+  --links: "#c5730d";
+  --listBackground: "rgb(226 250 200);";
+  --listColor: "rgb(7 45 7)";
+  --fontSize: "18px"
 }
 
 
@@ -57,7 +70,10 @@ Garamond
 }
 
 a {
-  color: "#c5730d";
+  /* color: "#c5730d"; */
+  color: var(--foreground);
+  border-width: var(--borderWidth);
+  border-color: var(--borderColor);
 }
 
 /*@media (prefers-reduced-motion: no-preference) {
@@ -67,14 +83,17 @@ a {
 }*/
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  background-color: var(--background);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* font-size: calc(10px + 2vmin); */
+  font-size: calc(var(--fontSize) + 2vmin);
+  /* color: white; */
+  color: var(--foreground);
 }
 
 .App-link {
@@ -236,15 +255,18 @@ table {
 
 button {
   box-shadow: 0 1px 10px 0;
-  border-color: darkgreen;
+  /* border-color: darkgreen; */
+  border-color: var(--foreground);
 }
 
 .nav-link-topmenu {
   text-align: center;
     padding: 10px;
-    color: darkgreen;
+    /* color: darkgreen; */
+    color: var(--foreground);
     padding-right: 10px;
-    background-color: #f1fb87;
+    /* background-color: #f1fb87; */
+    background-color: var(--splashColor);
     box-shadow: 0 1px 10px 0;
     width: 500px;
     font-size: 20px;
@@ -255,9 +277,11 @@ button {
   text-align: center;
     padding: 10px;
     margin: 0px 5px 0px 5px;
-    color: darkgreen;
+    /* color: darkgreen; */
+    color: var(--foreground);
     padding-right: 10px;
-    background-color: rgb(185, 249, 115);
+    /* background-color: rgb(185, 249, 115); */
+    background-color: var(--splashColor2);
     box-shadow: 0 1px 10px 0;
     width: 500px;
 }
@@ -284,7 +308,8 @@ body {
   width: 90%;
   max-width: 1240px;
   font-family: 'Garamond';
-  background-color: #f6f6f6;
+  /* background-color: #f6f6f6; */
+  background-color: var(--bodyBackground);
 }
 
 /* Typography */
@@ -307,8 +332,10 @@ h5 {
 }
 
 h6 {
-  color: #666;
-  font-size: 14px;
+  /* color: #666; */
+  color: var(--label);
+  /* font-size: 14px; */
+  font-size: calc(var(--fontSize)+2px);
   padding-bottom: 5px;
 }
 
@@ -335,8 +362,10 @@ h6 {
 }
 
 label {
-  color: #666;
-  font-size: 10px;
+  /* color: #666; */
+  color: var(--label);
+  /* font-size: 10px; */
+  font-size: calc(var(--fontSize)-2px);
   font-weight: 500;
   line-height: 1em;
   text-transform: uppercase;
@@ -355,7 +384,8 @@ label {
   flex: 1 25%; /* changed from 16% to make 3 columns instead of 5 */
   justify-content: space-between; /*to push the title to the top and the price to the bottom, irrespective of the picture size*/
 
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: var(--splashColor);
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.25);
 }
 

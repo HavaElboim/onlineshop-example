@@ -17,8 +17,22 @@ text-align: center;
   max-width: 190px;
 }
 
+.add-product-button-div {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #addNewProductButton {
   margin-top: 5px;
+  width: 160px;
+  padding: 10px;
+}
+
+label{
+  margin: 5px 15px 0px 15px;
+  font-size: 15px;
 }
 
 .input-div{
@@ -45,7 +59,3 @@ text-align: center;
   width: 190px;
 }
 
-.add-product-button-div {
-  justify-content: center;
-  display: flex;
-}
