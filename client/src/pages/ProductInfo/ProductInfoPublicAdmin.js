@@ -151,7 +151,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
             
             
             (
-              <div>
+              <div  className="edit-product">
                 <div className="product-info-header">
                   <button
                   className="productInfoButton"
