@@ -1,4 +1,16 @@
-:root {
+
+.login-buttons-div {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 40px;
+}
+
+.App {
+  text-align: center;
+}
+
+/*:root {
   font-family: 'Garamond';
   --foreground: darkgreen;
   --background: "rgb(185 249 115)";
@@ -14,23 +26,13 @@
   --listColor: "rgb(7 45 7)";
   --fontSize: "18px"
 }
-
-
-.App {
-  text-align: center;
-}
+*/
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-.login-buttons-div {
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  height: 40px;
-}
 
 .navigation-buttons-div {
   display: flex;
@@ -53,10 +55,10 @@
 }
 
 .outer-div {
-  /* padding: 20px; */
+
   padding: default;
 }
-*/
+
 .inner-outer-div{
   padding: 20px;
 }
@@ -67,30 +69,29 @@
 }
 
 a {
-  /* color: "#c5730d"; */
+  color: "#c5730d"; 
+  border-width: "2px";
+  border-color: "rgb(185 249 115)";
+  /*
   color: var(--foreground);
   border-width: var(--borderWidth);
   border-color: var(--borderColor);
+  */
 }
 
-/*@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}*/
 
 .App-header {
-  /* background-color: #282c34; */
-  background-color: var(--background);
+  background-color: "rgb(185 249 115)";
+  /*background-color: var(--background);*/
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
-  font-size: calc(var(--fontSize) + 2vmin);
-  /* color: white; */
-  color: var(--foreground);
+  /*font-size: calc(var(--fontSize) + 2vmin);
+  color: var(--foreground);*/
+  font-size: "20px";
+  color: darkgreen;
 }
 
 .App-link {
@@ -105,14 +106,6 @@ a {
     transform: rotate(360deg);
   }
 }
-
-/*------------------------------------*\
-    RESET
-\*------------------------------------*/
-/* https://meyerweb.com/eric/tools/css/reset/ 
-    v2.0b1 | 201101 
-    NOTE:WORK IN PROGRESS
-    USE WITH CAUTION AND TEST WITH ABANDON */
 
 html,
 body,
@@ -200,7 +193,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+
 article,
 aside,
 details,
@@ -232,12 +225,7 @@ q:after {
   content: ’’;
   content: none;
 }
-/* remember to define visible focus styles! 
-    :focus{
-      outline:?????;
-    } */
 
-/* remember to highlight inserts somehow! */
 ins {
   text-decoration: none;
 }
@@ -252,17 +240,14 @@ table {
 
 button {
   box-shadow: 0 1px 10px 0;
-  /* border-color: darkgreen; */
   border-color: var(--foreground);
 }
 
 .nav-link-topmenu {
   text-align: center;
     padding: 10px;
-    /* color: darkgreen; */
     color: var(--foreground);
     padding-right: 10px;
-    /* background-color: #f1fb87; */
     background-color: var(--splashColor);
     box-shadow: 0 1px 10px 0;
     width: 500px;
@@ -274,11 +259,10 @@ button {
   text-align: center;
     padding: 10px;
     margin: 0px 5px 0px 5px;
-    /* color: darkgreen; */
     color: var(--foreground);
     padding-right: 10px;
-    /* background-color: rgb(185, 249, 115); */
-    background-color: var(--splashColor2);
+    /*background-color: var(--splashColor2);*/
+    background-color: "rgb(185 249 115)";
     box-shadow: 0 1px 10px 0;
     width: 500px;
 }
@@ -294,22 +278,16 @@ button {
     max-width: 300px;
     width: 160px;
 }
-/*------------------------------------*\
-      $MAIN
-    \*------------------------------------*/
-
-/* @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500); */
 
 body {
   margin: 0 auto;
   width: 90%;
   max-width: 1240px;
   font-family: 'Garamond';
-  /* background-color: #f6f6f6; */
-  background-color: var(--bodyBackground);
+  /*background-color: var(--bodyBackground);*/
+  background-color: "#f6f6f6";
 }
 
-/* Typography */
 
 h1 {
   font-size: 28px;
@@ -329,19 +307,17 @@ h5 {
 }
 
 h6 {
-  /* color: #666; */
-  color: var(--label);
-  /* font-size: 14px; */
-  font-size: calc(var(--fontSize)+2px);
   padding-bottom: 5px;
+  color: "#666";
+  font-size: "20px";
+  /*color: var(--label);*/
+  /*font-size: calc(var(--fontSize)+2px);*/
 }
-
-/* Product Layout */
 
 .product-filter {
   display: flex;
   padding: 30px 0;
-  flex-wrap: wrap; /* else products are displayed in one long row and don't wrap onto more rows */
+  flex-wrap: wrap; 
 }
 
 .sort {
@@ -359,10 +335,10 @@ h6 {
 }
 
 label {
-  /* color: #666; */
-  color: var(--label);
-  /* font-size: 10px; */
-  font-size: calc(var(--fontSize)-2px);
+  color: "#666";
+  font-size: 16px;
+  /*color: var(--label);
+  font-size: calc(var(--fontSize)-2px);*/
   font-weight: 500;
   line-height: 1em;
   text-transform: uppercase;
@@ -378,11 +354,11 @@ label {
   flex-direction: column;
 
   padding: 2%;
-  flex: 1 25%; /* changed from 16% to make 3 columns instead of 5 */
-  justify-content: space-between; /*to push the title to the top and the price to the bottom, irrespective of the picture size*/
+  flex: 1 25%; 
+  justify-content: space-between; 
 
-  /* background-color: #fff; */
-  background-color: var(--splashColor);
+  /*background-color: var(--splashColor);*/
+  background-color: "#f1fb87";
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -392,7 +368,6 @@ label {
 
 
 .product-info {
-  /*margin-top: auto;*/ /*removed this as is adds different amounts of space above the product titles */
   padding-top: 20px;
   text-align: center;
 }
@@ -431,3 +406,4 @@ label {
     align-self: flex-start;
   }
 }
+
