@@ -241,6 +241,7 @@ const ProductInfoAdmin = ({ match }) => {
                 <input
                   id="setSale"
                   type="checkbox"
+                  defaultChecked={true}
                   value={onSale}
                   onChange={(e) => setSale(!onSale)}
                   style={{ color: theme.background, background: theme.foreground }}
