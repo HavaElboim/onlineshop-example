@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const User = require("./user");
-
+const Role = require("./role");
 const Product = require("./product");
 
 const connectDb = async () => {
@@ -14,7 +14,8 @@ const connectDb = async () => {
   });
 };
 
+const ROLES = ["user", "testadmin", "admin"];
 
-const models = { User, Product};
+const models = { User, Product, Role};
 
 module.exports = { connectDb, models };

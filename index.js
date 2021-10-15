@@ -43,6 +43,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to shop server." });
+});
+
+
 /* new for login: */
 /* this tells app to to use this router for any path beginning with “/api”.*/
 const apiRouter = express.Router();
@@ -52,7 +58,7 @@ apiRouter.use('/users', userRoutes);
 
 const {
   connectDb,
-  models: { User, Product},
+  models: { User, Product, Role},
 } = require("./models");
 
 // app.use() to specify middleware as the callback function

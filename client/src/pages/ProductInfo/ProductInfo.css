@@ -8,13 +8,27 @@
   /* max-width: 450px; */
 }
 
+.edit-product-text-fields {
+  font-size: 20px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.edit-product-fields-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .displayImageOuterBox {
   max-width: 95%;
-  height: 60%;
+  /*height: 60%;*/
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .productInfoButton {

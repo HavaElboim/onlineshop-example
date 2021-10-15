@@ -152,7 +152,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
             
             (
               <div>
-                <div>
+                <div className="product-info-header">
                   <button
                   className="productInfoButton"
                     id="exitEditButton"
@@ -178,6 +178,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                     </button>
                   </Link>
               </div>
+              <div className="edit-product-text-fields">
                <div>Input name of product:</div>
                <label htmlFor="nameInput">{nameWarning}</label>
                <input
@@ -191,7 +192,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                {productName.length === 0 && notAllFieldsFilled && (
                  <label for="productName">Enter name of product</label>
                )}
-               
+               </div>
                <div className="displayImageOuterBox">
                   <div className="displayImageInnerBox">
                     {products.onSale ? (
@@ -209,6 +210,8 @@ const ProductInfoPublicAdmin = ({ match }) => {
      
                 <div>
             <div>
+            <div className="edit-product-text-fields">
+              <div className="edit-product-fields-group">
               <div>Input description of product:</div>
               <label htmlFor="descriptionInput">{descriptionWarning}</label>
               <input
@@ -223,7 +226,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                 }}
               />{" "}
             </div>
-             <div>
+             <div  className="edit-product-fields-group">
              <div>Input price of product:</div>
              <input
                id="productPrice"
@@ -238,7 +241,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                <label for="productPrice">Enter price of product</label>
              )}
            </div>      
-              <div>
+              <div  className="edit-product-fields-group">
                 {products.length > 0 && (
                   <CategorySelectAdmin
                     selectedCategory={selectedCategory}
@@ -261,6 +264,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                 <input
                   id="setSale"
                   type="checkbox"
+                  defaultChecked={true}
                   value={onSale}
                   onChange={(e) => setSale(!onSale)}
                   style={{ color: theme.background, background: theme.foreground }}
@@ -279,7 +283,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                         background: theme.foreground,
                       }}
                     ></input>
-                    <div>{saleReductionPercent}</div>
+                    
                   </div>
                 )}
                 {quantityInStock.length === 0 && notAllFieldsFilled && (
@@ -287,42 +291,45 @@ const ProductInfoPublicAdmin = ({ match }) => {
                     How many of product are in stock?
                   </label>
                 )}
-
-                <button
-                className="productInfoButton"
-                  id="addNewProductButton"
-                  style={{ background: theme.background, color: theme.foreground }}
-                  onClick={(e) =>
-                    editProductFn(
-                      productName,
-                      productDescription,
-                      productPrice,
-                      selectedCategory,
-                      productURL,
-                      quantityInStock,
-                      onSale,
-                      saleReductionPercent,
-                      match.params._id
-                    )
-                  }
-                >
-                  Update product details
-                </button>
+                 </div>
+                 </div>
+                 </div>
+                 </div>
+                <div className="product-info-header">
+                  <button
+                  className="productInfoButton"
+                    id="addNewProductButton"
+                    style={{ background: theme.background, color: theme.foreground }}
+                    onClick={(e) =>
+                      editProductFn(
+                        productName,
+                        productDescription,
+                        productPrice,
+                        selectedCategory,
+                        productURL,
+                        quantityInStock,
+                        onSale,
+                        saleReductionPercent,
+                        match.params._id
+                      )
+                    }
+                  >
+                    Update product details
+                  </button>
 
                 {notAllFieldsFilled && (
                   <label for="addNewProductButton" style={{ display: "block" }}>
                     Complete all fields before uploading product update.
                   </label>
                 )}
-            </div>
+             </div>
           </div>
-          </div>
-
         ) : (
 
 
           <div>
               <div>
+              <div className="product-info-header">
                 <button
                 className="productInfoButton"
                   id="setEditingButton"
@@ -338,6 +345,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
                   Edit/delete product
                 </button>
                 <div className="product-title">{productName || products.title}</div>
+              </div>
             </div>
             <div className="displayImageOuterBox">
               <div className="displayImageInnerBox">
@@ -354,6 +362,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
               </div>
             </div>
             <div>
+            <div className="edit-product-text-fields">
               <div className="product-info">
                 {productDescription || products.description}
               </div>
@@ -395,7 +404,7 @@ const ProductInfoPublicAdmin = ({ match }) => {
           </div>
         </div>
       </div>
-
+    </div>
 
     )}
     </div>

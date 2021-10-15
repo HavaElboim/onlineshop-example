@@ -1,5 +1,14 @@
 import { createContext } from "react";
 
+/* note see here to use styles conditionally based on theme state in all components:
+https://malcoded.com/posts/react-component-style/
+
+also note that css definitions are always global!!
+unless use css modules:
+https://programmingwithmosh.com/react/css-modules-react/
+
+*/
+
 const themes = {
   light: {
     foreground: "darkgreen",
