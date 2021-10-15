@@ -1,4 +1,4 @@
-:root {
+/*:root {
   font-family: 'Garamond';
   --foreground: darkgreen;
   --background: "rgb(185 249 115)";
@@ -14,7 +14,7 @@
   --listColor: "rgb(7 45 7)";
   --fontSize: "18px"
 }
-
+*/
 
 .App {
   text-align: center;
@@ -55,7 +55,7 @@
 .outer-div {
   /* padding: 20px; */
 }
-
+*/
 .inner-outer-div{
   padding: 20px;
 }
