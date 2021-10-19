@@ -201,7 +201,7 @@ const App = () => {
                 <Route path="/Cart">
                   <ShoppingCartPage/>
                 </Route>
-                <Route path="/">
+                <Route exact path="/">
                   <About />
                 </Route>
               </Switch>
