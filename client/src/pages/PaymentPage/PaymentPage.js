@@ -4,7 +4,7 @@
 /*                                                       */
 /*********************************************************/
 
-import { React,  useContext, useState, useRef } from "react";
+import { React,  useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import ThemeContext, { themes } from "../../contexts/ThemeContexts";
@@ -66,10 +66,17 @@ const PaymentPage = () => {
         
     }
 
+    useEffect(() => {
+      console.log(
+        `In payment page, form details: ${address}, ${shipname}, ${city}, ${country}, ${zip}`);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [address, shipname, city, country, zip]);
 
     const clearShippingDetails = () => {
+      console.log("clearing form");
         setAddress(null); setShipname(null); setCity(null); setCountry(null); setZip(null);
         setFillWarning("");
+        console.log(`new values are: ${address}, ${shipname}, ${city}`);
     }
 
     return (
@@ -96,6 +103,10 @@ const PaymentPage = () => {
                   <label htmlFor="ShipCountry" >Country</label>
                   <input placeholder="Country" type="text"  className="form-control" name="ShipCountry" value={country} onBlur={(e) => {setCountry(e.target.value)} }/>
                 </form>
+                <div>city: {city}</div>
+                <div className="payButtonsBox">
+                        <button className="PayButton" onClick={(e) => {clearShippingDetails(); }}>Clear</button>
+                    </div> 
 
                              <CardReactFormContainer
                 
@@ -169,8 +180,6 @@ const PaymentPage = () => {
                     </div> */}
                   
                    <div className="payButtonsBox">
-                        <button className="PayButton" onClick={(e) => {clearShippingDetails(); }}>Clear</button>
-
                         <button className="PayButton" onClick={(e) => {handleDummyPayment(); }}>Send Payment</button>
                     </div> 
                     <div className="CardWarning">{formFillWarning}</div>  
