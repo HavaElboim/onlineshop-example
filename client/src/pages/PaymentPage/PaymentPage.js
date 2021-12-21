@@ -76,7 +76,7 @@ const PaymentPage = () => {
       console.log("clearing form");
         setAddress(null); setShipname(null); setCity(null); setCountry(null); setZip(null);
         setFillWarning("");
-        console.log(`new values are: ${address}, ${shipname}, ${city}`);
+        console.log(`new values are: ${address}, ${shipname}, ${city}, ${zip}`);
     }
 
     return (
@@ -87,9 +87,9 @@ const PaymentPage = () => {
                 <div className="shippingDetailsBox">
                 <div className="formHeader">Shipping Address:</div>
 
-                <form  >
+                {/*<form  >*/}
                 <label htmlFor="ShipName" title="Full name of recipient">Name</label>
-                <input placeholder="Full name" type="text"  className="form-control" name="ShipName" value={shipname} onBlur={(e) => {setShipname(e.target.value); console.log("changin shipping name to ", e.target.value);} } />
+                <input placeholder="Full name" type="text"  className="form-control" name="ShipName" value={shipname} onBlur={(e) => {setShipname(e.target.value); console.log("changing shipping name to ", e.target.value);} } />
 
                 <label htmlFor="ShipAdress1" title="House number/apt, Street">Address</label>
                   {/* <input placeholder="Address" type="text" className="form-control" name="ShipAdress1" value={address1} onFocus={(e)=>console.log("focused")} onBlur={(e) =>  {console.log("change"); onChangeDetails(e);}}  /> */}
@@ -102,7 +102,7 @@ const PaymentPage = () => {
                   <input placeholder="Zip" type="text"  className="form-control" name="ShipZip"  value={zip} onBlur={(e) => {setZip(e.target.value)} }/>
                   <label htmlFor="ShipCountry" >Country</label>
                   <input placeholder="Country" type="text"  className="form-control" name="ShipCountry" value={country} onBlur={(e) => {setCountry(e.target.value)} }/>
-                </form>
+                {/*</form>*/}
                 <div>city: {city}</div>
                 <div className="payButtonsBox">
                         <button className="PayButton" onClick={(e) => {clearShippingDetails(); }}>Clear</button>
