@@ -35,11 +35,18 @@ const PaymentPage = () => {
     const [formFillWarning, setFillWarning] = useState("");
 
     // const [shippingDetails, setShippingDetails] = useState({shippingname:"", address1:"", city:"", zip:"", country:""});
-    const [address, setAddress] = useState(null);
+    /*const [address, setAddress] = useState(null);
     const [shipname, setShipname] = useState(null);
     const [city, setCity] = useState(null);
     const [country, setCountry] = useState(null);
-    const [zip, setZip] = useState(null);
+    const [zip, setZip] = useState(null);*/
+
+    const [address, setAddress] = useState("");
+    const [shipname, setShipname] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [zip, setZip] = useState("");
+
 
     const [cart] = useCartState({});
     const [numInCart, setNumInCart] = useState((cart.length>0? cart.reduce((n, { quantity }) => n + quantity, 0): 0));
@@ -76,7 +83,7 @@ const PaymentPage = () => {
     const clearShippingDetails = () => {
       console.log("clearing form");
         setAddress(""); setShipname(""); setCity(""); setCountry(""); setZip("");
-        setAddress(null); setShipname(null); setCity(null); setCountry(null); setZip(null);
+        //setAddress(null); setShipname(null); setCity(null); setCountry(null); setZip(null);
         setFillWarning("");
         console.log(`new values are: ${address}, ${shipname}, ${city}, ${zip}`);
     }
@@ -91,19 +98,21 @@ const PaymentPage = () => {
 
                 {/*<form  >*/}
                 <label htmlFor="ShipName" title="Full name of recipient">Name</label>
-                <input placeholder="Full name" type="text"  className="form-control" name="ShipName" value={shipname} onBlur={(e) => {setShipname(e.target.value); console.log("changing shipping name to ", e.target.value);} } />
+                {/* Without onChange property, cannot update form field, & get warning in console:
+                Warning: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly` */}
+                <input placeholder="Full name" type="text"  className="form-control" name="ShipName" value={shipname} onBlur={(e) => {setShipname(e.target.value); console.log("changing shipping name to ", e.target.value);} } onChange={(e) => {setShipname(e.target.value); } }/>
 
                 <label htmlFor="ShipAdress1" title="House number/apt, Street">Address</label>
                   {/* <input placeholder="Address" type="text" className="form-control" name="ShipAdress1" value={address1} onFocus={(e)=>console.log("focused")} onBlur={(e) =>  {console.log("change"); onChangeDetails(e);}}  /> */}
                   {/* <input placeholder="Address" type="text" className="form-control" name="ShipAdress1" value={shippingDetails.address1}   /> */}
-                  <input placeholder="Address" type="text" className="form-control" name="ShipAdress1" value={address}  onBlur={(e) => {setAddress(e.target.value) } } />
+                  <input placeholder="Address" type="text" className="form-control" name="ShipAdress1" value={address}  onBlur={(e) => {setAddress(e.target.value) } } onChange={(e) => {setAddress(e.target.value) } }/>
 
                   <label htmlFor="ShipCity" >City</label>
-                  <input placeholder="City" type="text"  className="form-control" name="ShipCity"  value={city}  onBlur={(e) => {setCity(e.target.value)} }/>
+                  <input placeholder="City" type="text"  className="form-control" name="ShipCity"  value={city}  onBlur={(e) => {setCity(e.target.value)}} onChange={(e) => {setCity(e.target.value)}}/>
                   <label htmlFor="ShipZip" >Zip</label>
-                  <input placeholder="Zip" type="text"  className="form-control" name="ShipZip"  value={zip} onBlur={(e) => {setZip(e.target.value)} }/>
+                  <input placeholder="Zip" type="text"  className="form-control" name="ShipZip"  value={zip} onBlur={(e) => {setZip(e.target.value)} } onChange={(e) => {setZip(e.target.value)} }/>
                   <label htmlFor="ShipCountry" >Country</label>
-                  <input placeholder="Country" type="text"  className="form-control" name="ShipCountry" value={country} onBlur={(e) => {setCountry(e.target.value)} }/>
+                  <input placeholder="Country" type="text"  className="form-control" name="ShipCountry" value={country} onBlur={(e) => {setCountry(e.target.value)} } onChange={(e) => {setCountry(e.target.value)} }/>
                 {/*</form>*/}
                 <div>city: {city}</div>
                 <div className="payButtonsBox">
