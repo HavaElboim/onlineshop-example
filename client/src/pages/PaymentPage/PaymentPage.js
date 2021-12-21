@@ -74,7 +74,7 @@ const PaymentPage = () => {
 
     const clearShippingDetails = () => {
       console.log("clearing form");
-        setAddress(null); setShipname(null); setCity(null); setCountry(null); setZip(null);
+        setAddress(""); setShipname(""); setCity(""); setCountry(""); setZip("");
         setFillWarning("");
         console.log(`new values are: ${address}, ${shipname}, ${city}, ${zip}`);
     }
