@@ -55,7 +55,8 @@ const PaymentPage = () => {
                 setFillWarning("Information missing - fill all fields in form");
             }    
         }*/
-        if (address===null || shipname===null || city===null || country === null || zip===null) {
+        if (address===null || shipname===null || city===null || country === null || zip===null ||
+          address==="" || shipname==="" || city==="" || country === "" || zip==="") {
                 tempFilled = false;
                 setFillWarning("Information missing - fill all fields in form"); 
         }
