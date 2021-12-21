@@ -114,7 +114,6 @@ const PaymentPage = () => {
                   <label htmlFor="ShipCountry" >Country</label>
                   <input placeholder="Country" type="text"  className="form-control" name="ShipCountry" value={country} onBlur={(e) => {setCountry(e.target.value)} } onChange={(e) => {setCountry(e.target.value)} }/>
                 {/*</form>*/}
-                <div>city: {city}</div>
                 <div className="payButtonsBox">
                         <button className="PayButton" onClick={(e) => {clearShippingDetails(); }}>Clear</button>
                     </div> 
